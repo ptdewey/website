@@ -12,13 +12,14 @@
     --darker-brown: #1c1a18;
 
     --text-color: var(--tan);
-    --background-color: var(--dark-brown);
+    /* --background-color: var(--dark-brown); */
+    --background-color: var(--darker-brown);
     --background-color-alt: var(--dark-brown-alt);
     --header-background: var(--green);
     --link-color: var(--yellow);
     --link-hover-color: var(--teal);
 
-    --code-background: ar(--darker-brown);
+    --code-background: var(--dark-brown);
     --code-text-color: var(--tan);
 
     --font-size: 1.2em;
@@ -108,7 +109,7 @@ blockquote {
 
 code {
     font-family: "Iosevka Patrick";
-    background-color: var(--darker-brown);
+    background-color: var(--code-background);
     color: var(--code-text-color);
     padding: 0.2em 0.4em;
     border-radius: 3px;

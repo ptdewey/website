@@ -122,9 +122,9 @@
     transition: transform 0.2s ease;
   }
 
-  .entry:hover {
-    transform: scale(var(--hover-scale, 1.02));
-  }
+  /* .entry:hover { */
+  /*   transform: scale(var(--hover-scale, 1.02)); */
+  /* } */
 
   .entry-title {
     color: var(--yellow);
@@ -160,9 +160,9 @@
     transition: transform 0.2s ease;
   }
 
-  .skills-item:hover {
-    transform: scale(var(--hover-scale, 1.02));
-  }
+  /* .skills-item:hover { */
+  /*   transform: scale(var(--hover-scale, 1.02)); */
+  /* } */
 
   @media (max-width: 768px) {
     .skills-item {

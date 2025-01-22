@@ -1,8 +1,8 @@
 pre.chroma {
     display: flex;
     flex-direction: row;
-    background-color: var(--darker-brown);
-    color: var(--tan);
+    background-color: var(--code-background);
+    color: var(--code-text-color);
     padding: 0.5rem;
     border: 2px solid var(--orange);
     border-radius: 8px;
