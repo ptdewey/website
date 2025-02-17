@@ -71,11 +71,6 @@ export let projects = [
         link: "https://github.com/ptdewey/dotfiles",
         time: "Summer 2016 - Present",
       },
-    ],
-  },
-  {
-    category: "Dormant Projects",
-    items: [
       {
         title: "PlantUML LSP",
         description:
@@ -95,13 +90,6 @@ export let projects = [
   {
     category: "Finished Projects",
     items: [
-      {
-        title: "Bluesky Comments",
-        description:
-          "Embed Bluesky post replies as comments on any webpage as a Svelte-based component.",
-        link: "https://github.com/ptdewey/bluesky-comments-svelte",
-        time: "Fall 2024",
-      },
       {
         title: "internot.blog",
         description:

@@ -15,9 +15,12 @@
       constantly working on cool new <a href="{base}/projects">projects</a>.
     </p>
     <p>
-      The most recent project I've been working on an note taking application
-      with automatic note linking capabilities using a custom keyword extraction
-      system (<a href="https://github.com/oolong-sh/oolongd">link</a>).
+      My main projects currently include an AI-powered prospecting application
+      for <a href="https://navagant.com/">Navagant</a>, a Bluesky bot detection
+      system, and a
+      <a href="https://github.com/ptdewey/rooibos"
+        >programmatic resume generator</a
+      >.
     </p>
     <p>
       I'm somewhat obsessed with optimizing every part of my developer workflow,

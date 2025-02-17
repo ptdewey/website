@@ -26,29 +26,6 @@
         "Patrick Dewey"
       ],
       "categories": [
-        "Software Development"
-      ],
-      "date": "2024-11-10",
-      "read_time": 3,
-      "slug": "i-rewrote-my-site-in-svelte",
-      "tags": [
-        "go",
-        "swe",
-        "software-engineering",
-        "software-development",
-        "web-development",
-        "svelte"
-      ],
-      "title": "I rewrote my website in Svelte (and Go) and all I got was this lousy blog post"
-    },
-    "content": "\u003ch2\u003eIntroduction\u003c/h2\u003e\n\u003cp\u003eI have been using Hugo to run my personal website for a few years now, and it certainly did the job for me, but I was never truly happy with the aesthetics as I wanted something a bit more unique to me.\u003cbr /\u003e\nI could have just made my own theme, but Hugo's template system felt too complicated for what I actually wanted to do, so I decided I would start from scratch using a different tool.\u003cbr /\u003e\nUnfortunately, I do happen to be a fairly busy person (working and grad school and all), so I haven't had enough time to really jump in and build an entire site until this weekend when I had a bit of free time and a sudden (inexplicable) urge to try out Svelte.\u003c/p\u003e\n\u003ch2\u003eGoals\u003c/h2\u003e\n\u003cp\u003eI had a few goals/requirements that I wanted to meet before deploying the new site.\u003c/p\u003e\n\u003col\u003e\n\u003cli\u003eThe site styling should be easy to customize and add to (pretty much just styling with CSS)\u003c/li\u003e\n\u003cli\u003eI should be able to generate site content from markdown files (or a similar format like svx)\u003c/li\u003e\n\u003cli\u003eRouting for pages generated from markdown files should be automatic or very simple\u003c/li\u003e\n\u003cli\u003eThe site should be styled based on my \u003ca href=\"https://github.com/ptdewey/darkearth-nvim\"\u003eDarkEarth\u003c/a\u003e color scheme (because its awesome)\u003c/li\u003e\n\u003cli\u003eThe site needs to be static and deployable on GitHub pages\u003c/li\u003e\n\u003c/ol\u003e\n\u003ch2\u003eThe Rewrite\u003c/h2\u003e\n\u003cp\u003eI started the rewrite by writing some CSS for the project, choosing the colors (based on DarkEarth) and designing a simple navbar.\u003c/p\u003e\n\u003cp\u003eAfter this, I decided to build a small Go program that would convert Markdown files into HTML. I know there are JavaScript libraries I could have used for this, but I simply felt like writing some Go code (that's the only reason).\u003cbr /\u003e\nThe Go program converts all Markdown files found in the \u003ccode\u003econtent\u003c/code\u003e directory into HTML files in \u003ccode\u003estatic\u003c/code\u003e and is built with the \u0026quot;goldmark\u0026quot; library.\u003c/p\u003e\n\u003cp\u003eAfter this, I created a Svelte project, and spent some time learning how the page system works.\u003cbr /\u003e\nAt first, the \u003ccode\u003e+page.svelte\u003c/code\u003e and \u003ccode\u003e+page.js\u003c/code\u003e filenames felt a bit strange, but after playing with Svelte a little bit, I really enjoyed how easy it was to create new pages and style them.\u003cbr /\u003e\nI particularly liked the layout system, where you create a \u003ccode\u003e+layout.svelte\u003c/code\u003e file, which is then used in all pages lower in the file hierarchy.\u003cbr /\u003e\nThis made it super easy for me to set up my navbar and load global CSS in a single place, without having to worry about adding them anywhere else.\u003c/p\u003e\n\u003cp\u003eIt took me a few hours to get everything the way I envisioned, and I also learned about MDsveX, a library that creates a markdown variant that allows the use of Svelte components in it.\u003cbr /\u003e\nI decided to give it a try in a couple of my pages (that were previously in Markdown), and it worked quite well with only a little bit of added configuration.\u003c/p\u003e\n\u003ch2\u003eClosing Thoughts\u003c/h2\u003e\n\u003cp\u003eThe entire rewrite didn't take me nearly as long as I thought it would have, which is certainly somewhat due to Svelte's ease of use and simple syntax.\u003cbr /\u003e\nThe GitHub pages deployment even worked on the first try!\u003c/p\u003e\n\u003cp\u003eOverall, I'm really happy with how the site turned out, and I plan to sporadically improve it going forward (it is much easier to customize now).\u003cbr /\u003e\nI also really enjoyed working with Svelte, which is something I've never said about a frontend framework before, and as such, I highly recommend it if you are looking for a new web framework to try (for some reason).\u003c/p\u003e\n\u003cp\u003eThe code for this project can be found on GitHub \u003ca href=\"https://github.com/ptdewey/ptdewey.github.io\"\u003ehere\u003c/a\u003e\u003c/p\u003e\n"
-  },
-  {
-    "metadata": {
-      "authors": [
-        "Patrick Dewey"
-      ],
-      "categories": [
         "Statistics"
       ],
       "date": "2024-05-21",
