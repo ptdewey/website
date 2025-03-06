@@ -28,7 +28,7 @@
       blazingly fast in everything I do.
     </p>
     <p>
-      I also have a <a href="{base}/writing">blog</a> where I
+      I also have a <a href="{base}/blog">blog</a> where I
       <em>occasionally</em>
       write articles.
     </p>
