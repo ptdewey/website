@@ -4,7 +4,7 @@
 
 <div>
   <section class="welcome">
-    <h1>Welcome</h1>
+    <h1>Patrick Dewey</h1>
     <p>
       Hi there! I'm Patrick, and I'm a computer science Masters student at
       Virginia Tech studying artificial intelligence, machine learning, and data
@@ -15,9 +15,9 @@
       constantly working on cool new <a href="{base}/projects">projects</a>.
     </p>
     <p>
-      My main projects currently include an AI-powered prospecting application
-      for <a href="https://navagant.com/">Navagant</a>, a Bluesky bot detection
-      system, and a
+      I am currently working on an AI-powered prospecting application for <a
+        href="https://navagant.com/">Navagant</a
+      >, a Bluesky bot detection system, and a
       <a href="https://github.com/ptdewey/rooibos"
         >programmatic resume generator</a
       >.
@@ -28,7 +28,8 @@
       blazingly fast in everything I do.
     </p>
     <p>
-      I also have a <a href="{base}/blog">blog</a> where I <em>occasionally</em>
+      I also have a <a href="{base}/writing">blog</a> where I
+      <em>occasionally</em>
       write articles.
     </p>
   </section>
