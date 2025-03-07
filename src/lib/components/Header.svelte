@@ -18,9 +18,7 @@
 <header>
   <nav>
     <a href="{base}/" class="logo">Home</a>
-
     <button class="menu-toggle" on:click={toggleMenu}>☰</button>
-
     <div class="nav-links" class:is-open={isMenuOpen}>
       {#each pages as page}
         <a href="{base}/{page.slug}" on:click={closeMenu}>{page.title}</a>
@@ -36,18 +34,16 @@
   }
 
   header a:hover {
-    color: var(--link-hover-color);
-    background-color: var(--text-color);
-    text-decoration: none;
+    text-decoration: underline;
   }
 
   nav {
     background-color: var(--header-background);
-    padding: 1em 2em;
+    padding: 0.75em 2em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 0 auto;
     position: relative;
   }

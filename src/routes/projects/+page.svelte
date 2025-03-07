@@ -33,6 +33,7 @@
 <style>
   .category-section {
     margin-bottom: 2rem;
+    max-width: 800px;
   }
 
   .category-title {
@@ -51,7 +52,7 @@
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   @media (max-width: 768px) {
