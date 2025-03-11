@@ -1,12 +1,16 @@
 pre.chroma {
     display: flex;
     flex-direction: row;
-    background-color: var(--code-background);
-    color: var(--code-text-color);
+    background-color: #24211E;
+    color: #D7C484;
     padding: 0.5rem;
-    border: 2px solid var(--orange);
     border-radius: 8px;
     overflow-x: auto;
+}
+
+.dark pre.chroma {
+    background-color: #1c1a18;
+    border: 1px solid #BB7844;
 }
 
 .chroma .line {

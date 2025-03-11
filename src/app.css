@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+@layer base {
+    @font-face {
+        font-family: "Iosevka Patrick";
+        src: url("/fonts/patricks-iosevka-regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: "Iosevka Patrick";
+        src: url("/fonts/patricks-iosevka-semibold.ttf") format("truetype");
+        font-weight: bold;
+        font-style: bold;
+    }
+
+    @font-face {
+        font-family: "Iosevka Patrick";
+        src: url("/fonts/patricks-iosevka-italic.ttf") format("truetype");
+        font-weight: normal;
+        font-style: italic;
+    }
+}
+
+@theme {
+    --font-display: "Iosevka Patrick", "monospace";
+}
+
+:root {
+    --background: #f4f6f2;
+    --primary: inherit;
+    --link-color: #388e3c;
+}
+
+.dark {
+    --background: #24211E;
+    --primary: #D7C484;
+    --green: #77824A;
+    --orange: #BB7844;
+    --teal: #5F865F;
+    --yellow: #C9A654;
+    --red: #B3664D;
+    --link-color: var(--yellow);
+    --comment-border-color: var(--green);
+
+    .prose {
+        background-color: var(--background);
+        color: var(--primary);
+
+        a {
+            color: var(--link-color);
+        }
+
+        h1,
+        h2 {
+            color: var(--teal)
+        }
+
+        h3 {
+            color: var(--orange);
+        }
+
+        h4,
+        h5 {
+            color: var(--yellow);
+        }
+
+        code {
+            color: var(--primary);
+        }
+
+        hr {
+            border-color: var(--green);
+        }
+    }
+
+    img {
+        border: solid 1px;
+        border-color: var(--orange);
+    }
+}
+
+.bg-background {
+    background-color: var(--background);
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.link-color p a {
+    color: var(--link-color);
+}
+
+@layer component {
+
+    ul,
+    ol,
+    li {
+        list-style: none;
+        padding-left: 0;
+    }
+}
+
+
+@plugin '@tailwindcss/typography'

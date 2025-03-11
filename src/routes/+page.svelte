@@ -1,4 +1,5 @@
 <script>
+  import SocialLink from "$lib/components/SocialLink.svelte";
   import { base } from "$app/paths";
 </script>
 
@@ -7,19 +8,18 @@
 </svelte:head>
 
 <div>
-  <section class="welcome">
-    <h1>Patrick Dewey</h1>
+  <section>
+    <h2>Patrick Dewey</h2>
     <p>
       Hi there! I'm Patrick, and I'm a computer science Masters student at
-      Virginia Tech studying artificial intelligence, machine learning, and data
-      analytics.
+      Virginia Tech studying artificial intelligence, machine learning, software
+      engineering, and data analytics.
     </p>
     <p>
       I love learning new technologies, and I am always working on cool new <a
         href="{base}/projects">projects</a
       >. I am currently working on an intelligent-factory observability platform
-      for <a href="https://ccam-va.com/">CCAM</a>, an AI-powered prospecting
-      application for
+      for CCAM, an AI-powered prospecting application for
       <a href="https://navagant.com/">Navagant</a> and a Bluesky bot detection system.
     </p>
     <p>
@@ -28,22 +28,22 @@
       everything I do.
     </p>
     <p>
-      I also have a <a href="{base}/blog">blog</a> where I
+      I also have a <a href="{base}/writing">blog</a> where I
       <em>occasionally</em>
-      write articles. (<a href="{base}/rss.xml">RSS</a>)
+      write articles.
     </p>
   </section>
-  <section class="contact">
-    <p>
-      You find me on <a href="https://github.com/ptdewey">GitHub</a>,
-      <a href="https://www.linkedin.com/in/patricktdewey/">LinkedIn</a>, and
-      <a href="https://bsky.app/profile/pdewey.com">Bluesky</a>
-    </p>
+  <section>
+    <ul
+      class="font-sm flex flex-col mt-1 mb-0 space-x-0 space-y-2 md:flex-row md:space-x-5 md:space-y-0 list-none pl-0"
+    >
+      <SocialLink title="github" link="https://github.com/ptdewey" />
+      <SocialLink
+        title="linkedin"
+        link="https://www.linkedin.com/in/patricktdewey/"
+      />
+      <SocialLink title="bluesky" link="https://bsky.app/profile/pdewey.com" />
+      <SocialLink title="rss" link="{base}/rss.xml" />
+    </ul>
   </section>
 </div>
-
-<style>
-  .welcome {
-    max-width: 800px;
-  }
-</style>

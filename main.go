@@ -129,7 +129,7 @@ func processMarkdownFile(path string) (Page, error) {
 }
 
 func processDirectory(dir string) ([]Page, error) {
-	var posts []Page
+	var writings []Page
 
 	err := filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
@@ -146,12 +146,12 @@ func processDirectory(dir string) ([]Page, error) {
 				return err
 			}
 
-			posts = append(posts, page)
+			writings = append(writings, page)
 		}
 		return nil
 	})
 
-	return posts, err
+	return writings, err
 }
 
 func generateRSSFromJSON(inputPath string, outputPath string) error {
@@ -166,9 +166,9 @@ func generateRSSFromJSON(inputPath string, outputPath string) error {
 	}
 
 	channel := Channel{
-		Title:       "Patrick Dewey's Blog",
-		Link:        "https://pdewey.com/blog",
-		Description: "Articles and thoughts from Patrick Dewey",
+		Title:       "Patrick Dewey's Personal Site",
+		Link:        "https://pdewey.com/writing",
+		Description: "RSS feed of Patrick Dewey's website",
 		PubDate:     time.Now().Format(time.RFC1123Z),
 	}
 
@@ -184,7 +184,7 @@ func generateRSSFromJSON(inputPath string, outputPath string) error {
 
 		item := Item{
 			Title:       page.Metadata["title"].(string),
-			Link:        fmt.Sprintf("https://pdewey.com/blog/%s", page.Metadata["slug"].(string)),
+			Link:        fmt.Sprintf("https://pdewey.com/writing/%s", page.Metadata["slug"].(string)),
 			Description: page.Content,
 			PubDate:     page.Metadata["date"].(string),
 			Category:    strings.Join(categories, ", "),
@@ -217,27 +217,28 @@ func writeJSONFile(data interface{}, outputPath string) error {
 }
 
 func main() {
-	posts, err := processDirectory("content")
+	writings, err := processDirectory("content")
 	if err != nil {
 		fmt.Printf("Error processing directory: %v\n", err)
 		os.Exit(1)
 	}
 
-	sort.Slice(posts, func(i, j int) bool {
-		dateI, _ := time.Parse("2006-01-02", posts[i].Metadata["date"].(string))
-		dateJ, _ := time.Parse("2006-01-02", posts[j].Metadata["date"].(string))
+	sort.Slice(writings, func(i, j int) bool {
+		dateI, _ := time.Parse("2006-01-02", writings[i].Metadata["date"].(string))
+		dateJ, _ := time.Parse("2006-01-02", writings[j].Metadata["date"].(string))
 		return dateI.After(dateJ)
 	})
 
-	if err := writeJSONFile(posts, "static/data/posts.json"); err != nil {
-		fmt.Printf("Error writing posts.json: %v\n", err)
+	// TODO: spread out output to different files based on subdir structure within content
+	if err := writeJSONFile(writings, "static/data/writing.json"); err != nil {
+		fmt.Printf("Error writing writing.json: %v\n", err)
 		os.Exit(1)
 	}
 
-	if err := generateRSSFromJSON("static/data/posts.json", "static/rss.xml"); err != nil {
+	if err := generateRSSFromJSON("static/data/writing.json", "static/rss.xml"); err != nil {
 		fmt.Printf("Error writing rss.xml: %v\n", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Successfully generated posts.json and rss.xml")
+	fmt.Println("Successfully generated writing.json and rss.xml")
 }

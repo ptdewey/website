@@ -3,16 +3,16 @@ export type Page = {
   title: string;
 };
 
-export type BlogPost = {
-  post?: Post;
+export type WritingW = {
+  data?: Writing;
 };
 
-export type Post = {
-  metadata: PostMetadata;
+export type Writing = {
+  metadata: WritingMetadata;
   content: string;
 };
 
-export type PostMetadata = {
+export type WritingMetadata = {
   authors: string[];
   categories?: string[];
   date: string;
@@ -20,14 +20,18 @@ export type PostMetadata = {
   slug: string;
   tags?: string[];
   title: string;
+  type: string;
+  bluesky_link?: string;
 };
 
 export type Project = {
   title: string;
   description: string;
+  shortDescription?: string;
   link: string;
   image?: string;
   time?: string;
+  languages?: string;
 };
 
 export type ProjectCategory = {

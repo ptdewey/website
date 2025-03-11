@@ -4,9 +4,11 @@ authors: ["Patrick Dewey"]
 date: 2024-11-26
 categories: ["Software Development"]
 tags: ["bluesky", "software-development", "svelte", "npm"]
+type: "Blog"
+bluesky_link: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/app.bsky.feed.post/3lbvhkkrg4c2c"
 ---
 
-## Introduction
+### Introduction
 
 Bluesky has been gaining a lot of traction and publicity recently, and there are a few aspects of the platform that have piqued my interest in a way that no other social media platform has done.
 
@@ -14,7 +16,7 @@ What gets me most excited about Bluesky is that both the [platform](https://bsky
 
 What I'd like to talk about today is one specific example of a tool that was built off of Bluesky, embeddable blog post comments.
 
-## Embedding Bluesky for Blog Comments
+### Embedding Bluesky for Blog Comments
 
 The idea of using Bluesky threads as blog comments was first debuted by [Emily Liu](https://bsky.app/profile/emilyliu.me) (a Bluesky developer) in a [post](https://emilyliu.me/blog/open-network) a couple of days ago. It quickly got people very excited, with many requests for example code.
 
@@ -22,7 +24,7 @@ Fortunately, she published her code in a new [post](https://bsky.app/profile/emi
 
 I found [Cory Zue's](https://bsky.app/profile/coryzue.com) implementation[^co] in React pretty early on in its development, but I wasn't able to get it working with my site, as (at the time) the library only worked with React projects. As such, I set out to make my own version of the library in Svelte, since that is the framework I use for my site.
 
-### Building the Library
+#### Building the Library
 
 To begin, I used the Svelte library creation tool (`npx sv create`) to set up a base project (I chose to use JavaScript and JSDoc for types).
 
@@ -32,7 +34,7 @@ I set up some basic CSS styling for the components, and created some variables t
 
 The last step was publishing the library so that I (and hopefully others) could use the library. I had never published an NPM package before, but the process was actually quite simple, as the library creation tool provided the necessary scripts. After running `npm package` (and making some tweaks to 'package.json'), my library was published to the NPM registry[^npm-bcs]. (The [source code](https://github.com/ptdewey/bluesky-comments-svelte) is also available[^bcs])
 
-## Integrating the Library Into My Site
+### Integrating the Library Into My Site
 
 To get the newly published library integrated with my site, all I had to do was install it:
 ```sh
@@ -77,7 +79,7 @@ With just a few styling modifications (mostly colors), everything looked the way
 
 All that was left to take advantage of it was creating a new post (on the blog and on Bluesky)!
 
-## Closing Thoughts
+### Closing Thoughts
 
 Bluesky development feels like the wild west right now with many developers creating innovative new tools and integrations for and with the platform, and I'm enjoying being a part of it. I had a lot of fun developing my library and learning about how the Bluesky API works, and I'm quite happy with the result.
 

@@ -1,67 +1,31 @@
-<script>
-  import ProjectCard from "$lib/components/ProjectCard.svelte";
-  import { projects } from "./projects.js";
-  import { featuredProjects } from "./projects.js";
+<script lang="ts">
+  import FeaturedProjectEntry from "$lib/components/FeaturedProjectEntry.svelte";
+  import ProjectEntry from "$lib/components/ProjectEntry.svelte";
+  import { featuredProjects, projects } from "./projects";
 </script>
 
 <svelte:head>
-  <title>Projects</title>
+  <title>Patrick Dewey - Projects</title>
 </svelte:head>
 
-<!--
- TODO:
-- Add navigation jumps for moving between sections
--->
+<!-- TODO: make separate site with a list of all my tools (like this: https://tools.dhruvs.space/)-->
 <div>
-  <div class="category-section">
-    <h1 class="category-title">Featured Projects</h1>
-    <div class="projects-grid-full">
-      {#each featuredProjects.items as project}
-        <ProjectCard {project} />
-      {/each}
-    </div>
-  </div>
-
-  {#each projects as projectCategory}
-    <div class="category-section">
-      <h1 class="category-title">{projectCategory.category}</h1>
-      <div class="projects-grid">
-        {#each projectCategory.items as project}
-          <ProjectCard {project} />
-        {/each}
+  <section>
+    <h2>Featured Projects</h2>
+    {#each featuredProjects.items as project}
+      <FeaturedProjectEntry {project} />
+      <hr class="!mt-2 !mb-2" />
+    {/each}
+    {#each projects as projectCategory}
+      <div>
+        <h2>{projectCategory.category}</h2>
+        <div>
+          {#each projectCategory.items as project}
+            <ProjectEntry {project} />
+          {/each}
+        </div>
       </div>
-    </div>
-  {/each}
+      <hr />
+    {/each}
+  </section>
 </div>
-
-<style>
-  .category-section {
-    margin-bottom: 2rem;
-    max-width: 800px;
-  }
-
-  .category-title {
-    font-size: 1.8em;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    padding: 1rem;
-  }
-
-  .projects-grid-full {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 1.5rem;
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-  }
-
-  @media (max-width: 768px) {
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

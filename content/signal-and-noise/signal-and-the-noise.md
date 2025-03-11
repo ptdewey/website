@@ -4,6 +4,7 @@ authors: ["Patrick Dewey"]
 date: 2024-05-21
 categories: ["Statistics"]
 tags: ["statistics", "bayesian", "bayesian-statistics", "predictive-analytics", "book-review"]
+type: "Blog"
 ---
 
 ## Introduction

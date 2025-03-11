@@ -1,13 +1,12 @@
-/** @import {ProjectCategory} from "$lib/types" */
+import type { ProjectCategory } from "$lib/types";
 
-/** @type {ProjectCategory} */
-export let featuredProjects = {
+export let featuredProjects: ProjectCategory = {
   category: "Featured Projects",
   items: [
     {
       title: "Oolong",
       description:
-        "Platform agnostic, next gen note taking application with automatic note linking. Uses a custom keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph.",
+        "Platform agnostic, next gen note taking application with automatic note linking. Uses a custom keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph. Written in Go and JavaScript",
       image: "/images/oolong-graph-screenshot.png",
       link: "https://github.com/oolong-sh",
       time: "Fall 2024 - Present",
@@ -32,8 +31,7 @@ export let featuredProjects = {
   ],
 };
 
-/** @type {ProjectCategory[]} */
-export let projects = [
+export let projects: ProjectCategory[] = [
   {
     category: "Other Projects",
     items: [
@@ -41,56 +39,81 @@ export let projects = [
         title: "YankBank-nvim",
         description:
           "Versatile Neovim plugin that offers an enhanced clipboard history interface with a quick-access menu, featuring session persistence through SQLite. Written in Lua.",
+        shortDescription:
+          "Neovim plugin that provides quick access to clipboard history.",
         image:
           "https://github.com/ptdewey/yankbank-nvim/raw/main/assets/screenshot-2.png",
         link: "https://github.com/ptdewey/yankbank-nvim",
         time: "Spring 2024 - Present",
+        languages: "Lua",
       },
       {
         title: "DarkEarth-nvim",
         description:
           "A dark and earthy color scheme for Neovim. Written in Lua.",
+        shortDescription: "A dark and earthy color scheme for Neovim.",
         image:
           "https://github.com/ptdewey/darkearth-nvim/raw/main/assets/color_bar.png",
         link: "https://github.com/ptdewey/darkearth-nvim",
         time: "Spring 2024 - Present",
+        languages: "Lua",
       },
       {
         title: "FRC Scouting Database",
         description:
           "Cloud-deployable scouting system for FIRST Robotics Competition event stats and match predictions, achieving 80% match prediction accuracy. Written in Go.",
+        shortDescription:
+          "Scouting and match prediction application for FIRST Robotics.",
         link: "https://github.com/ptdewey/frc-scouting-database-v2",
         time: "Spring 2023 - Present",
+        languages: "Go",
       },
       {
         title: "Linux Dotfiles",
         description:
           "A collection of configuration files and scripts I use every day on my Linux desktop. Includes a quick setup script that allows me to get working on any system in minutes.",
+        shortDescription: "Configuration files and scripts I use every day.",
         link: "https://github.com/ptdewey/dotfiles",
         time: "Summer 2016 - Present",
+        languages: "Lua, Bash",
       },
-      // {
-      //   title: "Bluprinter",
-      //   description:
-      //     "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
-      //   // image:
-      //   // "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
-      //   link: "https://github.com/ptdewey/blueprinter",
-      //   time: "Summer 2024 - Fall 2024",
-      // },
+      {
+        title: "Bluprinter",
+        description:
+          "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
+        shortDescription:
+          "CLI tool for quickly generating files from templates.",
+        image:
+          "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
+        link: "https://github.com/ptdewey/blueprinter",
+        time: "Summer 2024 - Fall 2024",
+        languages: "Go",
+      },
+      {
+        title: "Matcha",
+        description: "CLI note taking helper.",
+        link: "https://github.com/ptdewey/matcha",
+        time: "Summer 2024 - Fall 2024",
+        languages: "Go",
+      },
       {
         title: "Visualizing *What* Neural Networks Learn",
         description:
           "Animated visualizations of neural network learning processes, built with Python and R.",
+        shortDescription: "A visual study of what neural networks learn.",
         link: "https://aanish-pradhan.github.io/CS-5764-Project/",
         time: "Spring 2024",
+        languages: "Python, R",
       },
       {
         title: "CUDA Neural Network",
         description:
           "Modular feed-forward neural network implementation in CUDA C++ with various activation and cost functions for classification and regression tasks.",
+        shortDescription:
+          "Modular feed-forward neural network implementation in CUDA.",
         link: "https://github.com/ptdewey/cuda-nn",
         time: "Fall 2023",
+        languages: "CUDA, C++",
       },
     ],
   },
@@ -106,7 +129,7 @@ export let projects = [
       {
         title: "nvim-lualine/lualine.nvim",
         description:
-          "Customizable status bar plugin for Neovim. Added feature for filename display with parent directory in multi-buffer projects.",
+          "Customizable status bar plugin for Neovim. Added new filename display option for projects with multiple same files with the same name.",
         link: "https://github.com/nvim-lualine/lualine.nvim",
       },
       {
