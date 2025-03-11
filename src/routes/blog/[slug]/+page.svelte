@@ -10,6 +10,10 @@
   const author = "pdewey.com";
 </script>
 
+<svelte:head>
+  <title>{data.post.metadata.title}</title>
+</svelte:head>
+
 <link rel="stylesheet" href="{base}/darkearth-syntax.css" />
 <article class="post-container">
   {#if data && data.post}

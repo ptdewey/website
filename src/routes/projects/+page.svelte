@@ -4,6 +4,10 @@
   import { featuredProjects } from "./projects.js";
 </script>
 
+<svelte:head>
+  <title>Projects</title>
+</svelte:head>
+
 <!--
  TODO:
 - Add navigation jumps for moving between sections

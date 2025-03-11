@@ -82,7 +82,7 @@ export let projects = [
         title: "Visualizing *What* Neural Networks Learn",
         description:
           "Animated visualizations of neural network learning processes, built with Python and R.",
-        link: "https://pdewey.com/neural-net-viz",
+        link: "https://aanish-pradhan.github.io/CS-5764-Project/",
         time: "Spring 2024",
       },
       {
