@@ -15,9 +15,9 @@
   <h2>Writing</h2>
   <ul class="space-y-5 p-0">
     {#each writings as writing}
-      <li class="flex items-start">
-        <span class="mr-4">{formatDate(writing.metadata.date)}</span>
-        <div>
+      <li class="flex w-full items-start">
+        <span class="mr-5">{formatDate(writing.metadata.date)}</span>
+        <div class="flex-3/4 overflow-hidden">
           <a href="{base}/writing/{writing.metadata.slug}"
             >{writing.metadata.title}</a
           >
