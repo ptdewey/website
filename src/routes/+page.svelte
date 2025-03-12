@@ -1,5 +1,6 @@
 <script>
   import SocialLink from "$lib/components/SocialLink.svelte";
+
   import { base } from "$app/paths";
 </script>
 
