@@ -20,7 +20,8 @@
       I love learning new technologies, and I am always working on cool new <a
         href="{base}/projects">projects</a
       >. I am currently working on an intelligent-factory observability platform
-      for CCAM, an AI-powered prospecting application for
+      for <a href="https://ccam-va.com/">CCAM</a>, an AI-powered prospecting
+      application for
       <a href="https://navagant.com/">Navagant</a> and a Bluesky bot detection system.
     </p>
     <p>
