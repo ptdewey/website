@@ -4,6 +4,13 @@ export let featuredProjects: ProjectCategory = {
   category: "Featured Projects",
   items: [
     {
+      title: "PlantUML LSP",
+      description:
+        "An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Written in Go.",
+      link: "https://github.com/ptdewey/plantuml-lsp",
+      time: "Summer 2024 - Present",
+    },
+    {
       title: "Oolong",
       description:
         "Platform agnostic, next gen note taking application with automatic note linking. Uses a custom keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph. Written in Go and JavaScript",
@@ -20,14 +27,6 @@ export let featuredProjects: ProjectCategory = {
       link: "https://github.com/ptdewey/pendulum-nvim",
       time: "Spring 2024 - Present",
     },
-
-    {
-      title: "PlantUML LSP",
-      description:
-        "An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Written in Go.",
-      link: "https://github.com/ptdewey/plantuml-lsp",
-      time: "Summer 2024 - Present",
-    },
   ],
 };
 
@@ -35,6 +34,25 @@ export let projects: ProjectCategory[] = [
   {
     category: "Other Projects",
     items: [
+      {
+        title: "Bluprinter",
+        description:
+          "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
+        shortDescription:
+          "CLI tool for quickly generating files from templates.",
+        image:
+          "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
+        link: "https://github.com/ptdewey/blueprinter",
+        time: "Summer 2024 - Fall 2024",
+        languages: "Go",
+      },
+      {
+        title: "Rooibos",
+        description: "Programmatic resume generator.",
+        link: "https://github.com/ptdewey/rooibos",
+        time: "Winter 2025",
+        languages: "Go, Lua, Typst",
+      },
       {
         title: "YankBank-nvim",
         description:
@@ -75,27 +93,15 @@ export let projects: ProjectCategory[] = [
         shortDescription: "Configuration files and scripts I use every day.",
         link: "https://github.com/ptdewey/dotfiles",
         time: "Summer 2016 - Present",
-        languages: "Lua, Bash",
+        languages: "Lua, Bash, Nix",
       },
-      {
-        title: "Bluprinter",
-        description:
-          "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
-        shortDescription:
-          "CLI tool for quickly generating files from templates.",
-        image:
-          "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
-        link: "https://github.com/ptdewey/blueprinter",
-        time: "Summer 2024 - Fall 2024",
-        languages: "Go",
-      },
-      {
-        title: "Matcha",
-        description: "CLI note taking helper.",
-        link: "https://github.com/ptdewey/matcha",
-        time: "Summer 2024 - Fall 2024",
-        languages: "Go",
-      },
+      //{
+      //  title: "Matcha",
+      //  description: "CLI note taking helper.",
+      //  link: "https://github.com/ptdewey/matcha",
+      //  time: "Summer 2024 - Fall 2024",
+      //  languages: "Go",
+      //},
       {
         title: "Visualizing *What* Neural Networks Learn",
         description:
@@ -121,17 +127,23 @@ export let projects: ProjectCategory[] = [
     category: "Open Source Contributions",
     items: [
       {
+        title: "fredrikaverpil/godoc.nvim",
+        description:
+          "Fuzzy search Go packages/symbols and view docs from within Neovim. Improved support for fzf_lua.",
+        link: "https://github.com/fredrikaverpil/godoc.nvim",
+      },
+      {
         title: "XAMPPRocky/tokei",
         description:
           "CLI app counting lines of code in a project. Added support for PlantUML.",
         link: "https://github.com/XAMPPRocky/tokei",
       },
-      {
-        title: "nvim-lualine/lualine.nvim",
-        description:
-          "Customizable status bar plugin for Neovim. Added new filename display option for projects with multiple same files with the same name.",
-        link: "https://github.com/nvim-lualine/lualine.nvim",
-      },
+      //{
+      //  title: "nvim-lualine/lualine.nvim",
+      //  description:
+      //    "Customizable status bar plugin for Neovim. Added new filename display option for projects with multiple same files with the same name.",
+      //  link: "https://github.com/nvim-lualine/lualine.nvim",
+      //},
       {
         title: "letieu/harpoon-lualine",
         description:
@@ -139,16 +151,16 @@ export let projects: ProjectCategory[] = [
         link: "https://github.com/letieu/harpoon-lualine",
       },
       {
-        title: "rockerBOO/awesome-neovim",
-        description:
-          "Curated list of Neovim plugins. Contributed new and updated plugins.",
-        link: "https://github.com/rockerBOO/awesome-neovim",
-      },
-      {
         title: "karthik/wesanderson",
         description:
           "Color palette library for R. Added Asteroid City-themed palettes.",
         link: "https://github.com/karthik/wesanderson",
+      },
+      {
+        title: "rockerBOO/awesome-neovim",
+        description:
+          "Curated list of Neovim plugins. Contributed new and updated plugins.",
+        link: "https://github.com/rockerBOO/awesome-neovim",
       },
     ],
   },
