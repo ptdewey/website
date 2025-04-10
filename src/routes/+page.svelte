@@ -13,8 +13,8 @@
     <h2>Patrick Dewey</h2>
     <p>
       Hi there! I'm Patrick, and I'm a computer science Masters student at
-      Virginia Tech studying artificial intelligence, machine learning, software
-      engineering, and data analytics.
+      Virginia Tech studying software engineering, machine learning, artificial
+      intelligence, and data analytics.
     </p>
     <p>
       I love learning new technologies, and I am always working on cool new <a
@@ -22,12 +22,16 @@
       >. I am currently working on an intelligent-factory observability platform
       for <a href="https://ccam-va.com/">CCAM</a>, an AI-powered prospecting
       application for
-      <a href="https://navagant.com/">Navagant</a> and a Bluesky bot detection system.
+      <a href="https://navagant.com/">Navagant</a> and an experiment on bot detection
+      methods for Bluesky.
     </p>
     <p>
-      I also enjoy optimizing my developer workflow, and I've written vim
-      plugins and cli/tui applications to try and be blazingly fast in
-      everything I do.
+      I enjoy optimizing my developer workflow, and I've written Neovim plugins
+      and cli applications to try and be blazingly fast in everything I do.
+    </p>
+    <p>
+      Outside of programming, I enjoy reading, listening to music, and making
+      coffee and cocktails.
     </p>
     <p>
       I also have a <a href="{base}/writing">blog</a> where I
