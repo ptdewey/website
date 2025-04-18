@@ -142,7 +142,7 @@ export let projects: ProjectCategory[] = [
       {
         title: "Myriad-Dreamin/tinymist",
         description:
-          "Language server for Typst. Fixed issue use of a blocking call in client documentation.",
+          "Language server for Typst. Various Neovim related documentation additions and fixes.",
         link: "https://github.com/Myriad-Dreamin/tinymist",
       },
       {
