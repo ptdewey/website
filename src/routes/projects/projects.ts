@@ -136,7 +136,7 @@ export let projects: ProjectCategory[] = [
       {
         title: "aaaton/golem",
         description:
-          "Lemmatization library for Go. Fixed dictionary encoding issue where a zero-width byte order mark would be included in some outputs. Added test relevant test cases.",
+          "Lemmatization library for Go. Fixed dictionary encoding issue where a zero-width byte order mark would be included in some outputs and added associated test cases.",
         link: "https://github.com/aaaton/golem",
       },
       {
