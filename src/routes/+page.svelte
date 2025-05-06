@@ -19,19 +19,22 @@
     <p>
       I love learning new technologies, and I am always working on cool new <a
         href="{base}/projects">projects</a
-      >. I am currently working on an intelligent-factory observability platform
-      for <a href="https://ccam-va.com/">CCAM</a>, an AI-powered prospecting
-      application for
-      <a href="https://navagant.com/">Navagant</a> and an experiment on bot detection
-      methods for Bluesky.
+      >. I am currently working on a
+      <a href="https://github.com/ptdewey/plantuml-lsp"
+        >language server for PlantUML</a
+      >
+      and am in the process of improving my
+      <a href="https://github.com/ptdewey/pendulum-nvim"
+        >time tracking plugin for Neovim</a
+      >.
     </p>
     <p>
       I enjoy optimizing my developer workflow, and I've written Neovim plugins
-      and cli applications to try and be blazingly fast in everything I do.
+      and cli applications to be blazingly fast in everything I do.
     </p>
     <p>
-      Outside of programming, I enjoy reading, listening to music, and making
-      coffee and cocktails.
+      Outside of programming, I enjoy reading, listening to music, playing
+      Minecraft, and making coffee and cocktails.
     </p>
     <p>
       I also have a <a href="{base}/writing">blog</a> where I

@@ -12,15 +12,6 @@ export let featuredProjects: ProjectCategory = {
       languages: "Go",
     },
     {
-      title: "Oolong",
-      description:
-        "Platform agnostic, next gen note taking application with automatic note linking. Uses an NLP-based keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph.",
-      image: "/images/oolong-graph-screenshot.png",
-      link: "https://github.com/oolong-sh",
-      time: "Fall 2024 - Present",
-      languages: "Go, TypeScript",
-    },
-    {
       title: "Pendulum-nvim",
       description:
         "Neovim plugin that monitors coding duration and compiles metrics such as git project name, file type, and additional parameters, providing insightful data for productivity analysis.",
@@ -29,6 +20,15 @@ export let featuredProjects: ProjectCategory = {
       link: "https://github.com/ptdewey/pendulum-nvim",
       time: "Spring 2024 - Present",
       languages: "Go, Lua",
+    },
+    {
+      title: "Oolong",
+      description:
+        "Platform agnostic, next gen note taking application with automatic note linking. Uses an NLP-based keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph.",
+      image: "/images/oolong-graph-screenshot.png",
+      link: "https://github.com/oolong-sh",
+      time: "Fall 2024 - Present",
+      languages: "Go, TypeScript",
     },
   ],
 };
@@ -142,7 +142,7 @@ export let projects: ProjectCategory[] = [
       {
         title: "Myriad-Dreamin/tinymist",
         description:
-          "Language server for Typst. Various Neovim related documentation additions and fixes.",
+          "Language server for Typst. Added and fixed Neovim related documentation.",
         link: "https://github.com/Myriad-Dreamin/tinymist",
       },
       {
@@ -172,7 +172,7 @@ export let projects: ProjectCategory[] = [
       {
         title: "rockerBOO/awesome-neovim",
         description:
-          "Curated list of Neovim plugins. Contributed new and updated plugins.",
+          "Curated list of Neovim plugins. Added and updated plugins.",
         link: "https://github.com/rockerBOO/awesome-neovim",
       },
     ],
