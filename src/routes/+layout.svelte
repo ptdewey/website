@@ -13,7 +13,7 @@
     class="w-full max-w-prose mx-auto flex-grow prose prose-a:no-underline text-[16px] leading-relaxed"
   >
     <Header />
-    <main class="link-color prose prose-sm">
+    <main class="link-color prose">
       {@render children()}
     </main>
 
