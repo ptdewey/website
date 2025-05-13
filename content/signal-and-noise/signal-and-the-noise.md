@@ -16,7 +16,7 @@ I'm a bit late to the party when it comes to commentary on Nate Silver's book *t
 
 ## Main Ideas
 
-First, I want to say that I think it is an amazing book that is worth reading for anyone who is interested in statistics, practitioners and laymen alike. If you are considering reading it (and are reading my blog for some reason), I highly recommend it.
+First, I want to say that I think it is a pretty decent book that may be worth reading for anyone who is interested in statistics. If you are considering reading it (and are reading my blog for some reason), I'd say give it a go.
 The main goal of the book is to investigate why "a vast majority of predictions fail" and to provide some tips to make better predictions.
 
 

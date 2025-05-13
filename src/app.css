@@ -41,8 +41,8 @@
     --teal: #5F865F;
     --yellow: #C9A654;
     --red: #B3664D;
-    --link-color: var(--yellow);
-    --comment-border-color: var(--green);
+    --link-color: var(--green);
+    --comment-border-color: var(--orange);
 
     .prose {
         background-color: var(--background);
@@ -54,11 +54,11 @@
 
         h1,
         h2 {
-            color: var(--teal)
+            color: var(--orange)
         }
 
         h3 {
-            color: var(--orange);
+            color: var(--red);
         }
 
         h4,
@@ -71,7 +71,7 @@
         }
 
         hr {
-            border-color: var(--green);
+            border-color: var(--teal);
         }
     }
 
