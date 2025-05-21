@@ -12,9 +12,9 @@
   <section>
     <h2>Patrick Dewey</h2>
     <p>
-      Hi there! I'm Patrick, and I'm a computer science Masters student at
-      Virginia Tech studying software engineering, machine learning, artificial
-      intelligence, and data analytics.
+      Hello there! I'm Patrick, a backend software engineer at Koalafi and a
+      recent graduate of Virginia Tech with a Master's degree in Computer
+      Science.
     </p>
     <p>
       I love learning new technologies, and I am always working on cool new <a
