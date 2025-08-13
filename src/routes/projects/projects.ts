@@ -21,15 +21,6 @@ export let featuredProjects: ProjectCategory = {
       time: "Spring 2024 - Present",
       languages: "Go, Lua",
     },
-    {
-      title: "Oolong",
-      description:
-        "Platform agnostic, next gen note taking application with automatic note linking. Uses an NLP-based keyword extraction system to link notes and ideas, enabling their visualization in a 2D/3D force-directed graph.",
-      image: "/images/oolong-graph-screenshot.png",
-      link: "https://github.com/oolong-sh",
-      time: "Fall 2024 - Present",
-      languages: "Go, TypeScript",
-    },
   ],
 };
 
@@ -37,25 +28,6 @@ export let projects: ProjectCategory[] = [
   {
     category: "Other Projects",
     items: [
-      {
-        title: "Bluprinter",
-        description:
-          "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
-        shortDescription:
-          "CLI tool for quickly generating files from templates.",
-        image:
-          "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
-        link: "https://github.com/ptdewey/blueprinter",
-        time: "Summer 2024 - Fall 2024",
-        languages: "Go",
-      },
-      {
-        title: "Rooibos",
-        description: "Programmatic resume generator.",
-        link: "https://github.com/ptdewey/rooibos",
-        time: "Winter 2025",
-        languages: "Go, Lua, Typst",
-      },
       {
         title: "YankBank-nvim",
         description:
@@ -91,42 +63,16 @@ export let projects: ProjectCategory[] = [
         languages: "Lua",
       },
       {
-        title: "FRC Scouting Database",
+        title: "Bluprinter",
         description:
-          "Cloud-deployable scouting system for FIRST Robotics Competition event stats and match predictions, achieving 80% match prediction accuracy.",
+          "An extensible template management tool with a beautiful terminal interface used for generating commonly used files. Written in Go using Bubble Tea.",
         shortDescription:
-          "Scouting and match prediction application for FIRST Robotics.",
-        link: "https://github.com/ptdewey/frc-scouting-database-v2",
-        time: "Spring 2023 - Present",
+          "CLI tool for quickly generating files from templates.",
+        image:
+          "https://github.com/ptdewey/blueprinter/raw/main/assets/screenshot-1.png",
+        link: "https://codeberg.org/ptdewey/blueprinter",
+        time: "Summer 2024 - Fall 2024",
         languages: "Go",
-      },
-      {
-        title: "Linux Dotfiles",
-        description:
-          "A collection of configuration files and scripts I use every day on my Linux desktop. Includes a quick setup script that allows me to get working on any system in minutes.",
-        shortDescription: "Configuration files and scripts I use every day.",
-        link: "https://github.com/ptdewey/dotfiles",
-        time: "Summer 2016 - Present",
-        languages: "Lua, Bash, Nix",
-      },
-      {
-        title: "Visualizing *What* Neural Networks Learn",
-        description:
-          "Animated visualizations of neural network learning processes.",
-        shortDescription: "A visual study of what neural networks learn.",
-        link: "https://aanish-pradhan.github.io/CS-5764-Project/",
-        time: "Spring 2024",
-        languages: "Python, R",
-      },
-      {
-        title: "CUDA Neural Network",
-        description:
-          "Modular feed-forward neural network implementation in CUDA C++ with various activation and cost functions for classification and regression tasks.",
-        shortDescription:
-          "Modular feed-forward neural network implementation in CUDA.",
-        link: "https://github.com/ptdewey/cuda-nn",
-        time: "Fall 2023",
-        languages: "CUDA, C++",
       },
     ],
   },
