@@ -13,7 +13,7 @@
     <h2>Patrick Dewey</h2>
     <p>
       Hello there! I'm Patrick, a backend software engineer who loves learning
-      new technologies, building cool <a href="{base}/projects">projects</a>.
+      new technologies and building cool <a href="{base}/projects">projects</a>.
     </p>
     <p>
       I also have a <a href="{base}/writing">blog</a> where I
