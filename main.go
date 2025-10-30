@@ -42,9 +42,10 @@ type Channel struct {
 type Item struct {
 	Title       string `xml:"title"`
 	Link        string `xml:"link"`
-	Description string `xml:"description"`
+	Description string `xml:"description,omitempty"`
 	PubDate     string `xml:"pubDate"`
-	Category    string `xml:"category"`
+	Category    string `xml:"category,omitempty"`
+	Content     string `xml:"content"`
 }
 
 func generateSlug(title string) string {
@@ -182,10 +183,16 @@ func generateRSSFromJSON(inputPath string, outputPath string) error {
 			}
 		}
 
+		description, ok := page.Metadata["description"].(string)
+		if !ok {
+			description = ""
+		}
+
 		item := Item{
 			Title:       page.Metadata["title"].(string),
 			Link:        fmt.Sprintf("https://pdewey.com/writing/%s", page.Metadata["slug"].(string)),
-			Description: page.Content,
+			Description: description,
+			Content:     page.Content,
 			PubDate:     page.Metadata["date"].(string),
 			Category:    strings.Join(categories, ", "),
 		}
