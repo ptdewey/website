@@ -1,7 +1,7 @@
 ---
 title: "Gaming on Linux (Wayland)"
 authors: ["Patrick Dewey"]
-date: "2025-11-15"
+date: "2025-08-11"
 categories: ["Linux"]
 tags: ["linux", "linux-gaming", "proton", "gamescope"]
 type: "Blog"
