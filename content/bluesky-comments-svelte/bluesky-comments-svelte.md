@@ -5,7 +5,6 @@ date: 2024-11-26
 categories: ["Software Development"]
 tags: ["bluesky", "software-development", "svelte", "npm"]
 type: "Blog"
-bluesky_link: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/app.bsky.feed.post/3lbvhkkrg4c2c"
 ---
 
 ### Introduction
@@ -37,17 +36,22 @@ The last step was publishing the library so that I (and hopefully others) could 
 ### Integrating the Library Into My Site
 
 To get the newly published library integrated with my site, all I had to do was install it:
+
 ```sh
 npm install bluesky-comments-svelte
 ```
+
 Import the component into my blog post '+page.svelte' file and set the author prop:
+
 ```svelte
 <script>
   import { CommentSection } from "bluesky-comments-svelte";
   const author = "pdewey.com";
 </script>
 ```
+
 And then add the component to the page itself:
+
 ```svelte
 <div>
   <h2>Comments</h2>
@@ -58,6 +62,7 @@ And then add the component to the page itself:
 ```
 
 With just a few styling modifications (mostly colors), everything looked the way I wanted it.
+
 ```svelte
 <style>
   :root {
@@ -89,10 +94,17 @@ If you are not a Svelte user, but you want to add Bluesky comments, I also recom
 Overall, this was a great learning experience, and I look forward to seeing all the cool stuff that gets built around Bluesky.
 
 [^em-post]: Emily Liu's original blog post - [https://emilyliu.me/blog/open-network](https://emilyliu.me/blog/open-network)
+
 [^em-gist]: Emily Liu's comment code - [https://gist.github.com/emilyliu7321/19ac4e111588bdc0cb4e411c88d9c79a](https://gist.github.com/emilyliu7321/19ac4e111588bdc0cb4e411c88d9c79a)
+
 [^co]: Cory Zue's comment library - [https://bsky.app/profile/coryzue.com/post/3lbrkypd37224](https://bsky.app/profile/coryzue.com/post/3lbrkypd37224)
+
 [^co-npm]: Cory Zue's library (NPM) - [https://www.npmjs.com/package/bluesky-comments](https://www.npmjs.com/package/bluesky-comments)
+
 [^app]: Bluesky appplication repository - [https://github.com/bluesky-social/social-app](https://github.com/bluesky-social/social-app)
+
 [^atproto]: AT Protocol repository - [https://github.com/bluesky-social/atproto](https://github.com/bluesky-social/atproto)
+
 [^bcs]: My project repository - [https://github.com/ptdewey/bluesky-comments-svelte](https://github.com/ptdewey/bluesky-comments-svelte)
+
 [^npm-bcs]: bluesky-comments-svelte NPM package - [https://www.npmjs.com/package/bluesky-comments-svelte](https://www.npmjs.com/package/bluesky-comments-svelte)
