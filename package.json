@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "@sveltejs/adapter-static": "^3.0.8",
-    "bluesky-comments-svelte": "^0.1.2"
+    "bluesky-comments-svelte": "^0.1.3"
   }
 }

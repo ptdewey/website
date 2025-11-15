@@ -5,6 +5,7 @@ date: 2024-11-26
 categories: ["Software Development"]
 tags: ["bluesky", "software-development", "svelte", "npm"]
 type: "Blog"
+bluesky_link: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/app.bsky.feed.post/3lbvhkkrg4c2c"
 ---
 
 ### Introduction
