@@ -6,7 +6,7 @@ export let featuredProjects: ProjectCategory = {
     {
       title: "PlantUML LSP",
       description:
-        "An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Built accompanying Neovim and VSCode plugins for hassle-free editor integration.",
+        "An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Also includes Neovim and VSCode plugins.",
       link: "https://github.com/ptdewey/plantuml-lsp",
       time: "Summer 2024 - Present",
       languages: "Go",
@@ -80,6 +80,12 @@ export let projects: ProjectCategory[] = [
     category: "Open Source Contributions",
     items: [
       {
+        title: "gleam-lang/gleam",
+        description:
+          "Improved int/float exhaustiveness checks for case statements.",
+        link: "https://github.com/gleam-lang/gleam",
+      },
+      {
         title: "aaaton/golem",
         description:
           "Lemmatization library for Go. Fixed dictionary encoding issue where a zero-width byte order mark would be included in some outputs and added associated test cases.",
@@ -92,34 +98,16 @@ export let projects: ProjectCategory[] = [
         link: "https://github.com/Myriad-Dreamin/tinymist",
       },
       {
-        title: "fredrikaverpil/godoc.nvim",
-        description:
-          "Fuzzy search Go packages/symbols and view docs from within Neovim. Improved support for fzf_lua.",
-        link: "https://github.com/fredrikaverpil/godoc.nvim",
-      },
-      {
         title: "XAMPPRocky/tokei",
         description:
           "CLI app counting lines of code in a project. Added support for PlantUML.",
         link: "https://github.com/XAMPPRocky/tokei",
       },
       {
-        title: "letieu/harpoon-lualine",
-        description:
-          "Harpoon extension for lualine integrating with Harpoon to show tracked files. Fixed a bug for empty Harpoon lists.",
-        link: "https://github.com/letieu/harpoon-lualine",
-      },
-      {
         title: "karthik/wesanderson",
         description:
           "Color palette library for R. Added Asteroid City-themed palettes.",
         link: "https://github.com/karthik/wesanderson",
-      },
-      {
-        title: "rockerBOO/awesome-neovim",
-        description:
-          "Curated list of Neovim plugins. Added and updated plugins.",
-        link: "https://github.com/rockerBOO/awesome-neovim",
       },
     ],
   },

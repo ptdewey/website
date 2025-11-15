@@ -21,8 +21,8 @@ import (
 )
 
 type Page struct {
-	Metadata map[string]interface{} `json:"metadata"`
-	Content  string                 `json:"content"`
+	Metadata map[string]any `json:"metadata"`
+	Content  string         `json:"content"`
 }
 
 type RSS struct {
@@ -55,7 +55,7 @@ func generateSlug(title string) string {
 	return slug
 }
 
-func parseFrontMatter(content []byte) (map[string]interface{}, []byte, error) {
+func parseFrontMatter(content []byte) (map[string]any, []byte, error) {
 	contentStr := string(content)
 	if !strings.HasPrefix(contentStr, "---") {
 		return nil, content, nil
@@ -64,7 +64,7 @@ func parseFrontMatter(content []byte) (map[string]interface{}, []byte, error) {
 	if len(parts) < 3 {
 		return nil, content, fmt.Errorf("invalid front-matter format")
 	}
-	var metadata map[string]interface{}
+	var metadata map[string]any
 	if err := yaml.Unmarshal([]byte(parts[1]), &metadata); err != nil {
 		return nil, nil, err
 	}
@@ -175,7 +175,7 @@ func generateRSSFromJSON(inputPath string, outputPath string) error {
 
 	for _, page := range pages {
 		var categories []string
-		if rawCategories, ok := page.Metadata["categories"].([]interface{}); ok {
+		if rawCategories, ok := page.Metadata["categories"].([]any); ok {
 			for _, category := range rawCategories {
 				if strCategory, ok := category.(string); ok {
 					categories = append(categories, strCategory)
@@ -215,7 +215,7 @@ func generateRSSFromJSON(inputPath string, outputPath string) error {
 	return os.WriteFile(outputPath, output, 0644)
 }
 
-func writeJSONFile(data interface{}, outputPath string) error {
+func writeJSONFile(data any, outputPath string) error {
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		return err
