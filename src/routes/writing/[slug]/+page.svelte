@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="{base}/darkearth-syntax.css" />
 
 <svelte:head>
-  <title>Patrick Dewey - {writing.metadata.title}</title>
+  <title>{writing.metadata.title}</title>
 </svelte:head>
 
 <article>

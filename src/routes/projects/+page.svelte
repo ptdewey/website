@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Patrick Dewey - Projects</title>
+  <title>Projects</title>
 </svelte:head>
 
 <!-- TODO: make separate site with a list of all my tools (like this: https://tools.dhruvs.space/)-->

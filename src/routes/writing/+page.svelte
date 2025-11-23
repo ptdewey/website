@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-  <title>Patrick Dewey - Writing</title>
+  <title>Writing</title>
 </svelte:head>
 
 <div>
