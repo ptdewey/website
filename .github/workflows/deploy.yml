@@ -29,26 +29,21 @@ jobs:
         uses: actions/checkout@v4
 
       # Step 2: Set up Node.js environment
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20"
 
       # Step 4: Build SvelteKit site
-      - name: Build SvelteKit
-        env:
-          VITE_BASE_URL: "${{ steps.pages.outputs.base_url }}/"  # Only if your SvelteKit config needs a base URL
-        run: npm run build
+      # - name: Build SvelteKit
+      #   env:
+      #     VITE_BASE_URL: "${{ steps.pages.outputs.base_url }}/" # Only if your SvelteKit config needs a base URL
+      #   run: npm run build
 
-      # Step 5: Upload build artifacts for deployment
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build # Adjust this to the output directory used by SvelteKit, usually `build`
+          path: ./public
 
   # Deployment job
   deploy:

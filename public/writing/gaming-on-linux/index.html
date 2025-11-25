@@ -1,0 +1,112 @@
+ 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaming on Linux (Wayland)</title>
+    
+    <link rel="stylesheet" href="/darkearth-syntax.css" />
+    <link rel="stylesheet" href="/style.css" />
+    
+  </head>
+  <body class="min-h-screen flex flex-col justify-between bg-background text-primary p-6 dark" >
+    <div class="font-mono w-full max-w-prose mx-auto flex-grow prose prose-a:no-underline leading-relaxed link-color">
+    
+<header>
+  <nav class="flex space-x-5">
+    <a href="/" class="no-underline">home</a>
+    <a href="/projects" class="no-underline">projects</a>
+    <a href="/writing" class="no-underline">writing</a>
+  </nav>
+</header>
+
+    
+<article>
+  <main>
+    <h2>Gaming on Linux (Wayland)</h2>
+    <ul class="list-none pl-0">
+      
+      <li>
+        <time datetime="2025-08-11">Aug 11, 2025</time>
+      </li>
+      
+      <li>
+        <span class="read-time"
+          >3 min read</span
+        >
+      </li>
+      
+    </ul>
+    <h2>Introduction</h2>
+<p>Gaming on Linux has come a long way in recent years, but it still presents unique challenges compared to Windows gaming. While tools like Proton and the advent of the Steam Deck have drastically improved the out-of-the-box Linux gaming experience, there are still many issues. Many of these issues are related to hardware/software compatibility, and can often be found when using modern Wayland window managers that lack full X11 support.</p>
+<p>This will not be a comprehensive guide, but it includes some tips and tools I've found to be helpful with getting Linux gaming working.</p>
+<h2>My Setup</h2>
+<p>My gaming system runs NixOS Unstable (currently version 25.11), with the Niri compositor. I use a recent AMD GPU since they have significantly fewer issues on Wayland compared to Nvidia cards (I won't be talking about Nvidia-specific issues here).</p>
+<p>One of the primary challenges I've run into with Linux gaming is incomplete (or lack of) X11 support. This is a problem as many Steam games only support X11, creating friction when running on pure Wayland environments. In my experience with Niri, I've encountered two particularly frustrating issues: controllers failing to be detected by games, and X11-only Steam games crashing immediately on startup. Another problem is that there are relatively few people using these newer tiling window managers, and as such, there is a lack of good documentation around using them for gaming.</p>
+<h2>Solutions</h2>
+<h3>Proton</h3>
+<p>Proton<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> has been an immensely important tool for Linux gaming, as It allows Windows-exclusive games to be run on Linux using Wine. Proton can be enabled in your Steam settings under the &quot;compatibility&quot; tab. For most Linux users, Proton is likely the only thing from this guide you will need (unless you require additional setup-specific configuration).</p>
+<h3>Steam Launch Flags</h3>
+<p>For window-managers that may not work well out of the box with just Proton, Steam has a couple of useful launch flags that can solve some issues.</p>
+<p>Running steam with the <code>-steamos3</code> launch flag tells steam to run with some more controller friendly options. I added custom desktop entry files to <code>~/.local/share/applications/</code> to ensure steam always launches with the flag enabled.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># ~/.local/share/applications/steam.desktop</span>
+</span></span><span class="line"><span class="cl"><span class="k">[Desktop Entry]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Name</span><span class="o">=</span><span class="s">SteamUI</span>
+</span></span><span class="line"><span class="cl"><span class="na">Comment</span><span class="o">=</span><span class="s">Run steam in steamos3 mode</span>
+</span></span><span class="line"><span class="cl"><span class="na">Exec</span><span class="o">=</span><span class="s">steam -steamos3</span>
+</span></span><span class="line"><span class="cl"><span class="na">Icon</span><span class="o">=</span><span class="s">steam</span>
+</span></span><span class="line"><span class="cl"><span class="na">Terminal</span><span class="o">=</span><span class="s">false</span>
+</span></span><span class="line"><span class="cl"><span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
+</span></span><span class="line"><span class="cl"><span class="na">Categories</span><span class="o">=</span><span class="s">Game;</span>
+</span></span></code></pre><p>Another useful flag is <code>-gamepadui</code>. It instructs steam to start in big picture mode for a console-like (controller-driven) UI.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl"><span class="c1"># ~/.local/share/applications/steam-ui.desktop</span>
+</span></span><span class="line"><span class="cl"><span class="k">[Desktop Entry]</span>
+</span></span><span class="line"><span class="cl"><span class="na">Name</span><span class="o">=</span><span class="s">SteamUI (Big Picture)</span>
+</span></span><span class="line"><span class="cl"><span class="na">Comment</span><span class="o">=</span><span class="s">Run steam in gamepad mode</span>
+</span></span><span class="line"><span class="cl"><span class="na">Exec</span><span class="o">=</span><span class="s">steam -steamos3 -gamepadui</span>
+</span></span><span class="line"><span class="cl"><span class="na">Icon</span><span class="o">=</span><span class="s">steam</span>
+</span></span><span class="line"><span class="cl"><span class="na">Terminal</span><span class="o">=</span><span class="s">false</span>
+</span></span><span class="line"><span class="cl"><span class="na">Type</span><span class="o">=</span><span class="s">Application</span>
+</span></span><span class="line"><span class="cl"><span class="na">Categories</span><span class="o">=</span><span class="s">Game;</span>
+</span></span></code></pre><p>I did run into an issue where my controller can't send inputs to a game using <code>-gamepadui</code> and <code>gamescope</code> at the same time. Note that this seems to be a more setup-specific issue (with Niri), so your mileage may vary.</p>
+<h3>Gamescope</h3>
+<p>Gamescope<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> is another useful tool for running games in a Wayland environment. It runs X11 applications with XWayland, allowing Steam games (and other X-only applications) to be run in Wayland environments that lack support for the X server (e.g. Niri). It is packaged for most Linux distros or can be built from source<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.</p>
+<p>To launch a game with Gamescope, add this to the Steam launch settings for each desired game with modifications for your screen width/height (<code>-W, -w, -H, -h</code> flags), and desired frame-rate (<code>-r</code> flag). Leave <code>%command%</code> as is, as this is automatically populated with the path your game.</p>
+<pre tabindex="0" class="chroma"><code><span class="line"><span class="cl">gamescope -W <span class="m">2560</span> -H <span class="m">1440</span> -w <span class="m">2560</span> -h <span class="m">1440</span> -r <span class="m">60</span> -f -- %command%
+</span></span></code></pre><p>See the <a href="https://github.com/ValveSoftware/gamescope">Gamescope repo</a> or run <code>gamescope --help</code> for more usage details.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/ValveSoftware/Proton">Proton</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://github.com/ValveSoftware/gamescope">Gamescope</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://github.com/ValveSoftware/gamescope?tab=readme-ov-file#status-of-gamescope-packages">Gamescope package statuses</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+ 
+<div id="comments"></div>
+<script src="/bluesky-comments.js"></script>
+<script>
+  
+  BlueskyComments("#comments", { author: "pdewey.com" });
+  
+</script>
+
+  </main>
+</article>
+
+    
+<footer>
+  
+</footer>
+
+    </div>
+  </body>
+</html>
+

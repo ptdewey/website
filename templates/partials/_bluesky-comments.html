@@ -1,0 +1,11 @@
+{{define "blueskyComments"}}
+<div id="comments"></div>
+<script src="/bluesky-comments.js"></script>
+<script>
+  {{if .Metadata.bluesky_link}}
+  BlueskyComments("#comments", { uri: "{{.Metadata.bluesky_link}}" });
+  {{else}}
+  BlueskyComments("#comments", { author: "pdewey.com" });
+  {{end}}
+</script>
+{{end}}

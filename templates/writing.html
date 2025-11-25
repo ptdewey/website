@@ -1,0 +1,18 @@
+{{define "content"}}
+<main>
+  <h2>Writing</h2>
+  <ul class="space-y-5 p-0">
+    {{range writingItems (index .AllPages "writing")}}
+    <li class="flex w-full items-start">
+      <span class="mr-5">{{formatDate .Date}}</span>
+      <div class="flex-3/4 overflow-hidden">
+        <a href="{{.Link}}">{{.Title}}</a>
+        {{if .Type}}
+        <p class="italic !m-0 p-0">{{.Type}}</p>
+        {{end}}
+      </div>
+    </li>
+    {{end}}
+  </ul>
+</main>
+{{end}} {{template "base" .}}

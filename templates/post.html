@@ -1,0 +1,21 @@
+{{define "content"}}
+<article>
+  <main>
+    <h2>{{.Metadata.title}}</h2>
+    <ul class="list-none pl-0">
+      {{if .Metadata.date}}
+      <li>
+        <time datetime="{{.Metadata.date}}">{{formatDate .Metadata.date}}</time>
+      </li>
+      {{end}}
+      <li>
+        {{if .Metadata.read_time}}<span class="read-time"
+          >{{.Metadata.read_time}} min read</span
+        >
+      </li>
+      {{end}}
+    </ul>
+    {{.HTMLContent}} {{template "blueskyComments" .}}
+  </main>
+</article>
+{{end}} {{template "base" .}}

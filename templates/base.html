@@ -1,0 +1,23 @@
+{{define "base"}}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{block "title" .}}{{.Metadata.title}}{{end}}</title>
+    {{if .Metadata.description}}
+    <meta name="description" content="{{.Metadata.description}}" />
+    {{end}}
+    <link rel="stylesheet" href="/darkearth-syntax.css" />
+    <link rel="stylesheet" href="/style.css" />
+    {{block "extra-head" .}}{{end}}
+  </head>
+  <body {{block "body-attrs" .}}class="min-h-screen flex flex-col justify-between bg-background text-primary p-6 dark" {{end}}>
+    <div class="font-mono w-full max-w-prose mx-auto flex-grow prose prose-a:no-underline leading-relaxed link-color">
+    {{template "header" .}}
+    {{block "content" .}} {{end}}
+    {{template "footer" .}}
+    </div>
+  </body>
+</html>
+{{end}}

@@ -1,0 +1,12 @@
+{{define "head"}}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{.Metadata.title}}</title>
+  {{if .Metadata.description}}
+  <meta name="description" content="{{.Metadata.description}}" />
+  {{end}}
+  <link rel="stylesheet" href="/darkearth-syntax.css" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+{{end}}
