@@ -15,7 +15,8 @@
       </li>
       {{end}}
     </ul>
-    {{.HTMLContent}} {{template "blueskyComments" .}}
+    <div class="break-words hyphens-auto">{{.HTMLContent}}</div>
+    {{template "blueskyComments" .}}
   </main>
 </article>
 {{end}} {{template "base" .}}
