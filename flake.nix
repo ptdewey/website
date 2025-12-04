@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    cedar.url = "git+file:///home/patrick/projects/cedar";
+    cedar.url = "github:ptdewey/cedar";
+    # cedar.url = "git+file:///home/patrick/projects/cedar";
   };
 
   outputs = { self, nixpkgs, cedar }:
