@@ -1,6 +1,7 @@
 buildDraft = false
 allowUnsafeHTML = true
 cleanBuild = true
+baseTemplatePath = "base.tmpl"
 
 [rss]
 generate = true
@@ -11,20 +12,20 @@ url = "pdewey.com"
 [[routes]]
 contentPath = "index.md"
 outputPattern = "/" 
-template = "_index.html"
+template = "_index.tmpl"
 
 [[routes]]
 contentPath = "writing.md"
 outputPattern = "/writing/"
-template = "writing.html"
+template = "writing.tmpl"
 
 [[routes]]
 contentPath = "writing"
 outputPattern = "/writing/:slug"
-template = "post.html"
+template = "post.tmpl"
 generateRSS = true
 
 [[routes]]
 contentPath = "projects.md"
 outputPattern = "/projects/"
-template = "projects.html"
+template = "projects.tmpl"

@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@source "../templates/**/*.html";
+@source "../templates/**/*.tmpl";
 @source "../content/**/*.md";
 
 /* @layer base { */
