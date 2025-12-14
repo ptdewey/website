@@ -12,3 +12,6 @@ shell:
 
 clean:
     @rm -rf public
+
+serve:
+    @pushd public || exit 0 && python -m http.server && popd || exit 0
