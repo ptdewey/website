@@ -1,11 +1,12 @@
 ## Featured Projects
 
-**[PlantUML Language Server](https://github.com/ptdewey/plantuml-lsp)**
+**[Arabica Social](alpha.arabica.social)**
+Coffee journaling social app, built on the AT Protocol. [(source)](https://github.com/arabica-social/arabica)
 
-An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Also includes Neovim and VSCode plugins.
+**[Shutter](https://github.com/ptdewey/shutter)**
+Approval-based snapshot testing library for Go.
 
 **[Pendulum-nvim](https://github.com/ptdewey/pendulum-nvim)**
-
 Neovim plugin that monitors coding duration and compiles metrics such as git project name, file type, and additional parameters, providing insightful data for productivity analysis.
 
 ## Other Projects
@@ -16,14 +17,8 @@ Neovim plugin that provides quick access to clipboard history.
 **[DarkEarth-nvim](https://github.com/ptdewey/darkearth-nvim)**
 A dark and earthy color scheme for Neovim.
 
-**[MonaLisa-nvim](https://github.com/ptdewey/monalisa-nvim)**
-Mona Lisa inspired color scheme for Neovim.
-
-**[Feeder](https://web.solanaceae.net/sol/feeder)**
-RSS feed aggregator web application (and PWA) built with Gleam.
-
-**[Shutter](https://github.com/ptdewey/shutter)**
-Snapshot testing library for Go.
+**[PlantUML Language Server](https://github.com/ptdewey/plantuml-lsp)**
+An implementation of the language server protocol (LSP) for PlantUML, providing autocompletion, definitions, and diagnostics for PlantUML diagrams. Also includes Neovim and VSCode plugins.
 
 **[Blueprinter](https://github.com/ptdewey/blueprinter)**
 CLI tool for quickly generating files from templates.
@@ -31,13 +26,9 @@ CLI tool for quickly generating files from templates.
 **[Bluesky Comments (Svelte)](https://github.com/ptdewey/bluesky-comments-svelte)**
 Svelte component library allowing Bluesky comments to be used as comments for any web-page.
 
-**[Bluesky Comments (vanilla JS)](https://web.solanaceae.net/sol/bluesky-comments)**
-Vanilla JavaScript port of my Bluesky Comments Svelte library.
-
-**[FRC Scouting Database V2](https://github.com/ptdewey/frc-scouting-database-v2)**
-Modeling team performance at FIRST robotics events.
-
 ## Other Contributions
+
+<!-- TODO: add blento and teal.fm contribs here at some point -->
 
 **[gleam-lang/gleam](https://github.com/gleam-lang/gleam)**
 Improved int/float exhaustiveness checks for case statements.
