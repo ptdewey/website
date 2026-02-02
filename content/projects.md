@@ -1,6 +1,6 @@
 ## Featured Projects
 
-**[Arabica Social](alpha.arabica.social)**
+**[Arabica Social](https://alpha.arabica.social)**
 Coffee journaling social app, built on the AT Protocol. [(source)](https://github.com/arabica-social/arabica)
 
 **[Shutter](https://github.com/ptdewey/shutter)**
