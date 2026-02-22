@@ -29,3 +29,8 @@ generateRSS = true
 contentPath = "projects.md"
 outputPattern = "/projects/"
 template = "projects.tmpl"
+
+[[routes]]
+contentPath = "now.md"
+outputPattern = "/now/"
+template = "now.tmpl"
