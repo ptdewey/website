@@ -17,7 +17,7 @@
   <nav class="flex space-x-5">
     <a href="/" class="no-underline">home</a>
     <a href="/projects" class="no-underline">projects</a>
-    <a href="/writing" class="no-underline">blog</a>
+    <a href="/blog" class="no-underline">blog</a>
     <a href="/coffee" class="no-underline">coffee</a>
     <a href="/now" class="no-underline">now</a>
   </nav>
@@ -53,9 +53,9 @@
 <p>Our approach to visualizing the learning process consisted of visualizing network weights (for image classification tasks) through the use of animated image plots. To create these plots, we plotted each weight in a layer as a single pixel in the image, with the color representing the value of that weight. Each image is made up of all the weights for a single neuron in a layer, and the images were arranged in a grid with all the images for that layer. To show how these weights evolve over the course of network training, we stitched the grid plots together into an animation.</p>
 <p>The other main component of our visualization of the learning process was visualizing network decision boundaries over time. To do this, we created a scatterplot of the data points and overlaid it on top of a contour plot representing the decision boundary of the network. In the scatterplot, the color of a point represents the class it is a part of. The colors of the contours are a bit harder to interpret (an area for improvement), but the dark red regions represent the actual decision boundary, and the network becomes more uncertain (represented as the color getting lighter, then changing to blue) as it gets farther away from the dark red region. Again, we wanted to show how the decision boundary changes during the training process, so we stitched the contour plots together into an animation.</p>
 <h3>Tools Used</h3>
-<p>To train our network and store the weights, we used Python with the PyTorch and SciKit-Learn libraries.<br>
-The weight and boundary visualizations were created in Python and animated using ffmpeg.<br>
-The exploratory PCA and <em>t</em>-SNE plots were created with R and ggplot, with the 3-dimensional plots being made with ggplotly.<br>
+<p>To train our network and store the weights, we used Python with the PyTorch and SciKit-Learn libraries.
+The weight and boundary visualizations were created in Python and animated using ffmpeg.
+The exploratory PCA and <em>t</em>-SNE plots were created with R and ggplot, with the 3-dimensional plots being made with ggplotly.
 The overarching website was created using R-markdown, knit (compiled) to a couple of html pages, and then hosted using GitHub pages.</p>
 <h3>Results</h3>
 <p>The website for this project can be found at <a href="https://aanish-pradhan.github.io/CS-5764-Project/">here</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. The source code for our code can also be found below<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</p>
@@ -77,7 +77,7 @@ The overarching website was created using R-markdown, knit (compiled) to a coupl
 </ul>
 <p>After 100 epochs, we can see that the decision boundary perfectly separates the two classes.</p>
 <h4>Dimensionality Reduction for High-Dimensional Datasets</h4>
-<p>The exploratory analysis page includes plots using Principal Component Analysis (PCA) and <em>t</em>-Distributed Stochastic Neighbor Embedding (<em>t</em>-SNE) to illustrate class distributions in the MNIST dataset. PCA plots show blurred boundaries between classes, while <em>t</em>-SNE plots reveal distinct clusters and greater sensitivity to in-group differences. For both PCA and <em>t</em>-SNE we included a biplot, de<br>
+<p>The exploratory analysis page includes plots using Principal Component Analysis (PCA) and <em>t</em>-Distributed Stochastic Neighbor Embedding (<em>t</em>-SNE) to illustrate class distributions in the MNIST dataset. PCA plots show blurred boundaries between classes, while <em>t</em>-SNE plots reveal distinct clusters and greater sensitivity to in-group differences. For both PCA and <em>t</em>-SNE we included a biplot, de
 nsity biplot, and 3D plot of the class embeddings.</p>
 <p><img src="/images/nnviz-pca-biplots.png" alt=""></p>
 <ul>
@@ -105,7 +105,7 @@ nsity biplot, and 3D plot of the class embeddings.</p>
 </ul>
 <p>After 100 epochs, most weights became very muddled, still holding the previous patterns but in more muddy state. This may seem counterintuitive as the network appears (from the eyes of a human) to have lost the original patterns, but the network was performing noticeably better in classification tasks at the 100 epoch mark.</p>
 <h3>Limitations</h3>
-<p>A significant challenge in this project was visualizing high-dimensional data, decision boundaries, and weights. For instance, it wasn't possible to plot the decision boundary for the MNIST image classification dataset in a contour plot due to its high dimensionality. However, by using weight visualizations, it was possible to represent individual components of the decision boundary, offering insights into the network's behavior when trained on this dataset.<br>
+<p>A significant challenge in this project was visualizing high-dimensional data, decision boundaries, and weights. For instance, it wasn't possible to plot the decision boundary for the MNIST image classification dataset in a contour plot due to its high dimensionality. However, by using weight visualizations, it was possible to represent individual components of the decision boundary, offering insights into the network's behavior when trained on this dataset.
 To address the dimensionality issue, PCA could be used to shrink the decision boundary into two or three dimensions, making visualization possible through contour plots. While this approach might produce messy or unclear results, it warrants further exploration and could yield intriguing findings.</p>
 <p>Another inherent limitation is that for large datasets with many unique output classes, weight visualizations often become unintelligible due to the wide range of possible weight values. This issue is more complex than the dimensionality problem but represents another potential area for future research.</p>
 <h3>Closing Thoughts</h3>
@@ -140,7 +140,7 @@ To address the dimensionality issue, PCA could be used to shrink the decision bo
 <footer>
   <div class="text-sm text-gray-500 mt-8">
     Powered by <a href="https://nixos.org" target="_blank" rel="noopener">Nix</a> and <a href="https://github.com/ptdewey/cedar" target="_blank" rel="noopener">Cedar</a> | 
-<span class="git-commit" title="Full change ID: kqmxyztxkztvvrxmxnlnkmzrnyupmmzt">Change ID: kqmxyztxkztv</span>
+<span class="jj-revision" title="Full revision ID: unknown">revision: unknown</span>
 
   </div>
 </footer>

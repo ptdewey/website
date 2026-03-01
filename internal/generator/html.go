@@ -19,10 +19,10 @@ import (
 type htmlPage struct {
 	Metadata         map[string]any
 	HTMLContent      template.HTML
-	AllPages         map[string][]PageInfo                     // Pages organized by route contentPath
-	ATProtoDocURI    string                                    // AT-URI for this document (empty if not published)
-	ATProtoDID       string                                    // DID for the configured ATProto handle
-	ATProtoPDS       string                                    // PDS service endpoint URL
+	AllPages         map[string][]PageInfo                    // Pages organized by route contentPath
+	ATProtoDocURI    string                                   // AT-URI for this document (empty if not published)
+	ATProtoDID       string                                   // DID for the configured ATProto handle
+	ATProtoPDS       string                                   // PDS service endpoint URL
 	PublicationPages map[string][]atproto.PublicationPageInfo // Keyed by publication config key
 }
 
@@ -159,8 +159,9 @@ func writePage(page parser.Page, pagesByRoute map[string][]PageInfo, publication
 				}
 
 				items = append(items, WritingItem{
-					Date:  date,
-					Link:  fmt.Sprintf("/writing/%s", p.Slug),
+					Date: date,
+					// TODO: make this path configurable, or make the helper function more generalizeable
+					Link:  fmt.Sprintf("/blog/%s", p.Slug),
 					Title: title,
 					Type:  typ,
 				})

@@ -1,7 +1,7 @@
-buildDraft = false
-allowUnsafeHTML = true
-cleanBuild = true
-baseTemplatePath = "base.tmpl"
+build_draft = false
+allow_unsafe_html = true
+clean_build = true
+base_template_path = "base.tmpl"
 
 [rss]
 generate = true
@@ -10,32 +10,35 @@ description = ""
 url = "pdewey.com"
 
 [[routes]]
-contentPath = "index.md"
-outputPattern = "/" 
+content_path = "index.md"
+output_pattern = "/"
 template = "_index.tmpl"
 
 [[routes]]
-contentPath = "writing.md"
-outputPattern = "/writing/"
-template = "writing.tmpl"
+content_path = "blog.md"
+output_pattern = "/blog/"
+template = "blog.tmpl"
 
 [[routes]]
-contentPath = "writing"
-outputPattern = "/writing/:slug"
+content_path = "blog"
+output_pattern = "/blog/:slug"
 template = "post.tmpl"
-generateRSS = true
+generate_rss = true
 
 [[routes]]
-contentPath = "projects.md"
-outputPattern = "/projects/"
+content_path = "projects.md"
+output_pattern = "/projects/"
 template = "projects.tmpl"
 
 [[routes]]
-contentPath = "coffee.md"
-outputPattern = "/coffee/"
+content_path = "coffee.md"
+output_pattern = "/coffee/"
 template = "coffee.tmpl"
 
 [[routes]]
-contentPath = "now.md"
-outputPattern = "/now/"
+content_path = "now.md"
+output_pattern = "/now/"
 template = "now.tmpl"
+
+[atproto]
+handle = "pdewey.com"
