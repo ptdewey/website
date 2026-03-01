@@ -1,5 +1,7 @@
 ## Now
 
+Last updated March 1st, 2026.
+
 _Inspired by [/now](https://nownownow.com/about)_
 
 Working on [arabica.social](https://alpha.arabica.social), a social coffee journaling application built on atproto. Currently focusing on expanding social features, primarily record correlating and suggestions. I'm evaluating different approaches for automatic linking of records without changing record ownership dynamics (I don't want deletions to cause other users to lose records). Arabica is currently in alpha, and is developed in the open[^1].

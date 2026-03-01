@@ -1,0 +1,175 @@
+{{define "content"}}
+<article>
+  <main>
+    {{.HTMLContent}}
+    <div id="brew-list" class="mt-6">
+      <p class="opacity-60">Fetching brews...</p>
+    </div>
+  </main>
+</article>
+
+<template id="brew-tmpl">
+  <div class="brew-entry py-4 border-b" style="border-color: var(--teal)">
+    <div class="flex items-baseline justify-between gap-4">
+      <a class="brew-bean font-bold"></a>
+      <time class="text-sm opacity-60 shrink-0"></time>
+    </div>
+    <div class="brew-roaster text-sm opacity-60"></div>
+    <div class="brew-bean-details text-sm opacity-60"></div>
+    <div class="brew-meta text-sm mt-1 opacity-70"></div>
+    <div class="brew-equipment text-sm opacity-70"></div>
+    <p class="brew-notes !mt-2 !mb-1 text-sm"></p>
+    <div class="brew-rating text-sm mt-1 opacity-50"></div>
+  </div>
+</template>
+
+<noscript>
+  <p>Enable JavaScript to view brews, or visit <a href="https://arabica.social">arabica.social</a>.</p>
+</noscript>
+
+<style>
+  #brew-list .brew-entry:last-child { border-bottom: none; }
+  .brew-bean { color: var(--orange) !important; }
+  .star-half {
+    display: inline-block;
+    position: relative;
+  }
+  .star-half::before {
+    content: '\2606';
+  }
+  .star-half::after {
+    content: '\2605';
+    position: absolute;
+    left: 0;
+    top: 0;
+    clip-path: inset(0 50% 0 0);
+  }
+</style>
+
+<script>
+  const PDS = 'https://arabica.systems'
+  const HANDLE = 'pdewey.com'
+  const NS = 'social.arabica.alpha'
+  const DOT = ' \u00b7 '
+
+  const xrpc = (method, params) =>
+    fetch(`${PDS}/xrpc/${method}?${new URLSearchParams(params)}`).then(r => r.json())
+
+  const recordCache = new Map()
+  function fetchRecord(did, collection, atURI) {
+    if (!atURI) return null
+    if (recordCache.has(atURI)) return recordCache.get(atURI)
+    const p = xrpc('com.atproto.repo.getRecord', {repo: did, collection, rkey: atURI.split('/').pop()})
+      .catch(() => null)
+    recordCache.set(atURI, p)
+    return p
+  }
+
+  function formatTime(s) {
+    if (!s) return ''
+    const m = Math.floor(s / 60)
+    return m > 0 ? `${m}:${String(s % 60).padStart(2, '0')}` : `${s}s`
+  }
+
+  function setOrRemove(el, text) {
+    if (text) { el.textContent = text } else { el.remove() }
+  }
+
+  function renderRating(container, rating) {
+    const n = Math.min(Math.max(rating, 0), 10)
+    const full = Math.floor(n / 2), half = n % 2, empty = 5 - full - half
+    const span = (ch, cls) => Object.assign(document.createElement('span'), cls ? {className: cls} : {textContent: ch})
+    container.append(
+      ...Array.from({length: full},  () => span('\u2605')),
+      ...(half ? [span(null, 'star-half')] : []),
+      ...Array.from({length: empty}, () => span('\u2606')),
+    )
+  }
+
+  function renderBrew(tmpl, brew) {
+    const el = tmpl.content.cloneNode(true)
+
+    Object.assign(el.querySelector('.brew-bean'), {textContent: brew.beanName || 'Unknown bean', href: brew.brewURL})
+
+    const timeEl = el.querySelector('time')
+    timeEl.textContent = new Date(brew.createdAt).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})
+    timeEl.setAttribute('datetime', brew.createdAt)
+
+    setOrRemove(el.querySelector('.brew-roaster'), brew.roasterName)
+    setOrRemove(el.querySelector('.brew-bean-details'),
+      [brew.beanOrigin, brew.beanRoastLevel, brew.beanProcess, brew.beanVariety].filter(Boolean).join(DOT))
+
+    const pours = brew.pours?.length
+    const water = brew.waterAmount || brew.pours?.reduce((s, p) => s + (p.waterAmount ?? 0), 0) || 0
+    const timeStr = brew.timeSeconds
+      ? `${formatTime(brew.timeSeconds)}${pours ? ` (${pours} pour${pours === 1 ? '' : 's'})` : ''}`
+      : null
+    el.querySelector('.brew-meta').textContent = [
+      brew.method,
+      brew.coffeeAmount ? `${brew.coffeeAmount}g coffee` : null,
+      water           ? `${water}g water`                : null,
+      brew.temperature ? `${(brew.temperature / 10).toFixed(1)}\u00b0C` : null,
+      timeStr,
+    ].filter(Boolean).join(DOT)
+
+    const grinderStr = brew.grinderName
+      ? `${brew.grinderName}${brew.grindSize ? ` (${brew.grindSize})` : ''}`
+      : (brew.grindSize ? `grind ${brew.grindSize}` : null)
+    setOrRemove(el.querySelector('.brew-equipment'), [brew.brewerName, grinderStr].filter(Boolean).join(DOT))
+
+    setOrRemove(el.querySelector('.brew-notes'), brew.tastingNotes)
+
+    const ratingEl = el.querySelector('.brew-rating')
+    if (brew.rating) { renderRating(ratingEl, brew.rating) } else { ratingEl.remove() }
+
+    return el
+  }
+
+  async function loadBrews() {
+    const container = document.getElementById('brew-list')
+    const tmpl = document.getElementById('brew-tmpl')
+    const setMessage = text => container.replaceChildren(
+      Object.assign(document.createElement('p'), {className: 'opacity-60', textContent: text})
+    )
+
+    try {
+      const {did} = await xrpc('com.atproto.identity.resolveHandle', {handle: HANDLE})
+      const {records} = await xrpc('com.atproto.repo.listRecords', {repo: did, collection: `${NS}.brew`, limit: 100})
+
+      const recent = records
+        .sort((a, b) => new Date(b.value.createdAt) - new Date(a.value.createdAt))
+        .slice(0, 5)
+
+      const brews = await Promise.all(recent.map(async ({uri, value}) => {
+        const [beanRec, brewerRec, grinderRec] = await Promise.all([
+          fetchRecord(did, `${NS}.bean`,    value.beanRef),
+          fetchRecord(did, `${NS}.brewer`,  value.brewerRef),
+          fetchRecord(did, `${NS}.grinder`, value.grinderRef),
+        ])
+        const roasterRec = await fetchRecord(did, `${NS}.roaster`, beanRec?.value?.roasterRef)
+        return {
+          ...value,
+          brewURL:      `https://alpha.arabica.social/brews/${uri.split('/').pop()}`,
+          beanName:     beanRec?.value?.name      ?? '',
+          beanOrigin:   beanRec?.value?.origin    ?? '',
+          beanRoastLevel: beanRec?.value?.roastLevel ?? '',
+          beanProcess:  beanRec?.value?.process   ?? '',
+          beanVariety:  beanRec?.value?.variety   ?? '',
+          roasterName:  roasterRec?.value?.name   ?? '',
+          brewerName:   brewerRec?.value?.name    ?? '',
+          grinderName:  grinderRec?.value?.name   ?? '',
+        }
+      }))
+
+      if (brews.length === 0) { setMessage('No brews yet.'); return }
+      container.replaceChildren(...brews.map(b => renderBrew(tmpl, b)))
+    } catch (e) {
+      setMessage('Could not load brews.')
+      console.error('Failed to load brews:', e)
+    }
+  }
+
+  loadBrews()
+</script>
+{{end}}
+{{template "base" .}}
