@@ -2,6 +2,7 @@ package atproto
 
 import (
 	"encoding/json"
+	"maps"
 	"testing"
 	"time"
 
@@ -24,9 +25,7 @@ func convertMarkdown(md string) *libleaflet.Document {
 func makePage(title, slug, rawMD string, meta ...map[string]any) parser.Page {
 	m := map[string]any{"title": title, "slug": slug}
 	for _, extra := range meta {
-		for k, v := range extra {
-			m[k] = v
-		}
+		maps.Copy(m, extra)
 	}
 	return parser.Page{
 		Metadata:    m,
@@ -40,45 +39,6 @@ func makePage(title, slug, rawMD string, meta ...map[string]any) parser.Page {
 }
 
 func testCfg() *config.Config { return &config.Config{ContentDir: "content"} }
-
-func TestBuildDocumentRecordContent(t *testing.T) {
-	page := parser.Page{
-		Metadata:    map[string]any{"title": "Test Post", "slug": "test-post"},
-		RawMarkdown: "# Test\n\nSome **bold** text.",
-		PlainText:   "Test Some bold text.",
-		Date:        time.Date(2026, 1, 15, 12, 0, 0, 0, time.UTC),
-		Route: &config.Route{
-			ContentPath:   "posts",
-			OutputPattern: "/posts/:slug",
-		},
-	}
-	leafletDoc := convertMarkdown(page.RawMarkdown)
-
-	doc := buildDocumentRecord(page, "at://did:plc:abc/site.standard.publication/xyz", testCfg(), leafletDoc, "")
-
-	if doc.Type != "site.standard.document" {
-		t.Errorf("$type = %q, want %q", doc.Type, "site.standard.document")
-	}
-	if doc.Title != "Test Post" {
-		t.Errorf("title = %q, want %q", doc.Title, "Test Post")
-	}
-	if doc.Content == nil {
-		t.Fatal("content is nil")
-	}
-	leafletContent, ok := doc.Content.(*libleaflet.Document)
-	if !ok {
-		t.Fatalf("content is not *leaflet.Document: %T", doc.Content)
-	}
-	if leafletContent.Type != "pub.leaflet.content" {
-		t.Errorf("content.$type = %q, want %q", leafletContent.Type, "pub.leaflet.content")
-	}
-	if len(leafletContent.Pages) == 0 {
-		t.Error("content.pages is empty")
-	}
-	if doc.TextContent != page.PlainText {
-		t.Errorf("textContent = %q, want %q", doc.TextContent, page.PlainText)
-	}
-}
 
 func TestBuildDocumentRecordContentNested(t *testing.T) {
 	// Verify the full JSON structure has $type at both levels

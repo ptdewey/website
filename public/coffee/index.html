@@ -74,24 +74,11 @@
   }
 </style>
 
+<script src="/atproto.js"></script>
 <script>
   const PDS = 'https://arabica.systems'
-  const HANDLE = 'pdewey.com'
   const NS = 'social.arabica.alpha'
   const DOT = ' \u00b7 '
-
-  const xrpc = (method, params) =>
-    fetch(`${PDS}/xrpc/${method}?${new URLSearchParams(params)}`).then(r => r.json())
-
-  const recordCache = new Map()
-  function fetchRecord(did, collection, atURI) {
-    if (!atURI) return null
-    if (recordCache.has(atURI)) return recordCache.get(atURI)
-    const p = xrpc('com.atproto.repo.getRecord', {repo: did, collection, rkey: atURI.split('/').pop()})
-      .catch(() => null)
-    recordCache.set(atURI, p)
-    return p
-  }
 
   function formatTime(s) {
     if (!s) return ''
@@ -161,8 +148,8 @@
     )
 
     try {
-      const {did} = await xrpc('com.atproto.identity.resolveHandle', {handle: HANDLE})
-      const {records} = await xrpc('com.atproto.repo.listRecords', {repo: did, collection: `${NS}.brew`, limit: 100})
+      const did = await ATProto.resolveHandle(PDS)
+      const records = await ATProto.listRecords(PDS, did, `${NS}.brew`, 100)
 
       const recent = records
         .sort((a, b) => new Date(b.value.createdAt) - new Date(a.value.createdAt))
@@ -170,11 +157,11 @@
 
       const brews = await Promise.all(recent.map(async ({uri, value}) => {
         const [beanRec, brewerRec, grinderRec] = await Promise.all([
-          fetchRecord(did, `${NS}.bean`,    value.beanRef),
-          fetchRecord(did, `${NS}.brewer`,  value.brewerRef),
-          fetchRecord(did, `${NS}.grinder`, value.grinderRef),
+          ATProto.getRecord(PDS, did, `${NS}.bean`,    value.beanRef),
+          ATProto.getRecord(PDS, did, `${NS}.brewer`,  value.brewerRef),
+          ATProto.getRecord(PDS, did, `${NS}.grinder`, value.grinderRef),
         ])
-        const roasterRec = await fetchRecord(did, `${NS}.roaster`, beanRec?.value?.roasterRef)
+        const roasterRec = await ATProto.getRecord(PDS, did, `${NS}.roaster`, beanRec?.value?.roasterRef)
         return {
           ...value,
           brewURL:      `https://alpha.arabica.social/brews/${uri.split('/').pop()}`,

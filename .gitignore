@@ -1,3 +1,5 @@
+cedar
+*.out
+
 # Generated at build time
 templates/partials/_git-info.tmpl
-cedar

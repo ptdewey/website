@@ -60,6 +60,8 @@ github.com/prometheus/procfs v0.12.0 h1:jluTpSng7V9hY0O2R9DzzJHYb2xULk9VTR1V1R/k
 github.com/prometheus/procfs v0.12.0/go.mod h1:pcuDEFsWDnvcgNzo4EEweacyhjeA9Zk3cnaOZAZEfOo=
 github.com/ptdewey/standard-site-go v0.0.0-20260303024214-f7c6167b4015 h1:p+HD6PmHd9x6kOKQnankKZa3pv8DoTfoPdHiu5VRtSY=
 github.com/ptdewey/standard-site-go v0.0.0-20260303024214-f7c6167b4015/go.mod h1:GVvlaM02LMdHq3WP9f466cbPrbGMXJmpCLFLHXmzYm8=
+github.com/ptdewey/standard-site-go v0.0.0-20260308002416-6919b585a33b h1:53J2+gFTp+S+zWkrcHJDJbKKgmNaU3j3tYIvc6qEBDo=
+github.com/ptdewey/standard-site-go v0.0.0-20260308002416-6919b585a33b/go.mod h1:GVvlaM02LMdHq3WP9f466cbPrbGMXJmpCLFLHXmzYm8=
 github.com/spaolacci/murmur3 v1.1.0 h1:7c1g84S4BPRrfL5Xrdp6fOJ206sU9y293DDHaoy0bLI=
 github.com/spaolacci/murmur3 v1.1.0/go.mod h1:JwIasOWyU6f++ZhiEuf87xNszmSA2myDM2Kzu9HwQUA=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

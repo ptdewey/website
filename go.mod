@@ -9,7 +9,7 @@ require (
 	github.com/bluesky-social/indigo v0.0.0-20260220055544-bf41e2ee75ab
 	github.com/goccy/go-yaml v1.18.0
 	github.com/pelletier/go-toml/v2 v2.2.4
-	github.com/ptdewey/standard-site-go v0.0.0-20260303024214-f7c6167b4015
+	github.com/ptdewey/standard-site-go v0.0.0-20260308002416-6919b585a33b
 	github.com/yuin/goldmark-highlighting v0.0.0-20220208100518-594be1970594
 )
 

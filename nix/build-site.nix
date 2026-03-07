@@ -21,7 +21,7 @@ pkgs.writeShellApplication {
     EOF
         
         echo "building site static files..."
-        cedar
+        cedar build
         echo "done."
         echo "building tailwind styles..."
         tailwindcss -i static/app.css -o public/style.css -m
