@@ -1,17 +1,13 @@
 {
   description = "Patrick's Site Flake";
 
-  inputs = {
-    nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-    cedar.url = "github:ptdewey/cedar";
-    # cedar.url = "git+file:///home/patrick/projects/cedar";
-  };
+  inputs = { nixpkgs.url = "nixpkgs/nixpkgs-unstable"; };
 
-  outputs = { self, nixpkgs, cedar }:
+  outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
-      cedarDrv = cedar.packages.${system}.default;
+      cedarDrv = pkgs.callPackage ./nix/default.nix { };
       buildSite = import ./nix/build-site.nix { inherit pkgs cedarDrv; };
       buildTailwind = import ./nix/build-tailwind.nix { inherit pkgs; };
     in {
@@ -24,7 +20,10 @@
       # `nix run` directives
       apps.${system} = {
         # Build SSG static HTML files
-        cedar = cedar.apps.${system}.cedar;
+        cedar = {
+          type = "app";
+          program = "${cedarDrv}/bin/cedar";
+        };
 
         # Build stylesheets
         tailwind = {
