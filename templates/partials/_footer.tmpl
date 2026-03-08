@@ -1,7 +1,9 @@
 {{define "footer"}}
 <footer>
-  <div class="text-sm text-gray-500 mt-8">
-    Powered by <a href="https://nixos.org" target="_blank" rel="noopener">Nix</a> and <a href="https://github.com/ptdewey/cedar" target="_blank" rel="noopener">Cedar</a> | {{template "git-info" .}}
+  <div class="text-sm text-gray-500 mt-8 flex flex-col md:flex-row md:items-center md:gap-2 items-center">
+    <span>Powered by <a href="https://nixos.org" target="_blank" rel="noopener">Nix</a> and <a href="https://github.com/ptdewey/cedar" target="_blank" rel="noopener">Cedar</a></span>
+    <span class="hidden md:block">|</span>
+    {{template "git-info" .}}
   </div>
 </footer>
 {{end}}
