@@ -31,6 +31,11 @@ output_pattern = "/coffee/"
 template = "coffee.tmpl"
 
 [[routes]]
+content_path = "music.md"
+output_pattern = "/music/"
+template = "music.tmpl"
+
+[[routes]]
 content_path = "now.md"
 output_pattern = "/now/"
 template = "now.tmpl"
