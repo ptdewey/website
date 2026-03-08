@@ -3,12 +3,6 @@ allow_unsafe_html = true
 clean_build = true
 base_template_path = "base.tmpl"
 
-[rss]
-generate = true
-title = "Patrick Dewey"
-description = ""
-url = "pdewey.com"
-
 [[routes]]
 content_path = "index.md"
 output_pattern = "/"
@@ -24,6 +18,7 @@ content_path = "blog"
 output_pattern = "/blog/:slug"
 template = "post.tmpl"
 generate_rss = true
+publish = "blog"
 
 [[routes]]
 content_path = "projects.md"
@@ -40,5 +35,21 @@ content_path = "now.md"
 output_pattern = "/now/"
 template = "now.tmpl"
 
+[rss]
+generate = true
+title = "Patrick Dewey"
+description = "Patrick's blog"
+url = "pdewey.com"
+
 [atproto]
 handle = "pdewey.com"
+
+[atproto.publications.blog]
+name = "Patrick's Blog"
+rkey = "3mgj4qfasw32n"
+url = "https://pdewey.com/blog"
+description = "Patrick's personal blog"
+show_in_discover = true
+include_in_build = false
+content_type = "markdown"
+path_mode = "slug"

@@ -3,3 +3,6 @@ cedar
 
 # Generated at build time
 templates/partials/_git-info.tmpl
+
+# atproto state stuff
+.cedar*

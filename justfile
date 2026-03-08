@@ -1,3 +1,8 @@
+[private]
+default:
+    @go run main.go build
+    @nix run .#tailwind
+
 all:
     @nix run
 

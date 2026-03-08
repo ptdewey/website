@@ -9,37 +9,27 @@ import (
 
 	"github.com/goccy/go-yaml"
 	"github.com/pelletier/go-toml/v2"
+	"github.com/ptdewey/standard-site-go/standard"
 )
-
-// ThemeColor represents an RGB color for a publication theme.
-type ThemeColor struct {
-	R int `toml:"r" json:"r" yaml:"r"`
-	G int `toml:"g" json:"g" yaml:"g"`
-	B int `toml:"b" json:"b" yaml:"b"`
-}
-
-// BasicTheme holds color overrides for a publication's basic theme.
-type BasicTheme struct {
-	Accent           *ThemeColor `toml:"accent" json:"accent" yaml:"accent"`
-	Background       *ThemeColor `toml:"background" json:"background" yaml:"background"`
-	Foreground       *ThemeColor `toml:"foreground" json:"foreground" yaml:"foreground"`
-	AccentForeground *ThemeColor `toml:"accent_foreground" json:"accent_foreground" yaml:"accent_foreground"`
-}
 
 // Publication represents a named ATProto publication with its own
 // site.standard.publication record.
 type Publication struct {
-	Name           string      `toml:"name" json:"name" yaml:"name"`
-	URL            string      `toml:"url" json:"url" yaml:"url"`
-	Description    string      `toml:"description" json:"description" yaml:"description"`
-	ShowInDiscover *bool       `toml:"show_in_discover" json:"show_in_discover" yaml:"show_in_discover"`
-	ShowComments   *bool       `toml:"show_comments" json:"show_comments" yaml:"show_comments"`
-	ShowMentions   *bool       `toml:"show_mentions" json:"show_mentions" yaml:"show_mentions"`
-	ShowPrevNext   *bool       `toml:"show_prev_next" json:"show_prev_next" yaml:"show_prev_next"`
-	BasicTheme     *BasicTheme `toml:"basic_theme" json:"basic_theme" yaml:"basic_theme"`
+	Name           string               `toml:"name" json:"name" yaml:"name"`
+	URL            string               `toml:"url" json:"url" yaml:"url"`
+	Description    string               `toml:"description" json:"description" yaml:"description"`
+	ShowInDiscover *bool                `toml:"show_in_discover" json:"show_in_discover" yaml:"show_in_discover"`
+	ShowComments   *bool                `toml:"show_comments" json:"show_comments" yaml:"show_comments"`
+	ShowMentions   *bool                `toml:"show_mentions" json:"show_mentions" yaml:"show_mentions"`
+	ShowPrevNext   *bool                `toml:"show_prev_next" json:"show_prev_next" yaml:"show_prev_next"`
+	BasicTheme     *standard.BasicTheme `toml:"basic_theme" json:"basic_theme" yaml:"basic_theme"`
 	// ContentType controls the document content format used when publishing.
 	// Valid values are "markdown" (default) and "leaflet".
 	ContentType string `toml:"content_type" json:"content_type" yaml:"content_type"`
+	// PathMode controls how the document path is set when publishing.
+	// "slug" uses the page slug (e.g. /my-post), "rkey" uses the ATProto
+	// record key (default).
+	PathMode string `toml:"path_mode" json:"path_mode" yaml:"path_mode"`
 	// RKey pins this publication to an existing ATProto record key. When set,
 	// cedar will not touch the record and will reuse the existing AT-URI.
 	RKey string `toml:"rkey" json:"rkey" yaml:"rkey"`

@@ -193,7 +193,7 @@ func Publish(cfg *config.Config, pages []parser.Page) error {
 
 			if exists && existing.Publication == pubKey {
 				fmt.Printf("  Updating: %s\n", title)
-				record := buildDocumentRecord(page, pubState.ATURI, cfg, content, "/"+existing.RKey)
+				record := buildDocumentRecord(page, pubState.ATURI, cfg, content, documentPath(pub.PathMode, page, existing.RKey))
 				if err := client.PutRecord(ctx, "site.standard.document", existing.RKey, record); err != nil {
 					return fmt.Errorf("updating document %q: %w", title, err)
 				}
@@ -206,16 +206,21 @@ func Publish(cfg *config.Config, pages []parser.Page) error {
 				updated++
 			} else {
 				fmt.Printf("  Creating: %s\n", title)
-				// Create without path first to get the rkey assigned by the PDS.
-				record := buildDocumentRecord(page, pubState.ATURI, cfg, content, "")
+
+				docPath := documentPath(pub.PathMode, page, "")
+				record := buildDocumentRecord(page, pubState.ATURI, cfg, content, docPath)
 				uri, rkey, err := client.CreateRecord(ctx, "site.standard.document", record)
 				if err != nil {
 					return fmt.Errorf("creating document %q: %w", title, err)
 				}
-				// Update the record immediately with the correct path now that rkey is known.
-				record.Path = "/" + rkey
-				if err := client.PutRecord(ctx, "site.standard.document", rkey, record); err != nil {
-					return fmt.Errorf("setting path for document %q: %w", title, err)
+
+				// When using rkey path mode, we need a second write since the
+				// rkey is only known after the initial create.
+				if docPath == "" {
+					record.Path = "/" + rkey
+					if err := client.PutRecord(ctx, "site.standard.document", rkey, record); err != nil {
+						return fmt.Errorf("setting path for document %q: %w", title, err)
+					}
 				}
 				state.Documents[relPath] = DocumentRecord{
 					Publication: pubKey,

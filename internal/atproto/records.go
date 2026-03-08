@@ -18,7 +18,7 @@ func boolPref(p *bool) bool {
 	return p == nil || *p
 }
 
-func convertColor(c *config.ThemeColor) *standard.ThemeColor {
+func convertColor(c *standard.ThemeColor) *standard.ThemeColor {
 	if c == nil {
 		return nil
 	}
@@ -47,6 +47,23 @@ func buildPublicationRecord(pub config.Publication) *standard.Publication {
 		}
 	}
 	return rec
+}
+
+// documentPath returns the path value for a document record based on the
+// publication's configured path mode. For "slug" mode, the page's slug is
+// used. For "rkey" mode (or any other value), the rkey is used. When rkey
+// is empty (new record, rkey not yet known), an empty string is returned
+// so the caller can set it after creation.
+func documentPath(mode string, page parser.Page, rkey string) string {
+	if mode == "slug" {
+		if slug, ok := page.Metadata["slug"].(string); ok {
+			return "/" + slug
+		}
+	}
+	if rkey != "" {
+		return "/" + rkey
+	}
+	return ""
 }
 
 func buildDocumentRecord(page parser.Page, publicationURI string, cfg *config.Config, content any, path string) *standard.Document {
