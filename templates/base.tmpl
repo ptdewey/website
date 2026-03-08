@@ -10,6 +10,7 @@
     {{end}}
     <link rel="stylesheet" href="/darkearth-syntax.css" />
     <link rel="stylesheet" href="/style.css" />
+    {{if .ATProtoDocURI}}<link rel="site.standard.document" href="{{.ATProtoDocURI}}" />{{end}}
     {{block "extra-head" .}}{{end}}
   </head>
   <body {{block "body-attrs" .}}class="min-h-screen flex flex-col justify-between bg-background text-primary p-6 dark" {{end}}>

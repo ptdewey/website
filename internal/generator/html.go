@@ -20,7 +20,7 @@ type htmlPage struct {
 	Metadata         map[string]any
 	HTMLContent      template.HTML
 	AllPages         map[string][]PageInfo                    // Pages organized by route contentPath
-	ATProtoDocURI    string                                   // AT-URI for this document (empty if not published)
+	ATProtoDocURI    template.URL                              // AT-URI for this document (empty if not published)
 	ATProtoDID       string                                   // DID for the configured ATProto handle
 	ATProtoPDS       string                                   // PDS service endpoint URL
 	PublicationPages map[string][]atproto.PublicationPageInfo // Keyed by publication config key
@@ -216,7 +216,7 @@ func writePage(page parser.Page, pagesByRoute map[string][]PageInfo, publication
 		Metadata:         page.Metadata,
 		HTMLContent:      template.HTML(page.Content),
 		AllPages:         pagesByRoute,
-		ATProtoDocURI:    atURI,
+		ATProtoDocURI:    template.URL(atURI),
 		ATProtoDID:       did,
 		ATProtoPDS:       pds,
 		PublicationPages: publicationPages,
