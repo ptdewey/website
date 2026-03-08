@@ -11,12 +11,12 @@ pkgs.writeShellApplication {
         
         # Generate change info template using jj
         echo "generating change info..."
-        REV_ID_SHORT=$(jj log -r @ --no-graph -T 'rev.short()' 2>/dev/null || echo "unknown")
-        REV_ID_FULL=$(jj log -r @ --no-graph -T 'rev' 2>/dev/null || echo "unknown")
+        REV_ID_SHORT=$(jj log -r @ --no-graph -T 'change_id.short()' 2>/dev/null || echo "unknown")
+        REV_ID_FULL=$(jj log -r @ --no-graph -T 'change_id' 2>/dev/null || echo "unknown")
         
         cat > templates/partials/_git-info.tmpl << EOF
     {{define "git-info"}}
-    <span class="jj-revision" title="Full revision ID: $REV_ID_FULL">revision: $REV_ID_SHORT</span>
+    <span class="jj-revision" title="Full change ID: $REV_ID_FULL">revision: $REV_ID_SHORT</span>
     {{end}}
     EOF
         
