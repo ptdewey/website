@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Music">
+  <article>
+      <h2>Music</h2>
+      <p>
+        Recent listens, tracked on <a href="https://teal.fm">teal.fm</a>, a music scrobbling platform on the AT Protocol.
+        Tracked using <a href="https://github.com/teal-fm/piper">piper</a> (Plays are fetched directly from my PDS).
+      </p>
+
+      <div id="now-playing" class="mt-4 hidden">
+        <h3>Now playing</h3>
+        <div class="flex items-baseline gap-2">
+          <span class="now-playing-indicator text-sm">&#9835;</span>
+          <span id="np-track" class="font-bold"></span>
+          <span class="opacity-60">&ndash;</span>
+          <span id="np-artist" class="opacity-70"></span>
+        </div>
+        <div id="np-release" class="text-sm opacity-60"></div>
+        <div class="np-time-row mt-1">
+          <span id="np-time" class="text-sm opacity-50"></span>
+        </div>
+      </div>
+
+      <div id="recently-played">
+        <h3>Recently Played</h3>
+        <div id="play-list" class="mt-6">
+          <p class="opacity-60">Fetching plays...</p>
+        </div>
+      </div>
+  </article>
+
+  <template id="play-tmpl">
+    <div class="play-entry py-3 border-b" style="border-color: var(--rule-color)">
+      <div class="flex items-baseline justify-between gap-4">
+        <a class="play-track font-bold" target="_blank" rel="noopener"></a>
+        <time class="text-sm opacity-60 shrink-0"></time>
+      </div>
+      <div class="play-artist text-sm opacity-70"></div>
+      <div class="play-release text-sm opacity-60"></div>
+    </div>
+  </template>
+
+  <noscript>
+    <p>Enable JavaScript to view plays, or visit <a href="https://teal.fm">teal.fm</a>.</p>
+  </noscript>
+</Layout>
+
+<style is:global>
+  #play-list .play-entry:last-child { border-bottom: none; }
+  .play-track { color: var(--orange) !important; }
+  .now-playing-indicator { color: var(--green); }
+</style>
+
+<script is:inline src="/atproto.js"></script>
+<script is:inline src="/music.js"></script>

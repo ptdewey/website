@@ -1,0 +1,108 @@
+---
+import '../styles/app.css';
+import { revision } from '../lib/revision';
+
+interface Props {
+  title: string;
+  description?: string;
+  atprotoDocURI?: string;
+  hideNav?: boolean;
+}
+
+const { title, description, atprotoDocURI, hideNav = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="stylesheet" href="/darkearth-syntax.css" />
+    {atprotoDocURI && <link rel="site.standard.document" href={atprotoDocURI} />}
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen flex flex-col justify-between bg-background text-primary p-6 dark">
+    <a href="#main" class="skip-link">skip to content</a>
+    <div class="font-mono w-full max-w-prose mx-auto flex-grow prose prose-a:no-underline leading-relaxed link-color">
+      {!hideNav && (
+        <header>
+          <nav class="site-nav" aria-label="primary">
+            <a href="/">home</a>
+            <a href="/projects">projects</a>
+            <a href="/blog">blog</a>
+            <a href="/coffee">coffee</a>
+            <a href="/music">music</a>
+            <a href="/now">now</a>
+          </nav>
+        </header>
+      )}
+
+      <main id="main">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <span>Powered by <a href="https://nixos.org" target="_blank" rel="noopener">Nix</a> and <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></span>
+          {revision.short && (
+            <>
+              <span class="footer-sep hidden md:block" aria-hidden="true">|</span>
+              <span class="jj-revision" title={`Full change ID: ${revision.full}`}>revision: {revision.short}</span>
+            </>
+          )}
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--background);
+    color: var(--primary);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    z-index: 100;
+    text-decoration: none;
+    border: 1px solid var(--orange);
+  }
+  .skip-link:focus-visible {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
+    font-size: 1.0625rem;
+  }
+  .site-nav a {
+    text-decoration: none;
+    padding-block: 0.55rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .site-footer { margin-top: 2rem; }
+  .footer-inner {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  @media (min-width: 48rem) {
+    .footer-inner { flex-direction: row; gap: 0.5rem; }
+  }
+  .footer-sep { color: var(--text-dim); }
+</style>

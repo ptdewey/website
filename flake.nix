@@ -1,41 +1,53 @@
 {
-  description = "Patrick's Site Flake";
+  description = "Patrick's Site (Astro)";
 
-  inputs = { nixpkgs.url = "nixpkgs/nixpkgs-unstable"; };
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
 
   outputs = { self, nixpkgs }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
-      cedarDrv = pkgs.callPackage ./nix/default.nix { };
-      buildSite = import ./nix/build-site.nix { inherit pkgs cedarDrv; };
-      buildTailwind = import ./nix/build-tailwind.nix { inherit pkgs; };
+      supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
+      forAllSystems = f:
+        nixpkgs.lib.genAttrs supportedSystems (system: f {
+          inherit system;
+          pkgs = import nixpkgs { inherit system; };
+        });
     in {
-      # `nix develop` directives
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [ tailwindcss_4 ];
-        buildInputs = [ cedarDrv ];
-      };
-
-      # `nix run` directives
-      apps.${system} = {
-        # Build SSG static HTML files
-        cedar = {
-          type = "app";
-          program = "${cedarDrv}/bin/cedar";
+      devShells = forAllSystems ({ pkgs, ... }: {
+        default = pkgs.mkShell {
+          packages = [ pkgs.nodejs_22 pkgs.pnpm_10 pkgs.jujutsu ];
         };
+      });
 
-        # Build stylesheets
-        tailwind = {
-          type = "app";
-          program = "${buildTailwind}/bin/run";
-        };
-
-        # Build site (static HTML files and stylesheets)
-        default = {
-          type = "app";
-          program = "${buildSite}/bin/run";
-        };
-      };
+      apps = forAllSystems ({ pkgs, ... }:
+        let
+          runtimeInputs = [ pkgs.nodejs_22 pkgs.pnpm_10 pkgs.jujutsu ];
+          buildSite = pkgs.writeShellApplication {
+            name = "build-site";
+            inherit runtimeInputs;
+            text = ''
+              pnpm install --frozen-lockfile
+              pnpm build
+            '';
+          };
+          devSite = pkgs.writeShellApplication {
+            name = "dev-site";
+            inherit runtimeInputs;
+            text = ''
+              pnpm install --frozen-lockfile
+              pnpm dev
+            '';
+          };
+        in {
+          default = {
+            type = "app";
+            program = "${buildSite}/bin/build-site";
+          };
+          dev = {
+            type = "app";
+            program = "${devSite}/bin/dev-site";
+          };
+        });
     };
 }
