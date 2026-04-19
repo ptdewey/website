@@ -191,20 +191,20 @@ const readMin = Math.max(1, Math.round(wordCount / 220));
     margin-bottom: 1rem;
     font-family: var(--font-mono);
     font-size: 0.88rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
   .comments-label { color: var(--orange); font-weight: 700; }
   .comments-source {
     color: var(--text-dim);
   }
+  .comments-box :global(.bsky-divider) { display: none; }
 </style>
 
 <script is:inline src="/bluesky-comments.js"></script>
 <script is:inline define:vars={{ bskyUri }}>
   if (bskyUri) {
-    BlueskyComments('#comments', { uri: bskyUri });
+    BlueskyComments('#comments', { uri: bskyUri, showCommentsTitle: false });
   } else {
-    BlueskyComments('#comments', { author: 'pdewey.com' });
+    BlueskyComments('#comments', { author: 'pdewey.com', showCommentsTitle: false });
   }
 </script>

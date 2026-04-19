@@ -3,44 +3,58 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Music">
-  <article>
-      <h2>Music</h2>
-      <p>
-        Recent listens, tracked on <a href="https://teal.fm">teal.fm</a>, a music scrobbling platform on the AT Protocol.
-        Tracked using <a href="https://github.com/teal-fm/piper">piper</a> (Plays are fetched directly from my PDS).
-      </p>
+  <div class="almanac">
+    <section class="masthead">
+      <h1 class="page-title">listening log</h1>
+      <div class="meta-strip">
+        <span>plays from <a href="https://teal.fm">teal.fm</a></span>
+      </div>
+    </section>
 
-      <div id="now-playing" class="mt-4 hidden">
-        <h3>Now playing</h3>
-        <div class="flex items-baseline gap-2">
-          <span class="now-playing-indicator text-sm">&#9835;</span>
-          <span id="np-track" class="font-bold"></span>
-          <span class="opacity-60">&ndash;</span>
-          <span id="np-artist" class="opacity-70"></span>
+    <hr class="rule" />
+
+    <p class="intro">
+      Plays scrobbled by <a href="https://github.com/teal-fm/piper">piper</a> and written to my PDS. Fetched at read time, so the now-playing line updates as I listen.
+    </p>
+
+    <div id="now-playing" class="now-playing hidden">
+      <span class="np-label">now playing</span>
+      <div class="log-value">
+        <div>
+          <span id="np-track" class="np-track"></span>
+          <span class="np-sep" aria-hidden="true">&middot;</span>
+          <span id="np-artist" class="np-artist"></span>
         </div>
-        <div id="np-release" class="text-sm opacity-60"></div>
-        <div class="np-time-row mt-1">
-          <span id="np-time" class="text-sm opacity-50"></span>
+        <div id="np-release" class="np-release"></div>
+        <div class="np-progress" aria-hidden="true">
+          <span class="np-bar"><span id="np-bar-filled" class="np-bar-filled"></span><span id="np-bar-empty" class="np-bar-empty"></span></span>
+          <span id="np-time" class="np-time"></span>
         </div>
       </div>
+    </div>
 
-      <div id="recently-played">
-        <h3>Recently Played</h3>
-        <div id="play-list" class="mt-6">
-          <p class="opacity-60">Fetching plays...</p>
-        </div>
-      </div>
-  </article>
+    <hr class="rule" />
+
+    <div class="log-col-head" aria-hidden="true">
+      <span>when</span>
+      <span>track &middot; artist &middot; release</span>
+    </div>
+
+    <div id="play-list" class="log-body">
+      <p class="log-msg">Fetching plays&hellip;</p>
+    </div>
+  </div>
 
   <template id="play-tmpl">
-    <div class="play-entry py-3 border-b" style="border-color: var(--rule-color)">
-      <div class="flex items-baseline justify-between gap-4">
-        <a class="play-track font-bold" target="_blank" rel="noopener"></a>
-        <time class="text-sm opacity-60 shrink-0"></time>
+    <article class="log-entry play-entry">
+      <time class="log-date"></time>
+      <div class="log-value">
+        <a class="play-track" target="_blank" rel="noopener"></a>
+        <div class="play-artist"></div>
+        <div class="play-release"></div>
+        <div class="log-rkey play-rkey"></div>
       </div>
-      <div class="play-artist text-sm opacity-70"></div>
-      <div class="play-release text-sm opacity-60"></div>
-    </div>
+    </article>
   </template>
 
   <noscript>
@@ -48,11 +62,6 @@ import Layout from '../layouts/Layout.astro';
   </noscript>
 </Layout>
 
-<style is:global>
-  #play-list .play-entry:last-child { border-bottom: none; }
-  .play-track { color: var(--orange) !important; }
-  .now-playing-indicator { color: var(--green); }
-</style>
-
-<script is:inline src="/atproto.js"></script>
-<script is:inline src="/music.js"></script>
+<script>
+  import '../scripts/music';
+</script>
