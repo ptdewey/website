@@ -23,9 +23,21 @@ const { title, description, atprotoDocURI, hideNav = false } = Astro.props;
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" href="/darkearth-syntax.css" />
     {atprotoDocURI && <link rel="site.standard.document" href={atprotoDocURI} />}
+    <script is:inline>
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var sysLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          var theme = saved || (sysLight ? 'light' : 'dark');
+          document.documentElement.classList.add(theme);
+        } catch (_) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
     <slot name="head" />
   </head>
-  <body class="min-h-screen flex flex-col justify-between bg-background text-primary p-6 dark">
+  <body class="min-h-screen flex flex-col justify-between bg-background text-primary p-6">
     <a href="#main" class="skip-link">skip to content</a>
     <div class="font-mono w-full max-w-prose mx-auto flex-grow prose prose-a:no-underline leading-relaxed link-color">
       {!hideNav && (
@@ -54,8 +66,31 @@ const { title, description, atprotoDocURI, hideNav = false } = Astro.props;
               <span class="jj-revision" title={`Full change ID: ${revision.full}`}>revision: {revision.short}</span>
             </>
           )}
+          <span class="footer-sep hidden md:block" aria-hidden="true">|</span>
+          <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle light/dark theme">
+            <span data-theme-label>theme</span>
+          </button>
         </div>
       </footer>
+      <script is:inline>
+        (function () {
+          var btn = document.querySelector('[data-theme-toggle]');
+          var label = document.querySelector('[data-theme-label]');
+          if (!btn || !label) return;
+          var root = document.documentElement;
+          function render() {
+            label.textContent = root.classList.contains('light') ? '☼ light' : '☾ dark';
+          }
+          render();
+          btn.addEventListener('click', function () {
+            var toLight = !root.classList.contains('light');
+            root.classList.toggle('light', toLight);
+            root.classList.toggle('dark', !toLight);
+            try { localStorage.setItem('theme', toLight ? 'light' : 'dark'); } catch (_) {}
+            render();
+          });
+        })();
+      </script>
     </div>
   </body>
 </html>
@@ -105,4 +140,16 @@ const { title, description, atprotoDocURI, hideNav = false } = Astro.props;
     .footer-inner { flex-direction: row; gap: 0.5rem; }
   }
   .footer-sep { color: var(--text-dim); }
+
+  .theme-toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    color: var(--text-muted);
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: color 160ms ease-out;
+  }
+  .theme-toggle:hover { color: var(--orange); }
 </style>

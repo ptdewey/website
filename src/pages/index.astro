@@ -1,16 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
 import { revision } from '../lib/revision';
-import { fetchRecentPlay, fetchRecentBrew } from '../lib/atproto';
+import { DID, fetchRecentPlay, fetchRecentBrew } from '../lib/atproto';
 import { featured } from '../lib/projects';
+import { getAllBlogEntries } from '../lib/blog-entries';
 
-const DID = 'did:plc:hm5f3dnm6jdhrc55qp2npdja';
+const nowHeadline = "What I'm up to now";
 
-const nowHeadline = 'arabica.social social features, recipes record type';
-
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const posts = await getAllBlogEntries();
 const latestPost = posts[0];
 const recentPosts = posts.slice(0, 3);
 
@@ -46,10 +43,24 @@ const today = fmtDate(new Date());
       <div class="meta-strip">
         <span>a personal almanac</span>
         <span>
-          {revision.short && <><span class="rev">rev {revision.short}</span><span class="sep"> / </span></>}
+          {revision.short && <><span class="rev">rev: {revision.short}</span><span class="sep"> / </span></>}
           <time datetime={new Date().toISOString().slice(0, 10)}>{today}</time>
         </span>
       </div>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="about" aria-label="about">
+      <div class="section-head">
+        <span>about</span>
+      </div>
+      <p class="blurb">
+        Hello, I'm Patrick, a backend software engineer who loves learning new 
+        technologies, building dev tools, and building on the open web. 
+        I'm currently working on <a href="https://alpha.arabica.social">arabica.social</a>,
+        a social coffee brew logging site, built on <a href="https://atproto.com">atproto</a>.
+      </p>
     </section>
 
     <hr class="rule" />
@@ -66,9 +77,14 @@ const today = fmtDate(new Date());
         <div class="row">
           <span class="label">latest post</span>
           <div class="value-stack">
-            <a href={`/blog/${latestPost.id}`} class="primary-value">{latestPost.data.title}</a>
+            <a
+              href={latestPost.href}
+              class="primary-value"
+              {...(latestPost.external ? { target: '_blank', rel: 'noopener' } : {})}
+            >{latestPost.title}</a>
             <span class="secondary-value">
-              <time datetime={latestPost.data.date.toISOString()}>{fmtDate(latestPost.data.date)}</time>
+              {latestPost.external && <>[{latestPost.source}]<span class="dot" aria-hidden="true"> · </span></>}
+              <time datetime={latestPost.date.toISOString()}>{fmtDate(latestPost.date)}</time>
             </span>
           </div>
         </div>
@@ -77,9 +93,9 @@ const today = fmtDate(new Date());
         <div class="row">
           <span class="label">recent play</span>
           <div class="value-stack">
-            <span class="primary-value">{recentPlay.trackName}</span>
+            <a href="/music" class="primary-value track-name">{recentPlay.trackName}</a>
             <span class="secondary-value">
-              {recentPlay.artists && <>{recentPlay.artists}<span class="dot" aria-hidden="true"> · </span></>}
+              {recentPlay.artists && <>{recentPlay.artists}<span class="sep" aria-hidden="true"> · </span></>}
               <time datetime={recentPlay.playedTime.toISOString()}>{timeAgo(recentPlay.playedTime)}</time>
             </span>
           </div>
@@ -89,9 +105,9 @@ const today = fmtDate(new Date());
         <div class="row">
           <span class="label">recent brew</span>
           <div class="value-stack">
-            <span class="primary-value">{recentBrew.beanName}</span>
+            <a href="/coffee" class="primary-value bean-name">{recentBrew.beanName}</a>
             <span class="secondary-value">
-              {recentBrew.method && <>{recentBrew.method}<span class="dot" aria-hidden="true"> · </span></>}
+              {recentBrew.method && <><span class="brew-method">{recentBrew.method}</span><span class="sep" aria-hidden="true"> · </span></>}
               <time datetime={recentBrew.createdAt.toISOString()}>{timeAgo(recentBrew.createdAt)}</time>
             </span>
           </div>
@@ -111,8 +127,14 @@ const today = fmtDate(new Date());
       </div>
       {recentPosts.map(post => (
         <div class="entry">
-          <time datetime={post.data.date.toISOString()}>{fmtDate(post.data.date)}</time>
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          <time datetime={post.date.toISOString()}>{fmtDate(post.date)}</time>
+          <a
+            href={post.href}
+            {...(post.external ? { target: '_blank', rel: 'noopener' } : {})}
+          >
+            {post.title}
+            {post.external && <span class="source-tag"> [{post.source}]</span>}
+          </a>
         </div>
       ))}
     </section>
@@ -170,7 +192,7 @@ const today = fmtDate(new Date());
     min-width: 0;
   }
   .primary-value {
-    color: var(--primary);
+    color: var(--link-color);
     overflow-wrap: anywhere;
   }
   .secondary-value {
@@ -184,6 +206,18 @@ const today = fmtDate(new Date());
     font-weight: 600;
   }
 
+  .source-tag {
+    color: var(--text-dim);
+    font-size: 0.88em;
+  }
+
+  .bean-name { font-weight: 600; }
+  .track-name { font-weight: 600; }
+  .brew-method {
+    color: var(--teal);
+    letter-spacing: 0.04em;
+  }
+
   .at-uri {
     color: var(--text-muted);
     word-break: break-all;
@@ -191,21 +225,17 @@ const today = fmtDate(new Date());
 
   .identity { margin-top: 0.5rem; }
 
+  .blurb {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 65ch;
+    margin: 0;
+  }
+
   .head-actions {
     display: inline-flex;
     gap: 1.25ch;
-  }
-
-  /* Kill the default prose anchor color override on the almanac; use
-     teal/green for links but keep secondary text muted. */
-  .almanac a {
-    color: var(--green);
-    text-decoration: none;
-  }
-  .almanac a:hover {
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    text-decoration-color: var(--orange);
   }
 
   /* Tighten prose's default margins inside the almanac */

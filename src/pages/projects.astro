@@ -30,7 +30,11 @@ const sections: Array<{ title: string; items: Project[] }> = [
               <dt>
                 <a href={p.href}>{p.name}</a>
               </dt>
-              <dd>{p.desc}</dd>
+              <dd>
+                {Array.isArray(p.desc)
+                  ? p.desc.map(line => <span class="desc-line">{line}</span>)
+                  : p.desc}
+              </dd>
             </div>
           ))}
         </dl>
@@ -96,6 +100,9 @@ const sections: Array<{ title: string; items: Project[] }> = [
     color: var(--text-muted);
     font-size: 1rem;
     line-height: 1.6;
+  }
+  .desc-line {
+    display: block;
   }
 
   @media (max-width: 36rem) {
