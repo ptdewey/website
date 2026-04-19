@@ -1,0 +1,253 @@
+@import "tailwindcss";
+@source "../**/*.{astro,md,mdx,html,js,ts}";
+
+/* @layer base { */
+/*   @font-face { */
+/*     font-family: "Iosevka Patrick"; */
+/*     src: url("/fonts/patricks-iosevka-regular.ttf") format("truetype"); */
+/*     font-weight: normal; */
+/*     font-style: normal; */
+/*   } */
+/**/
+/*   @font-face { */
+/*     font-family: "Iosevka Patrick"; */
+/*     src: url("/fonts/patricks-iosevka-semibold.ttf") format("truetype"); */
+/*     font-weight: bold; */
+/*     font-style: bold; */
+/*   } */
+/**/
+/*   @font-face { */
+/*     font-family: "Iosevka Patrick"; */
+/*     src: url("/fonts/patricks-iosevka-italic.ttf") format("truetype"); */
+/*     font-weight: normal; */
+/*     font-style: italic; */
+/*   } */
+/* } */
+
+@theme {
+  --font-mono: "Iosevka Patrick", ui-monospace, monospace;
+}
+
+:root {
+  --background: #f4f6f2;
+  --primary: inherit;
+  --link-color: #388e3c;
+}
+
+.dark {
+  --background: #24211e;
+  --primary: #d7c484;
+  --green: #77824a;
+  --orange: #bb7844;
+  --teal: #5f865f;
+  --yellow: #c9a654;
+  --red: #b3664d;
+  --link-color: var(--green);
+  --comment-border-color: var(--orange);
+  --post-content-color: var(--primary);
+  --author-link-color: var(--teal);
+
+  /* Muted text tokens — derived from --primary but WCAG AA-safe against
+     #24211e. Computed: primary at 72% mix ≈ 4.6:1 (passes AA 4.5:1).
+     Dim at 58% mix ≈ 3.2:1 (passes AA large-text 3:1, use only for
+     decorative separators and labels ≥18px). */
+  --text-muted: color-mix(in oklch, var(--primary) 72%, #24211e);
+  --text-dim:   color-mix(in oklch, var(--primary) 58%, #24211e);
+  /* Rules are warm-neutral, not teal. Derived from --primary so they
+     sit in the same earthy family as body text rather than calling
+     attention to themselves. */
+  --rule-color: color-mix(in oklch, var(--primary) 22%, #24211e);
+
+  .prose {
+    background-color: var(--background);
+    color: var(--primary);
+
+    a {
+      color: var(--link-color);
+    }
+
+    h1 {
+      color: var(--teal);
+    }
+
+    h2 {
+      color: var(--orange);
+    }
+
+    h3 {
+      color: var(--red);
+    }
+
+    h4,
+    h5 {
+      color: var(--yellow);
+    }
+
+    code {
+      color: var(--primary);
+    }
+
+    hr {
+      border-color: var(--rule-color);
+    }
+  }
+
+  img {
+    border: solid 1px;
+    border-color: var(--orange);
+  }
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.link-color p a {
+  color: var(--link-color);
+}
+
+@plugin '@tailwindcss/typography';
+
+/* ──────────────────────────────────────────────────────────
+   Focus ring — keyboard users need to see where they are.
+   Uses the orange accent so it registers against the dark
+   earthy background; offset keeps it off text baselines.
+   ────────────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ──────────────────────────────────────────────────────────
+   Almanac layout primitives
+   Used by the homepage and any page that wants fixed-width
+   two-column rows: label (left) + value (right).
+   ────────────────────────────────────────────────────────── */
+
+.almanac {
+  font-family: var(--font-mono);
+  /* Break out of the prose 65ch cap — almanac needs width for columns. */
+  width: min(100%, 80ch);
+  margin-inline: auto;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.almanac .rule {
+  border: 0;
+  border-top: 1px solid var(--rule-color);
+  margin: 1.5rem 0;
+}
+
+.almanac section + section,
+.almanac section + .rule,
+.almanac .rule + section {
+  /* handled by .rule margin above */
+}
+
+.almanac .row {
+  display: grid;
+  grid-template-columns: 13ch 1fr;
+  gap: 2ch;
+  align-items: baseline;
+  padding: 0.3rem 0;
+}
+
+.almanac .row > .label {
+  color: var(--text-muted);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}
+
+.almanac .section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2ch;
+  margin-bottom: 1rem;
+  color: var(--orange);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.almanac .section-head .more {
+  color: var(--text-dim);
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.almanac .entry {
+  display: grid;
+  grid-template-columns: 13ch 1fr;
+  gap: 2ch;
+  align-items: baseline;
+  padding: 0.35rem 0;
+}
+
+.almanac .entry > time,
+.almanac .entry > .key {
+  color: var(--text-muted);
+}
+
+/* Mobile: collapse almanac columns to stacked labels/values.
+   30rem ≈ 480px — below this, 13ch labels crowd the value column. */
+@media (max-width: 30rem) {
+  .almanac .row,
+  .almanac .entry {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+    padding: 0.5rem 0;
+  }
+  .almanac .row > .label,
+  .almanac .entry > time,
+  .almanac .entry > .key {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 1.4rem + 2vw, 2.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--primary);
+  margin: 0;
+}
+
+.meta-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 2ch;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  letter-spacing: 0.02em;
+  margin-top: 0.75rem;
+}
+
+.almanac .masthead {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Override the default prose wrapper's heading colors JUST on the almanac
+   homepage — we want section heads to feel like labels, not h2 blocks. */
+.prose .almanac h1:not(.wordmark):not(.page-title),
+.prose .almanac h2,
+.prose .almanac h3 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}

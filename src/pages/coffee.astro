@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Coffee">
+  <article>
+      <h2>Coffee</h2>
+      <p>
+        Some of my recent brews, tracked on <a href="https://alpha.arabica.social">arabica.social</a>, a coffee journaling platform on the AT Protocol. Brews are fetched directly from my PDS, check out my <a href="https://alpha.arabica.social/profile/pdewey.com">Arabica profile</a> for more brews and gear details.
+      </p>
+
+      <div id="brew-list" class="mt-6">
+        <p class="opacity-60">Fetching brews...</p>
+      </div>
+  </article>
+
+  <template id="brew-tmpl">
+    <div class="brew-entry py-4 border-b" style="border-color: var(--rule-color)">
+      <div class="flex items-baseline justify-between gap-4">
+        <a class="brew-bean font-bold"></a>
+        <time class="text-sm opacity-60 shrink-0"></time>
+      </div>
+      <div class="brew-roaster text-sm opacity-60"></div>
+      <div class="brew-bean-details text-sm opacity-60"></div>
+      <div class="brew-meta text-sm mt-1 opacity-70"></div>
+      <div class="brew-equipment text-sm opacity-70"></div>
+      <p class="brew-notes mt-2 mb-1 text-sm"></p>
+      <div class="brew-rating text-sm mt-1 opacity-50"></div>
+    </div>
+  </template>
+
+  <noscript>
+    <p>Enable JavaScript to view brews, or visit <a href="https://arabica.social">arabica.social</a>.</p>
+  </noscript>
+</Layout>
+
+<style is:global>
+  #brew-list .brew-entry:last-child { border-bottom: none; }
+  .brew-bean { color: var(--orange) !important; }
+  .star-half { display: inline-block; position: relative; }
+  .star-half::before { content: '\2606'; }
+  .star-half::after {
+    content: '\2605';
+    position: absolute;
+    left: 0;
+    top: 0;
+    clip-path: inset(0 50% 0 0);
+  }
+</style>
+
+<script is:inline src="/atproto.js"></script>
+<script is:inline src="/coffee.js"></script>

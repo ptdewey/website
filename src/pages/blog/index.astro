@@ -1,0 +1,144 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-CA', {
+    year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'UTC',
+  });
+
+// Group by year so the list reads like a ledger.
+const byYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const y = post.data.date.getUTCFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(post);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+---
+
+<Layout title="Blog — Patrick Dewey">
+  <div class="almanac">
+    <PageHeader title="blog" subtitle={`${posts.length} post${posts.length === 1 ? '' : 's'} since 2024`} />
+
+    {years.map(year => (
+      <section class="year-group">
+        <div class="year-rule">
+          <span class="year">{year}</span>
+          <span class="line" aria-hidden="true"></span>
+          <span class="count">{byYear.get(year)!.length}</span>
+        </div>
+        {byYear.get(year)!.map(post => (
+          <article class="post-entry">
+            <time datetime={post.data.date.toISOString()} class="post-date">
+              {fmtDate(post.data.date)}
+            </time>
+            <div class="post-meta">
+              <a href={`/blog/${post.id}`} class="post-title">{post.data.title}</a>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="post-tags">
+                  {post.data.tags.slice(0, 4).map(tag => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </section>
+    ))}
+
+    <footer class="blog-foot">
+      <a href="/rss.xml">[subscribe via rss]</a>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .year-group + .year-group { margin-top: 2.5rem; }
+
+  .blog-foot {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule-color);
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+  .blog-foot a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  .blog-foot a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--orange);
+  }
+
+  .year-rule {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5ch;
+    align-items: center;
+    margin-bottom: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+  .year-rule .year {
+    color: var(--orange);
+    font-weight: 700;
+  }
+  .year-rule .line {
+    height: 1px;
+    background: var(--rule-color);
+  }
+  .year-rule .count {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+  }
+
+  .post-entry {
+    display: grid;
+    grid-template-columns: 13ch 1fr;
+    gap: 2ch;
+    align-items: baseline;
+    padding: 0.55rem 0;
+  }
+  .post-date {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .post-title {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    color: var(--primary);
+    text-decoration: none;
+  }
+  .post-title:hover {
+    color: var(--green);
+  }
+  .post-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75ch;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    color: var(--text-dim);
+  }
+  .tag::before { content: '#'; opacity: 0.5; }
+
+  @media (max-width: 30rem) {
+    .post-entry { grid-template-columns: 1fr; gap: 0.3rem; }
+    .post-date { font-size: 0.92rem; }
+  }
+</style>

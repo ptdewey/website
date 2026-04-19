@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { revision } from '../lib/revision';
+import { fetchRecentPlay, fetchRecentBrew } from '../lib/atproto';
+import { featured } from '../lib/projects';
+
+const DID = 'did:plc:hm5f3dnm6jdhrc55qp2npdja';
+
+const nowHeadline = 'arabica.social social features, recipes record type';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latestPost = posts[0];
+const recentPosts = posts.slice(0, 3);
+
+const [recentPlay, recentBrew] = await Promise.all([
+  fetchRecentPlay(),
+  fetchRecentBrew(),
+]);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-CA', {
+    year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'UTC',
+  });
+
+const timeAgo = (d: Date) => {
+  const s = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (s < 60) return 'just now';
+  const m = Math.floor(s / 60);
+  if (m < 60) return `~${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `~${h}h ago`;
+  const dy = Math.floor(h / 24);
+  if (dy === 1) return 'yesterday';
+  return `${dy}d ago`;
+};
+
+const today = fmtDate(new Date());
+---
+
+<Layout title="Patrick Dewey">
+  <div class="almanac">
+    <section class="masthead">
+      <h1 class="wordmark">patrick dewey</h1>
+      <div class="meta-strip">
+        <span>a personal almanac</span>
+        <span>
+          {revision.short && <><span class="rev">rev {revision.short}</span><span class="sep"> / </span></>}
+          <time datetime={new Date().toISOString().slice(0, 10)}>{today}</time>
+        </span>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <section class="dashboard" aria-label="current state">
+      <div class="section-head">
+        <span>recent</span>
+      </div>
+      <div class="row">
+        <span class="label">/now</span>
+        <span><a href="/now">{nowHeadline}</a></span>
+      </div>
+      {latestPost && (
+        <div class="row">
+          <span class="label">latest post</span>
+          <div class="value-stack">
+            <a href={`/blog/${latestPost.id}`} class="primary-value">{latestPost.data.title}</a>
+            <span class="secondary-value">
+              <time datetime={latestPost.data.date.toISOString()}>{fmtDate(latestPost.data.date)}</time>
+            </span>
+          </div>
+        </div>
+      )}
+      {recentPlay && (
+        <div class="row">
+          <span class="label">recent play</span>
+          <div class="value-stack">
+            <span class="primary-value">{recentPlay.trackName}</span>
+            <span class="secondary-value">
+              {recentPlay.artists && <>{recentPlay.artists}<span class="dot" aria-hidden="true"> · </span></>}
+              <time datetime={recentPlay.playedTime.toISOString()}>{timeAgo(recentPlay.playedTime)}</time>
+            </span>
+          </div>
+        </div>
+      )}
+      {recentBrew && (
+        <div class="row">
+          <span class="label">recent brew</span>
+          <div class="value-stack">
+            <span class="primary-value">{recentBrew.beanName}</span>
+            <span class="secondary-value">
+              {recentBrew.method && <>{recentBrew.method}<span class="dot" aria-hidden="true"> · </span></>}
+              <time datetime={recentBrew.createdAt.toISOString()}>{timeAgo(recentBrew.createdAt)}</time>
+            </span>
+          </div>
+        </div>
+      )}
+    </section>
+
+    <hr class="rule" />
+
+    <section aria-label="blog">
+      <div class="section-head">
+        <span>blog</span>
+        <span class="head-actions">
+          <a href="/rss.xml" class="more">[rss]</a>
+          <a href="/blog" class="more">[view all]</a>
+        </span>
+      </div>
+      {recentPosts.map(post => (
+        <div class="entry">
+          <time datetime={post.data.date.toISOString()}>{fmtDate(post.data.date)}</time>
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+        </div>
+      ))}
+    </section>
+
+    <hr class="rule" />
+
+    <section aria-label="projects">
+      <div class="section-head">
+        <span>projects</span>
+        <a href="/projects" class="more">[view all]</a>
+      </div>
+      {featured.map(p => (
+        <div class="entry">
+          <a class="key project-key" href={p.href}>{p.name}</a>
+          <span>{p.desc}</span>
+        </div>
+      ))}
+    </section>
+
+    <hr class="rule" />
+
+    <section class="identity" aria-label="identity">
+      <div class="section-head">
+        <span>identity</span>
+      </div>
+      <div class="entry">
+        <span class="key">atproto</span>
+        <span class="value-stack">
+          <span class="at-uri">at://{DID}</span>
+          <a href="https://bsky.app/profile/pdewey.com" class="primary-value">@pdewey.com</a>
+        </span>
+      </div>
+      <div class="entry">
+        <span class="key">github</span>
+        <span><a href="https://github.com/ptdewey">ptdewey</a></span>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .masthead { margin-bottom: 0.75rem; }
+  .wordmark-dim {
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  /* Two-line stack for dashboard rows with multiple data points.
+     Primary sits on the value baseline; secondary is muted and smaller
+     so wrap behavior is predictable (no mid-line color jumps). */
+  .value-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .primary-value {
+    color: var(--primary);
+    overflow-wrap: anywhere;
+  }
+  .secondary-value {
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+  .sep { color: var(--text-dim); }
+
+  .project-key {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .at-uri {
+    color: var(--text-muted);
+    word-break: break-all;
+  }
+
+  .identity { margin-top: 0.5rem; }
+
+  .head-actions {
+    display: inline-flex;
+    gap: 1.25ch;
+  }
+
+  /* Kill the default prose anchor color override on the almanac; use
+     teal/green for links but keep secondary text muted. */
+  .almanac a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  .almanac a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: var(--orange);
+  }
+
+  /* Tighten prose's default margins inside the almanac */
+  :global(.prose) .almanac :where(p, ul, ol) {
+    margin: 0;
+  }
+</style>
