@@ -1,28 +1,36 @@
 @import "tailwindcss";
 @source "../**/*.{astro,md,mdx,html,js,ts}";
 
-/* @layer base { */
-/*   @font-face { */
-/*     font-family: "Iosevka Patrick"; */
-/*     src: url("/fonts/patricks-iosevka-regular.ttf") format("truetype"); */
-/*     font-weight: normal; */
-/*     font-style: normal; */
-/*   } */
-/**/
-/*   @font-face { */
-/*     font-family: "Iosevka Patrick"; */
-/*     src: url("/fonts/patricks-iosevka-semibold.ttf") format("truetype"); */
-/*     font-weight: bold; */
-/*     font-style: bold; */
-/*   } */
-/**/
-/*   @font-face { */
-/*     font-family: "Iosevka Patrick"; */
-/*     src: url("/fonts/patricks-iosevka-italic.ttf") format("truetype"); */
-/*     font-weight: normal; */
-/*     font-style: italic; */
-/*   } */
-/* } */
+@layer base {
+  @font-face {
+    font-family: "Iosevka Patrick";
+    src: url("/fonts/patricks-iosevka-regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Iosevka Patrick";
+    src: url("/fonts/patricks-iosevka-semibold.ttf") format("truetype");
+    font-weight: 600 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Iosevka Patrick";
+    src: url("/fonts/patricks-iosevka-italic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Iosevka Patrick";
+    src: url("/fonts/patricks-iosevka-semibolditalic.ttf") format("truetype");
+    font-weight: 600 700;
+    font-style: italic;
+    font-display: swap;
+  }
+}
 
 @theme {
   --font-mono: "Iosevka Patrick", ui-monospace, monospace;
@@ -207,7 +215,7 @@ img {
 }
 
 .almanac .section-head .more {
-  color: var(--text-dim);
+  color: var(--text-muted);
   font-size: 0.85em;
   font-weight: 400;
 }
@@ -305,7 +313,7 @@ img {
   display: grid;
   grid-template-columns: 13ch 1fr;
   gap: 2ch;
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-transform: lowercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
@@ -343,21 +351,25 @@ img {
   justify-content: space-between;
   gap: 1ch;
   flex-wrap: wrap;
+  min-width: 0;
 }
 
 .almanac .log-rkey {
-  color: var(--text-dim);
-  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
   letter-spacing: 0.04em;
   margin-top: 0.45rem;
 }
-.almanac .log-rkey a { color: var(--text-dim); }
-.almanac .log-rkey a:hover { color: var(--text-muted); }
+.almanac .log-rkey a { color: var(--text-muted); }
+.almanac .log-rkey a:hover { color: var(--primary); }
 
 /* brew-specific */
+.dark .almanac .brew-bean,
 .almanac .brew-bean {
   color: var(--orange);
   font-weight: 600;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 .almanac .brew-rating {
   color: var(--yellow);
@@ -382,7 +394,7 @@ img {
   font-variant-numeric: tabular-nums;
 }
 .almanac .brew-equipment {
-  color: var(--text-dim);
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 .almanac .brew-notes {
@@ -394,7 +406,7 @@ img {
 }
 .almanac .brew-notes::before {
   content: 'notes  ';
-  color: var(--text-dim);
+  color: var(--text-muted);
   letter-spacing: 0.06em;
   font-size: 0.78rem;
   text-transform: uppercase;
@@ -414,7 +426,7 @@ img {
   margin-top: 0.1rem;
 }
 .almanac .play-release {
-  color: var(--text-dim);
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -465,7 +477,7 @@ img {
 }
 .almanac .np-sep { color: var(--text-dim); padding-inline: 0.4ch; }
 .almanac .np-artist { color: var(--text-muted); }
-.almanac .np-release { color: var(--text-dim); font-size: 0.88rem; margin-top: 0.1rem; }
+.almanac .np-release { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.1rem; }
 
 .almanac .np-progress {
   margin-top: 0.55rem;

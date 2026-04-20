@@ -2,15 +2,6 @@ export const PDS = 'https://arabica.systems';
 export const DID = 'did:plc:hm5f3dnm6jdhrc55qp2npdja';
 export const HANDLE = 'pdewey.com';
 
-const BUILD_TIMEOUT_MS = 3000;
-
-// In Node (build) we want a hard timeout so a slow PDS never hangs the build.
-// In the browser we let fetch run to its own default. Callers pass AbortSignal
-// when they want it.
-function buildSignal(): AbortSignal | undefined {
-  return typeof window === 'undefined' ? AbortSignal.timeout(BUILD_TIMEOUT_MS) : undefined;
-}
-
 export async function xrpc<T = unknown>(
   method: string,
   params: Record<string, string | number>,
@@ -20,11 +11,23 @@ export async function xrpc<T = unknown>(
   const qs = new URLSearchParams(
     Object.entries(params).map(([k, v]) => [k, String(v)]),
   );
+  // cache: 'default' lets the browser honour whatever Cache-Control the
+  // PDS returns. All callers are client-side; build-time timeout logic
+  // is gone now that nothing runs in Node.
   const r = await fetch(`${pds}/xrpc/${method}?${qs}`, {
-    signal: opts.signal ?? buildSignal(),
+    signal: opts.signal,
+    cache: 'default',
   });
   if (!r.ok) throw new Error(`xrpc ${method}: ${r.status}`);
   return (await r.json()) as T;
+}
+
+export type Ref = string | { uri?: string; $link?: string } | undefined | null;
+
+export function refToUri(ref: Ref): string | undefined {
+  if (!ref) return undefined;
+  if (typeof ref === 'string') return ref;
+  return ref.uri ?? ref.$link ?? undefined;
 }
 
 const recordCache = new Map<string, Promise<unknown>>();
@@ -72,32 +75,28 @@ export async function resolveHandle(handle: string = HANDLE, opts: { pds?: strin
   return r.did;
 }
 
-// --- build-time domain helpers (null on failure so a flaky PDS doesn't
-// break the static build) ---
+// --- domain getters used by the homepage "recent" rows. Both resolve
+// to null on any failure so a flaky PDS just leaves the placeholder
+// state rather than crashing the script. ---
 
-export interface RecentPlay {
+export interface LatestPlay {
   trackName: string;
   artists: string;
   playedTime: Date;
+  uri: string;
 }
 
-export interface RecentBrew {
+export interface LatestBrew {
   beanName: string;
   method: string;
   createdAt: Date;
+  rkey: string;
 }
 
 interface PlayRecord {
   trackName: string;
   playedTime: string;
   artists?: Array<{ artistName: string }>;
-}
-
-type Ref = string | { uri?: string; $link?: string };
-function refToUri(ref: Ref | undefined | null): string | undefined {
-  if (!ref) return undefined;
-  if (typeof ref === 'string') return ref;
-  return ref.uri ?? ref.$link ?? undefined;
 }
 
 interface BrewRecord {
@@ -110,37 +109,37 @@ interface BeanRecord {
   name?: string;
 }
 
-export async function fetchRecentPlay(): Promise<RecentPlay | null> {
+export async function getLatestPlay(): Promise<LatestPlay | null> {
   try {
-    const records = await listRecords<PlayRecord>('fm.teal.alpha.feed.play', 20);
+    const records = await listRecords<PlayRecord>('fm.teal.alpha.feed.play', 10);
     if (!records.length) return null;
-    const sorted = [...records].sort(
+    const top = [...records].sort(
       (a, b) => new Date(b.value.playedTime).getTime() - new Date(a.value.playedTime).getTime(),
-    );
-    const top = sorted[0].value;
+    )[0];
     return {
-      trackName: top.trackName,
-      artists: top.artists?.map(a => a.artistName).join(', ') ?? '',
-      playedTime: new Date(top.playedTime),
+      trackName: top.value.trackName,
+      artists: top.value.artists?.map(a => a.artistName).join(', ') ?? '',
+      playedTime: new Date(top.value.playedTime),
+      uri: top.uri,
     };
   } catch {
     return null;
   }
 }
 
-export async function fetchRecentBrew(): Promise<RecentBrew | null> {
+export async function getLatestBrew(): Promise<LatestBrew | null> {
   try {
     const records = await listRecords<BrewRecord>('social.arabica.alpha.brew', 5);
     if (!records.length) return null;
-    const sorted = [...records].sort(
+    const top = [...records].sort(
       (a, b) => new Date(b.value.createdAt).getTime() - new Date(a.value.createdAt).getTime(),
-    );
-    const top = sorted[0].value;
-    const bean = await getRecord<BeanRecord>('social.arabica.alpha.bean', refToUri(top.beanRef));
+    )[0];
+    const bean = await getRecord<BeanRecord>('social.arabica.alpha.bean', refToUri(top.value.beanRef));
     return {
       beanName: bean?.name ?? 'unknown bean',
-      method: top.method ?? '',
-      createdAt: new Date(top.createdAt),
+      method: top.value.method ?? '',
+      createdAt: new Date(top.value.createdAt),
+      rkey: top.uri.split('/').pop() ?? '',
     };
   } catch {
     return null;
