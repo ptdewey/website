@@ -1,5 +1,4 @@
 import { getCollection } from 'astro:content';
-import { fetchStandardPosts } from './standard';
 
 export interface BlogEntry {
   title: string;
@@ -10,7 +9,7 @@ export interface BlogEntry {
   source?: string;
 }
 
-export async function getAllBlogEntries(): Promise<BlogEntry[]> {
+export async function getLocalBlogEntries(): Promise<BlogEntry[]> {
   const local: BlogEntry[] = (await getCollection('blog', ({ data }) => !data.draft)).map(p => ({
     title: p.data.title,
     date: p.data.date,
@@ -18,13 +17,5 @@ export async function getAllBlogEntries(): Promise<BlogEntry[]> {
     href: `/blog/${p.id}`,
     external: false,
   }));
-  const external: BlogEntry[] = (await fetchStandardPosts()).map(p => ({
-    title: p.title,
-    date: p.date,
-    tags: p.tags,
-    href: p.href,
-    external: true,
-    source: p.source,
-  }));
-  return [...local, ...external].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+  return local.sort((a, b) => b.date.valueOf() - a.date.valueOf());
 }

@@ -17,7 +17,7 @@ import Layout from '../layouts/Layout.astro';
       Plays scrobbled by <a href="https://github.com/teal-fm/piper">piper</a> and written to my PDS. Fetched at read time, so the now-playing line updates as I listen.
     </p>
 
-    <div id="now-playing" class="now-playing hidden">
+    <div id="now-playing" class="now-playing hidden" aria-live="polite" aria-atomic="false">
       <span class="np-label">now playing</span>
       <div class="log-value">
         <div>

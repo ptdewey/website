@@ -39,13 +39,10 @@ const readMin = Math.max(1, Math.round(wordCount / 220));
           <span>~{readMin} min</span>
         </span>
         {post.data.tags && post.data.tags.length > 0 && (
-          <>
-            <span class="meta-sep" aria-hidden="true">·</span>
-            <span class="meta-item meta-tags">
-              <span class="meta-label">tags</span>
-              <span>{post.data.tags.join(', ')}</span>
-            </span>
-          </>
+          <span class="meta-item meta-tags">
+            <span class="meta-label">tags</span>
+            <span>{post.data.tags.join(', ')}</span>
+          </span>
         )}
       </div>
     </PageHeader>
@@ -82,14 +79,13 @@ const readMin = Math.max(1, Math.round(wordCount / 220));
   .meta-item { display: inline-flex; align-items: baseline; gap: 0.5ch; }
   .meta-label {
     color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.04em;
     font-size: 0.8rem;
   }
+  .meta-tags { flex-basis: 100%; }
   .meta-sep {
     color: var(--text-dim);
   }
-  .meta-tags { flex-wrap: wrap; }
 
   .post-body {
     max-width: 70ch;

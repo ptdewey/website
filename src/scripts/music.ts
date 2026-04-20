@@ -156,7 +156,7 @@ async function loadPlays() {
   };
 
   try {
-    const records = await listRecords<PlayRecord>(`${NS}.feed.play`, 100);
+    const records = await listRecords<PlayRecord>(`${NS}.feed.play`, 15);
     const sorted = records.sort(
       (a, b) => new Date(b.value.playedTime).getTime() - new Date(a.value.playedTime).getTime(),
     );

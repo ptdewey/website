@@ -1,16 +1,8 @@
-import { resolveHandle, listRecords, getRecord } from '../lib/atproto';
+import { resolveHandle, listRecords, getRecord, refToUri, type Ref } from '../lib/atproto';
 
 const NS = 'social.arabica.alpha';
 const PDSLS = 'https://pdsls.dev/at/';
 const DOT = ' \u00b7 ';
-
-type Ref = string | { uri?: string; $link?: string } | undefined | null;
-
-function refToUri(ref: Ref): string | undefined {
-  if (!ref) return undefined;
-  if (typeof ref === 'string') return ref;
-  return ref.uri ?? ref.$link ?? undefined;
-}
 
 interface Pour { waterAmount?: number }
 interface BrewRecord {
@@ -140,7 +132,7 @@ async function loadBrews() {
 
   try {
     const did = await resolveHandle();
-    const records = await listRecords<BrewRecord>(`${NS}.brew`, 100, { repo: did });
+    const records = await listRecords<BrewRecord>(`${NS}.brew`, 15, { repo: did });
 
     const sorted = records.sort(
       (a, b) => new Date(b.value.createdAt).getTime() - new Date(a.value.createdAt).getTime(),
