@@ -1,4 +1,5 @@
 import { xrpc, listRecords, DID } from '../lib/atproto';
+import { fadeIn, fadeInStagger } from '../lib/anim';
 
 const NS = 'fm.teal.alpha';
 const PDSLS = 'https://pdsls.dev/at/';
@@ -139,7 +140,9 @@ async function loadStatus() {
     updateTime();
     npTimer = setInterval(updateTime, 1000);
 
+    const wasHidden = container.classList.contains('hidden');
     container.classList.remove('hidden');
+    if (wasHidden) fadeIn(container);
   } catch (e) {
     console.error('Failed to load status:', e);
   }
@@ -165,6 +168,7 @@ async function loadPlays() {
     if (recent.length === 0) { setMessage('No plays yet.'); return; }
 
     container.replaceChildren(...recent.map(r => renderPlay(tmpl, r.uri, r.value)));
+    fadeInStagger(container.children);
   } catch (e) {
     setMessage('Could not load plays.');
     console.error('Failed to load plays:', e);

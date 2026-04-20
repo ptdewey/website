@@ -1,5 +1,6 @@
 import { getLatestPlay, getLatestBrew } from '../lib/atproto';
 import { fetchStandardPosts } from '../lib/standard';
+import { fadeIn, flipAnimate, swap } from '../lib/anim';
 
 function timeAgo(d: Date): string {
   const s = Math.floor((Date.now() - d.getTime()) / 1000);
@@ -52,6 +53,7 @@ function fillPlay() {
     if (!play) {
       track.textContent = 'no recent play';
       secondary.textContent = '';
+      fadeIn(track);
       return;
     }
     track.textContent = play.trackName;
@@ -61,6 +63,8 @@ function fillPlay() {
       play.playedTime.toISOString(),
       timeAgo(play.playedTime),
     );
+    fadeIn(track);
+    fadeIn(secondary);
   });
 }
 
@@ -73,6 +77,7 @@ function fillBrew() {
     if (!brew) {
       bean.textContent = 'no recent brew';
       secondary.textContent = '';
+      fadeIn(bean);
       return;
     }
     bean.textContent = brew.beanName;
@@ -82,6 +87,8 @@ function fillBrew() {
       brew.createdAt.toISOString(),
       timeAgo(brew.createdAt),
     );
+    fadeIn(bean);
+    fadeIn(secondary);
   });
 }
 
@@ -123,40 +130,42 @@ function hydratePosts() {
     if (!external.length) return;
     const sorted = [...external].sort((a, b) => b.date.valueOf() - a.date.valueOf());
 
-    // latest-post row: swap in if any external predates current latest.
+    // latest-post row: swap in (crossfade) if any external predates current latest.
     if (latestRow) {
       const currentIso = latestRow.dataset.latestDate ?? '';
       const currentTime = currentIso ? new Date(currentIso).getTime() : 0;
       const top = sorted[0];
       if (top.date.getTime() > currentTime) {
+        const stack = latestRow.querySelector<HTMLElement>('.value-stack');
         const link = latestRow.querySelector<HTMLAnchorElement>('[data-latest-link]');
         const secondary = latestRow.querySelector<HTMLElement>('[data-latest-secondary]');
-        if (link) {
-          link.textContent = top.title;
-          link.href = top.href;
-          link.target = '_blank';
-          link.rel = 'noopener';
+        if (stack && link && secondary) {
+          swap(stack, () => {
+            link.textContent = top.title;
+            link.href = top.href;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            secondary.textContent = '';
+            if (top.source) {
+              secondary.appendChild(document.createTextNode(`[${top.source}]`));
+              const sep = document.createElement('span');
+              sep.className = 'sep';
+              sep.setAttribute('aria-hidden', 'true');
+              sep.textContent = ' · ';
+              secondary.appendChild(sep);
+            }
+            const t = document.createElement('time');
+            t.dateTime = top.date.toISOString();
+            t.textContent = fmtDate(top.date);
+            secondary.appendChild(t);
+            latestRow.dataset.latestDate = top.date.toISOString();
+          });
         }
-        if (secondary) {
-          secondary.textContent = '';
-          if (top.source) {
-            secondary.appendChild(document.createTextNode(`[${top.source}]`));
-            const sep = document.createElement('span');
-            sep.className = 'sep';
-            sep.setAttribute('aria-hidden', 'true');
-            sep.textContent = ' · ';
-            secondary.appendChild(sep);
-          }
-          const t = document.createElement('time');
-          t.dateTime = top.date.toISOString();
-          t.textContent = fmtDate(top.date);
-          secondary.appendChild(t);
-        }
-        latestRow.dataset.latestDate = top.date.toISOString();
       }
     }
 
     // blog 3-list: insert externals in date order, trim to 3 entries.
+    // Displaced siblings slide to their new positions; the new entry fades in.
     if (blogList) {
       for (const post of sorted) {
         const children = Array.from(blogList.querySelectorAll<HTMLElement>('.entry'));
@@ -164,15 +173,16 @@ function hydratePosts() {
           const iso = c.dataset.entryDate ?? '';
           return iso && new Date(iso).getTime() < post.date.getTime();
         });
+        if (!target && children.length >= 3) continue;
+
         const entry = makeBlogEntry(post);
-        if (target) {
-          blogList.insertBefore(entry, target);
-        } else if (children.length < 3) {
-          blogList.appendChild(entry);
-        }
-        // enforce cap of 3
-        const all = Array.from(blogList.querySelectorAll<HTMLElement>('.entry'));
-        for (const extra of all.slice(3)) extra.remove();
+        flipAnimate(children, () => {
+          if (target) blogList.insertBefore(entry, target);
+          else blogList.appendChild(entry);
+          const all = Array.from(blogList.querySelectorAll<HTMLElement>('.entry'));
+          for (const extra of all.slice(3)) extra.remove();
+        });
+        fadeIn(entry);
       }
     }
   }).catch(() => {

@@ -1,4 +1,5 @@
 import { resolveHandle, listRecords, getRecord, refToUri, type Ref } from '../lib/atproto';
+import { fadeInStagger } from '../lib/anim';
 
 const NS = 'social.arabica.alpha';
 const PDSLS = 'https://pdsls.dev/at/';
@@ -167,6 +168,7 @@ async function loadBrews() {
     if (brews.length === 0) { setMessage('No brews yet.'); return; }
 
     container.replaceChildren(...brews.map(b => renderBrew(tmpl, b, did)));
+    fadeInStagger(container.children);
   } catch (e) {
     setMessage('Could not load brews.');
     console.error('Failed to load brews:', e);
