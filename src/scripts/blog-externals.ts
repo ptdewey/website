@@ -1,4 +1,5 @@
 import { fetchStandardPosts } from '../lib/standard';
+import { fadeIn, flipAnimate } from '../lib/anim';
 
 function fmtDate(d: Date): string {
   return d.toLocaleDateString('en-CA', {
@@ -116,11 +117,23 @@ async function hydrate() {
   for (const post of external) {
     const year = post.date.getUTCFullYear();
     let section = root.querySelector<HTMLElement>(`.year-group[data-year="${year}"]`);
-    if (!section) {
-      section = makeYearSection(year);
-      insertYearSection(root, section, year);
-    }
-    insertIntoYear(section, makeEntry(post), post.date.getTime());
+    const created = !section;
+    const entry = makeEntry(post);
+
+    // Capture every existing .post-entry across the whole index so displaced
+    // local posts slide to their new positions after we mutate.
+    const allEntries = Array.from(root.querySelectorAll<HTMLElement>('.post-entry'));
+
+    flipAnimate(allEntries, () => {
+      if (!section) {
+        section = makeYearSection(year);
+        insertYearSection(root, section, year);
+      }
+      insertIntoYear(section, entry, post.date.getTime());
+    });
+
+    if (created) fadeIn(section!);
+    else fadeIn(entry);
   }
 }
 
