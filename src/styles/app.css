@@ -432,7 +432,6 @@ img {
 
 /* ──────────────────────────────────────────────────────────
    Now playing strip — one precious moment per /music page.
-   ASCII progress bar in monospace block characters.
    ────────────────────────────────────────────────────────── */
 .almanac .now-playing {
   display: grid;
@@ -478,22 +477,6 @@ img {
 .almanac .np-sep { color: var(--text-dim); padding-inline: 0.4ch; }
 .almanac .np-artist { color: var(--text-muted); }
 .almanac .np-release { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.1rem; }
-
-.almanac .np-progress {
-  margin-top: 0.55rem;
-  display: flex;
-  align-items: baseline;
-  gap: 1.25ch;
-  font-size: 0.9rem;
-  font-variant-numeric: tabular-nums;
-}
-.almanac .np-bar {
-  letter-spacing: 0;
-  white-space: pre;
-}
-.almanac .np-bar-filled { color: var(--orange); }
-.almanac .np-bar-empty  { color: var(--rule-color); }
-.almanac .np-time { color: var(--text-muted); }
 
 @media (max-width: 30rem) {
   .almanac .log-col-head,
