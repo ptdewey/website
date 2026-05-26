@@ -1,0 +1,240 @@
+:root {
+  --font-body: "Patrick's Iosevka", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+@font-face {
+  font-family: "Patrick's Iosevka";
+  src: url("/assets/fonts/IosevkaPatrickNerdFont-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Patrick's Iosevka";
+  src: url("/assets/fonts/IosevkaPatrickNerdFont-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Patrick's Iosevka";
+  src: url("/assets/fonts/IosevkaPatrickNerdFont-SemiBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root,
+.light {
+  --background: #f0ebe1;
+  --primary: #252f1e;
+  --green: #77824a;
+  --orange: #bb7844;
+  --teal: #5f865f;
+  /* darker yellow for contrast on cream background */
+  --yellow: #9a8030;
+  --red: #b3664d;
+}
+
+.dark {
+  --background: #24211e;
+  --primary: #d7c484;
+  --yellow: #c9a654;
+}
+
+html {
+  background: var(--background);
+  color: var(--primary);
+}
+
+body {
+  position: relative;
+  max-width: 70ch;
+  margin: 4rem auto;
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--orange);
+}
+
+::marker {
+  color: var(--teal);
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav li + li::before {
+  content: "/";
+  margin-right: 1rem;
+  color: var(--primary);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--green);
+}
+
+article :where(h1, h2) {
+  line-height: 1.2;
+  margin: 2rem, 0, 0.75rem;
+  font-weight: 700;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.75rem;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.posts-list {
+  padding: 0;
+  list-style: none;
+}
+
+.posts-list__item {
+  display: grid;
+  grid-template-columns: 12ch 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  margin: 0.35rem 0;
+}
+
+.posts-list time,
+.post-meta {
+  color: var(--yellow);
+  font-size: 0.9rem;
+}
+
+.posts-list time {
+  font-variant-numeric: tabular-nums;
+}
+
+.post-header {
+  margin-bottom: 2rem;
+}
+
+.post-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  align-items: center;
+}
+
+.post-meta > * + *::before {
+  content: "/";
+  margin-right: 0.75rem;
+  color: var(--primary);
+}
+
+.tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.tags li::before {
+  content: "#";
+}
+
+@media (max-width: 480px) {
+  body {
+    line-height: 1.55;
+  }
+
+  nav ul {
+    gap: 0.25rem 0.75rem;
+  }
+
+  nav li + li::before {
+    margin-right: 0.75rem;
+  }
+
+  .posts-list__item {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.log-body {
+  margin-top: 1.5rem;
+}
+
+.log-entry,
+.now-playing {
+  display: grid;
+  grid-template-columns: 12ch 1fr;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+.log-date,
+.log-rkey,
+.np-label {
+  color: var(--yellow);
+  font-size: 0.9rem;
+}
+
+.log-rkey {
+  margin-top: 0.25rem;
+}
+
+.log-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.brew-bean,
+.play-track {
+  font-weight: 700;
+}
+
+.brew-roaster,
+.brew-sub,
+.brew-meta,
+.brew-equipment,
+.play-artist,
+.play-release,
+.np-release {
+  margin-top: 0.15rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .log-entry,
+  .now-playing {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
