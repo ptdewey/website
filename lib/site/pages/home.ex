@@ -44,7 +44,7 @@ defmodule Site.Pages.Home do
           a social coffee journaling site, built on <a href="https://atproto.com">atproto</a>.
         </p>
       </section>
-      <section id="projects">
+      <section id="logs-and-lists">
         <p>A few logs and lists live here too:</p>
         <ul>
           <li><a href="/projects">projects</a> - things I've made and contributed to</li>

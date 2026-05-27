@@ -26,8 +26,8 @@ _other interesting things i've built:_
 
 ## contributions
 
-_i contribute to open source projects frequently, are just a few projects i've
-contributed to:_
+_i contribute to open source projects frequently, here are just a few projects
+i've contributed to:_
 
 - [tangled.org/core](https://tangled.org/tangled.org/core): added repo
   "starrers" page; show issue/pull request counts on search

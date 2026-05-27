@@ -8,13 +8,7 @@
   outputs =
     { self, nixpkgs }:
     let
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "aarch64-darwin"
-      ];
-
+      systems = [ "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in
     {
@@ -26,14 +20,15 @@
 
           src = pkgs.lib.cleanSourceWith {
             src = ./.;
-            filter = path: type:
+            filter =
+              path: type:
               let
                 rel = pkgs.lib.removePrefix (toString ./. + "/") (toString path);
               in
               pkgs.lib.cleanSourceFilter path type
-              && ! pkgs.lib.hasPrefix "output/" rel
-              && ! pkgs.lib.hasPrefix "_build/" rel
-              && ! pkgs.lib.hasPrefix "deps/" rel;
+              && !pkgs.lib.hasPrefix "output/" rel
+              && !pkgs.lib.hasPrefix "_build/" rel
+              && !pkgs.lib.hasPrefix "deps/" rel;
           };
 
           mixFodDeps = beamPackages.fetchMixDeps {
@@ -43,59 +38,35 @@
             hash = "sha256-1JbQujRXl0KrMU98DEN7jnaoGC7m02X8tIHk3Tuw+u4=";
           };
 
-          nativeArtifacts = {
-            x86_64-linux = {
-              mdex = {
-                file = "libcomrak_nif-v0.12.2-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz";
-                hash = "sha256:a13679dd322957e415839b0ca4d4b759241dea725c8616bff0906eca515cd77f";
+          nativeArtifacts =
+            {
+              x86_64-linux = {
+                mdex = {
+                  file = "libcomrak_nif-v0.12.2-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz";
+                  hash = "sha256:a13679dd322957e415839b0ca4d4b759241dea725c8616bff0906eca515cd77f";
+                };
+                lumis = {
+                  file = "liblumis_nif-v0.5.0-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz";
+                  hash = "sha256:02c58f7c27dbedd2ef577145a9327317c1d8e75f512eb9c6279256dafb1947f5";
+                };
               };
-              lumis = {
-                file = "liblumis_nif-v0.5.0-nif-2.15-x86_64-unknown-linux-gnu.so.tar.gz";
-                hash = "sha256:02c58f7c27dbedd2ef577145a9327317c1d8e75f512eb9c6279256dafb1947f5";
-              };
-            };
-            aarch64-linux = {
-              mdex = {
-                file = "libcomrak_nif-v0.12.2-nif-2.15-aarch64-unknown-linux-gnu.so.tar.gz";
-                hash = "sha256:9111c332fbac1d10bd027c9251ce0a7c6f8c0665cc71497d4562ddd03c70a98c";
-              };
-              lumis = {
-                file = "liblumis_nif-v0.5.0-nif-2.15-aarch64-unknown-linux-gnu.so.tar.gz";
-                hash = "sha256:d83a55467895f86cd03c9062bc2f00686d945849ef47d5497a07d374ee6ec06f";
-              };
-            };
-            x86_64-darwin = {
-              mdex = {
-                file = "libcomrak_nif-v0.12.2-nif-2.15-x86_64-apple-darwin.so.tar.gz";
-                hash = "sha256:a9f5f7fe297ccacb4d521662f8ccb136ef2b9cc2526992f7b9f4336278a176d2";
-              };
-              lumis = {
-                file = "liblumis_nif-v0.5.0-nif-2.15-x86_64-apple-darwin.so.tar.gz";
-                hash = "sha256:f164c99fa1532f2e9d589558956a70a6140e5bb8407ffdf06883fe37ab659717";
-              };
-            };
-            aarch64-darwin = {
-              mdex = {
-                file = "libcomrak_nif-v0.12.2-nif-2.15-aarch64-apple-darwin.so.tar.gz";
-                hash = "sha256:05a8e8b77b4181491478bbbc61ec907b28f8fabec2577673b83445be87f88597";
-              };
-              lumis = {
-                file = "liblumis_nif-v0.5.0-nif-2.15-aarch64-apple-darwin.so.tar.gz";
-                hash = "sha256:b32b7b703d180620c011fc13efaedf8f5ea3a5a744bcdcc7ae0666194dda2a12";
-              };
-            };
-          }.${system};
+            }
+            .${system};
 
           rustlerCache = pkgs.runCommand "site-rustler-precompiled-cache" { } ''
             mkdir -p "$out"
-            cp ${pkgs.fetchurl {
-              url = "https://github.com/leandrocp/mdex/releases/download/v0.12.2/${nativeArtifacts.mdex.file}";
-              hash = nativeArtifacts.mdex.hash;
-            }} "$out/${nativeArtifacts.mdex.file}"
-            cp ${pkgs.fetchurl {
-              url = "https://github.com/leandrocp/lumis/releases/download/hex-lumis/v0.5.0/${nativeArtifacts.lumis.file}";
-              hash = nativeArtifacts.lumis.hash;
-            }} "$out/${nativeArtifacts.lumis.file}"
+            cp ${
+              pkgs.fetchurl {
+                url = "https://github.com/leandrocp/mdex/releases/download/v0.12.2/${nativeArtifacts.mdex.file}";
+                hash = nativeArtifacts.mdex.hash;
+              }
+            } "$out/${nativeArtifacts.mdex.file}"
+            cp ${
+              pkgs.fetchurl {
+                url = "https://github.com/leandrocp/lumis/releases/download/hex-lumis/v0.5.0/${nativeArtifacts.lumis.file}";
+                hash = nativeArtifacts.lumis.hash;
+              }
+            } "$out/${nativeArtifacts.lumis.file}"
           '';
         in
         {
