@@ -1,6 +1,7 @@
 # uses
 
-stuff i use
+stuff i use _(inspired by [ovyerus](https://ovyerus.com/uses/) and
+[natalie](https://natalie.sh/uses))_
 
 ## editor and terminal
 
@@ -20,6 +21,19 @@ stuff i use
   theme I created (I usually use the light version, lightearth, now though).
 - I use Neovim for note taking on my computers, and Obsidian when I'm on my
   phone.
+- I've also been getting really into using and customizing
+  [pi coding agent](https://pi.dev).
+
+## linux
+
+- I run NixOS (a distro that lets me
+  [declaratively configure](https://github.com/ptdewey/nixos) my entire system)
+  on all of my systems.
+- I have been using Niri as my main window manager for a couple of years, but I
+  am exploring [river](https://codeberg.org/river/river) on my laptop.
+- My [dotfiles](https://github.com/ptdewey/dotfiles) are mostly just shell
+  scripts, I don't do much ricing and I just use waybar and a (badly)
+  home-rolled quickshell bar.
 
 ## keyboards
 
@@ -34,7 +48,7 @@ stuff i use
 
 ## computers
 
-- My desktop is a NixOS system with a Ryzen 7 5800x system with 64GB DDR4 RAM
-  and a Radeon 7800xt gpu.
+- My desktop is a Ryzen 7 5800x system with 64GB DDR4 RAM and a Radeon 7800xt
+  gpu.
 - My personal laptop is a framework 13 with an AMD Ryzen 7 7840u CPU and 32GB
-  RAM, also running NixOS.
+  RAM.

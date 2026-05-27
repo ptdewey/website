@@ -28,6 +28,8 @@ defmodule Site.Pages.Home do
     }
   end
 
+  # TODO: probably switch this over to a markdown file since its just simple
+  # formatting that translates easily from markdown -> html
   defp page(assigns) do
     assigns = Map.put(assigns, :links, @links)
 
