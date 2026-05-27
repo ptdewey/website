@@ -13,6 +13,18 @@ defmodule Site.Layouts.Root do
       <head>
         <meta charset="utf-8" />
         <title>{@title}</title>
+        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#f0ebe1" />
+        <style>
+          :root {
+            background: #f0ebe1;
+            color: #252f1e;
+          }
+
+          html {
+            background: #f0ebe1;
+          }
+        </style>
         <link rel="icon" href="/assets/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/assets/favicon.png" />
         <link rel="stylesheet" href="/assets/css/app.css" />
