@@ -12,6 +12,7 @@ defmodule Site.Layouts.Root do
     <html>
       <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{@title}</title>
         <meta name="color-scheme" content="light" />
         <meta name="theme-color" content="#f0ebe1" />

@@ -7,3 +7,4 @@ erl_crash.dump
 site-*.tar
 /tmp/
 output/
+/result

@@ -54,6 +54,7 @@ body {
   position: relative;
   max-width: 70ch;
   margin: 4rem auto;
+  padding: 0 1rem;
   font-family: var(--font-body);
   line-height: 1.6;
 }
@@ -90,7 +91,7 @@ h4 {
 
 article :where(h1, h2) {
   line-height: 1.2;
-  margin: 2rem, 0, 0.75rem;
+  margin: 2rem 0 0.75rem;
   font-weight: 700;
 }
 
@@ -165,6 +166,8 @@ img {
 
 @media (max-width: 480px) {
   body {
+    margin: 1.5rem auto;
+    padding: 0 1rem;
     line-height: 1.55;
   }
 
