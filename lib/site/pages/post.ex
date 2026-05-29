@@ -3,11 +3,14 @@ defmodule Site.Pages.Post do
   import Phoenix.HTML
   import Site.Components
 
+  @standard_site_publication "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.publication/3mgj4qfasw32n"
+
   def routes(%{posts: posts}) do
     Enum.map(posts, fn post ->
       %Site.Route{
         path: post.path,
         title: post.title,
+        standard_site_publication: @standard_site_publication,
         page: page(%{post: post})
       }
     end)

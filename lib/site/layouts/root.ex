@@ -4,6 +4,8 @@ defmodule Site.Layouts.Root do
 
   attr(:title, :string, default: "patrick dewey")
   attr(:content, :any, required: true)
+  attr(:standard_site_document, :string, default: nil)
+  attr(:standard_site_publication, :string, default: nil)
 
   # TODO: use page title in H1 if provided
   def render(assigns) do
@@ -28,6 +30,8 @@ defmodule Site.Layouts.Root do
         </style>
         <link rel="icon" href="/assets/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/assets/favicon.png" />
+        <link :if={@standard_site_document} rel="site.standard.document" href={@standard_site_document} />
+        <link :if={@standard_site_publication} rel="site.standard.publication" href={@standard_site_publication} />
         <link rel="stylesheet" href="/assets/css/app.css" />
       </head>
       <body>
