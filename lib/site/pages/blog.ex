@@ -5,6 +5,11 @@ defmodule Site.Pages.Blog do
   @standard_site_publication "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.publication/3mgj4qfasw32n"
 
   def route(%{posts: posts}) do
+    posts =
+      posts
+      |> Kernel.++(Site.Leaflets.all())
+      |> Enum.sort_by(& &1.date, {:desc, Date})
+
     %Site.Route{
       path: "/blog",
       title: "blog",

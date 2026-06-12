@@ -24,7 +24,8 @@ defmodule Site.MixProject do
       {:nimble_publisher, "~> 1.0", runtime: false},
       {:phoenix_live_view, "~> 1.1"},
       {:mdex, "~> 0.11"},
-      {:yaml_elixir, "~> 2.12"}
+      {:yaml_elixir, "~> 2.12"},
+      {:jason, "~> 1.4"}
     ]
   end
 end
