@@ -24,7 +24,8 @@ defmodule Site.Layouts.Root do
             color: #252f1e;
           }
 
-          html {
+          html,
+          body {
             background: #f0ebe1;
           }
         </style>
@@ -34,7 +35,7 @@ defmodule Site.Layouts.Root do
         <link :if={@standard_site_publication} rel="site.standard.publication" href={@standard_site_publication} />
         <link rel="stylesheet" href="/assets/css/app.css" />
       </head>
-      <body>
+      <body style="background: #f0ebe1; color: #252f1e;">
         <.header />
         <main>{@content}</main>
       </body>

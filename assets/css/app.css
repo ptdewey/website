@@ -52,6 +52,8 @@ html {
 
 body {
   position: relative;
+  background: var(--background);
+  color: var(--primary);
   max-width: 70ch;
   margin: 4rem auto;
   padding: 0 1rem;
