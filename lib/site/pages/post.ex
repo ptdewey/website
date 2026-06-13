@@ -14,7 +14,7 @@ defmodule Site.Pages.Post do
         title: post.title,
         standard_site_document: post.standard_site_uri,
         standard_site_publication: @standard_site_publication,
-        page: page(%{post: post})
+        page: page(%{post: post, bsky_conversation_url: bsky_conversation_url(post)})
       }
     end)
   end
@@ -25,6 +25,37 @@ defmodule Site.Pages.Post do
       <.post_header post={@post} />
       <%= raw @post.body %>
     </article>
+
+    <section :if={@bsky_conversation_url} class="bsky-comments" aria-labelledby="bsky-comments-title">
+      <script type="module" src="/assets/js/bsky-conversation.js">
+      </script>
+      <h2 id="bsky-comments-title">comments</h2>
+      <bsky-conversation
+        uri={@bsky_conversation_url}
+        max-depth="3"
+        engage-text="add your thoughts on bluesky"
+        header-template="{replies?{replies|reply|replies}}{quotes?, {quotes|quote|quotes}}{repostedBy?, reposted by {repostedBy}}"
+      >
+      </bsky-conversation>
+    </section>
     """
   end
+
+  defp bsky_conversation_url(%{bsky_post_ref: %{"uri" => uri}}), do: bsky_post_url(uri)
+  defp bsky_conversation_url(%{bsky_post_ref: %{uri: uri}}), do: bsky_post_url(uri)
+
+  defp bsky_conversation_url(%{bsky_post_ref: uri}) when is_binary(uri),
+    do: bsky_post_url(uri)
+
+  defp bsky_conversation_url(_post), do: nil
+
+  defp bsky_post_url("at://" <> rest) do
+    case String.split(rest, "/", parts: 3) do
+      [repo, "app.bsky.feed.post", rkey] -> "https://bsky.app/profile/#{repo}/post/#{rkey}"
+      _ -> nil
+    end
+  end
+
+  defp bsky_post_url("https://bsky.app/profile/" <> _ = url), do: url
+  defp bsky_post_url(_uri), do: nil
 end

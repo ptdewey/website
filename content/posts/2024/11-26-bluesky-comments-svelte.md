@@ -3,6 +3,7 @@ title: "Adding Comments to My Blog with Bluesky!"
 author: "Patrick Dewey"
 tags: ["bluesky", "software-development", "svelte", "npm"]
 description: "Software Development"
+bsky_post_ref: https://bsky.app/profile/pdewey.com/post/3lbvhkkrg4c2c
 ---
 
 ### Introduction

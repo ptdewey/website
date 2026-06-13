@@ -166,6 +166,27 @@ img {
   content: "#";
 }
 
+.bsky-comments {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in srgb, var(--green) 40%, transparent);
+}
+
+.bsky-comments h2 {
+  margin-bottom: 1rem;
+}
+
+bsky-conversation {
+  display: block;
+  font-size: 0.95rem;
+  --bsky-border-color: color-mix(in srgb, var(--green) 35%, transparent);
+  --bsky-muted-color: var(--yellow);
+  --bsky-link-color: var(--orange);
+  --bsky-link-hover: var(--teal);
+  --bsky-link-underline: color-mix(in srgb, var(--orange) 45%, transparent);
+  --bsky-link-underline-hover: color-mix(in srgb, var(--teal) 50%, transparent);
+}
+
 @media (max-width: 480px) {
   body {
     margin: 1.5rem auto;
