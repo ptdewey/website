@@ -2,7 +2,6 @@ import { resolveHandle, listRecords, getRecord, refToUri } from "./atproto.js";
 import { fadeInStagger } from "./anim.js";
 
 const NS = "social.arabica.alpha";
-const PDSLS = "https://pdsls.dev/at/";
 const DOT = " \u00b7 ";
 
 function formatTime(s) {
@@ -19,10 +18,56 @@ function setOrRemove(el, text) {
 
 function renderRating(container, rating) {
   const n = Math.min(Math.max(rating, 0), 10);
-  container.textContent = ` - (${n}/10)`;
+  container.textContent = `★ ${n}/10`;
 }
 
-function renderBrew(tmpl, brew, did) {
+function setParam(el, value) {
+  if (!el) return;
+  if (!value) {
+    el.remove();
+    return;
+  }
+  el.querySelector("dd").textContent = value;
+}
+
+function renderPours(container, pours) {
+  if (!container || !pours?.length) {
+    container?.remove();
+    return;
+  }
+
+  const label = document.createElement("span");
+  label.className = "brew-label";
+  label.textContent = "Pours:";
+  container.append(label);
+
+  pours.forEach((pour, i) => {
+    const pill = document.createElement("span");
+    pill.className = "brew-pour";
+    const index = document.createElement("span");
+    index.className = "brew-pour__index";
+    index.textContent = `${i + 1}`;
+    pill.append(index);
+    if (pour.waterAmount) {
+      const water = document.createElement("span");
+      water.className = "brew-pour__water";
+      water.textContent = `${pour.waterAmount}g`;
+      pill.append(water);
+    }
+    if (pour.timeSeconds) {
+      const dot = document.createElement("span");
+      dot.className = "brew-pour__dot";
+      dot.textContent = "·";
+      const time = document.createElement("span");
+      time.className = "brew-pour__time";
+      time.textContent = formatTime(pour.timeSeconds);
+      pill.append(dot, time);
+    }
+    container.append(pill);
+  });
+}
+
+function renderBrew(tmpl, brew) {
   const el = tmpl.content.cloneNode(true);
 
   const bean = el.querySelector(".brew-bean");
@@ -30,72 +75,59 @@ function renderBrew(tmpl, brew, did) {
   bean.href = brew.brewURL;
 
   const timeEl = el.querySelector("time");
-  timeEl.textContent = new Date(brew.createdAt).toLocaleDateString("en-CA", {
+  timeEl.textContent = new Date(brew.createdAt).toLocaleDateString("en-US", {
     year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
+    month: "short",
+    day: "numeric",
   });
   timeEl.setAttribute("datetime", brew.createdAt);
 
   setOrRemove(el.querySelector(".brew-roaster"), brew.roasterName);
   setOrRemove(
     el.querySelector(".brew-sub"),
-    [brew.beanOrigin, brew.beanRoastLevel, brew.beanProcess, brew.beanVariety]
+    [
+      brew.beanOrigin,
+      brew.beanRoastLevel,
+      brew.beanVariety,
+      brew.beanProcess,
+      brew.coffeeAmount ? `${brew.coffeeAmount}g` : null,
+    ]
       .filter(Boolean)
       .join(DOT),
   );
 
-  const pours = brew.pours?.length;
   const water =
     brew.waterAmount ||
     brew.pours?.reduce((s, p) => s + (p.waterAmount ?? 0), 0) ||
     0;
-  const ratio =
-    brew.coffeeAmount && water
-      ? `${brew.coffeeAmount}g / ${water}g`
-      : brew.coffeeAmount
-        ? `${brew.coffeeAmount}g`
-        : water
-          ? `${water}g`
-          : null;
-  const timeStr = brew.timeSeconds
-    ? `${formatTime(brew.timeSeconds)}${pours ? ` (${pours} pour${pours === 1 ? "" : "s"})` : ""}`
-    : null;
-
-  el.querySelector(".brew-meta").textContent = [
-    brew.method,
-    ratio,
-    brew.temperature ? `${(brew.temperature / 10).toFixed(1)}\u00b0C` : null,
-    timeStr,
-  ]
-    .filter(Boolean)
-    .join(DOT);
+  const timeStr = brew.timeSeconds ? formatTime(brew.timeSeconds) : null;
 
   const grinderStr = brew.grinderName
     ? `${brew.grinderName}${brew.grindSize ? ` (${brew.grindSize})` : ""}`
     : brew.grindSize
       ? `grind ${brew.grindSize}`
       : null;
-  setOrRemove(
-    el.querySelector(".brew-equipment"),
-    [brew.brewerName, grinderStr].filter(Boolean).join(DOT),
+  setParam(el.querySelector(".brew-param-grinder"), grinderStr);
+  setParam(el.querySelector(".brew-param-water"), water ? `${water}g` : null);
+  setParam(
+    el.querySelector(".brew-param-temp"),
+    brew.temperature ? `${(brew.temperature / 10).toFixed(1)}\u00b0C` : null,
   );
+  setParam(el.querySelector(".brew-param-time"), timeStr);
+  if (!el.querySelector(".brew-param")) el.querySelector(".brew-params")?.remove();
+
+  const brewerText = brew.brewerName || brew.method || "";
+  if (!brewerText) el.querySelector(".brew-brewer-row")?.remove();
+  const brewerEl = el.querySelector(".brew-brewer");
+  if (brewerEl) brewerEl.textContent = brewerText;
+
+  renderPours(el.querySelector(".brew-pours"), brew.pours);
 
   setOrRemove(el.querySelector(".brew-notes"), brew.tastingNotes);
 
   const ratingEl = el.querySelector(".brew-rating");
   if (brew.rating) renderRating(ratingEl, brew.rating);
   else ratingEl.remove();
-
-  const rkeyEl = el.querySelector(".brew-rkey");
-  const label = document.createElement("span");
-  label.textContent = "rec  ";
-  const a = document.createElement("a");
-  a.href = `${PDSLS}${did}/${NS}.brew/${brew.rkey}`;
-  a.target = "_blank";
-  a.rel = "noopener";
-  a.textContent = brew.rkey;
-  rkeyEl.append(label, a);
 
   return el;
 }
@@ -154,8 +186,11 @@ async function loadBrews() {
       return;
     }
 
-    container.replaceChildren(...brews.map((b) => renderBrew(tmpl, b, did)));
-    fadeInStagger(container.children);
+    const grid = document.createElement("div");
+    grid.className = "brew-grid";
+    grid.replaceChildren(...brews.map((b) => renderBrew(tmpl, b)));
+    container.replaceChildren(grid);
+    fadeInStagger(grid.children);
   } catch (e) {
     setMessage("Could not load brews.");
     console.error("Failed to load brews:", e);

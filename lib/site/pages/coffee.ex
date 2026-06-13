@@ -19,24 +19,53 @@ defmodule Site.Pages.Coffee do
     <p>
       The full journal, gear, and ratings are on <a href="https://alpha.arabica.social/profile/pdewey.com">alpha.arabica.social/profile/pdewey.com</a>.
     </p>
-    <div id="brew-list" class="log-body">
+    <div id="brew-list" class="brew-list">
       <p class="log-msg">Fetching brews…</p>
     </div>
 
     <template id="brew-tmpl">
-      <article class="log-entry brew-entry">
-        <time class="log-date"></time>
-        <div class="log-value">
-          <div class="log-head">
-            <a class="brew-bean" target="_blank" rel="noopener"></a>
+      <article class="feed-card feed-card-brew brew-card">
+        <header class="brew-card__meta">
+          <time class="brew-date"></time>
+        </header>
+
+        <div class="brew-card__body">
+          <div class="brew-card__topline">
+            <div class="brew-card__title-wrap">
+              <a class="brew-bean" target="_blank" rel="noopener"></a>
+              <div class="brew-roaster"></div>
+            </div>
             <span class="brew-rating" aria-label="rating"></span>
           </div>
-          <div class="brew-roaster"></div>
+
           <div class="brew-sub"></div>
-          <div class="brew-meta"></div>
-          <div class="brew-equipment"></div>
+
+          <div class="brew-brewer-row">
+            <span class="brew-label">Brewer:</span>
+            <span class="brew-brewer"></span>
+          </div>
+
+          <dl class="brew-params">
+            <div class="brew-param brew-param-grinder">
+              <dt>Grinder:</dt>
+              <dd></dd>
+            </div>
+            <div class="brew-param brew-param-water">
+              <dt>Water:</dt>
+              <dd></dd>
+            </div>
+            <div class="brew-param brew-param-temp">
+              <dt>Temp:</dt>
+              <dd></dd>
+            </div>
+            <div class="brew-param brew-param-time">
+              <dt>Time:</dt>
+              <dd></dd>
+            </div>
+          </dl>
+
+          <div class="brew-pours" aria-label="pours"></div>
           <p class="brew-notes"></p>
-          <div class="log-rkey brew-rkey"></div>
         </div>
       </article>
     </template>
