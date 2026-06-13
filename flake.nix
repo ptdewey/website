@@ -35,7 +35,7 @@
             pname = "site-deps";
             version = "0.1.0";
             inherit src;
-            hash = "sha256-1JbQujRXl0KrMU98DEN7jnaoGC7m02X8tIHk3Tuw+u4=";
+            hash = "sha256-fAmaGpIPkLgE4y7DatQvRv3SiPsJ72cMf9YQZuid1+o=";
           };
 
           nativeArtifacts =

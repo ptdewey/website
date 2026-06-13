@@ -3,7 +3,12 @@ defmodule Site.FrontmatterParser do
     "title" => :title,
     "author" => :author,
     "tags" => :tags,
-    "description" => :description
+    "description" => :description,
+    "standard_site_description" => :standard_site_description,
+    "standard_site_uri" => :standard_site_uri,
+    "standard_site_cid" => :standard_site_cid,
+    "bsky_post_ref" => :bsky_post_ref,
+    "updated_at" => :updated_at
   }
 
   def parse(_path, contents) do

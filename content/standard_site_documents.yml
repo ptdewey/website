@@ -1,0 +1,28 @@
+"/blog/bluesky-comments-svelte":
+  uri: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.document/3mgj4qfgmhl2n"
+  cid: "bafyreiadmdavpuqsbpshe6cidxtkorf2bigczlj2hbdzridgi7tfedhuoe"
+  rkey: "3mgj4qfgmhl2n"
+  title: "Adding Comments to My Blog with Bluesky!"
+  published_at: "2024-11-26T00:00:00Z"
+  updated_at: "2026-06-13T14:49:07Z"
+"/blog/gaming-on-linux":
+  uri: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.document/3mgj4qflfrt2n"
+  cid: "bafyreihkcq6sloe4lj4ds6xwfnj27tqfwwqtrlo6eykjlydxnmljdt3gza"
+  rkey: "3mgj4qflfrt2n"
+  title: "Gaming on Linux (Wayland)"
+  published_at: "2025-08-11T00:00:00Z"
+  updated_at: "2026-06-13T14:49:07Z"
+"/blog/neural-net-viz":
+  uri: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.document/3mgj4qfrh5d2n"
+  cid: "bafyreif3udzk5g5cwhnxabbf6ne7kgeqg6uvr6gnaoxo3dret47qgx6nui"
+  rkey: "3mgj4qfrh5d2n"
+  title: "Visually Representing *What* Neural Networks Learn"
+  published_at: "2024-05-13T00:00:00Z"
+  updated_at: "2026-06-13T14:49:07Z"
+"/blog/signal-and-the-noise":
+  uri: "at://did:plc:hm5f3dnm6jdhrc55qp2npdja/site.standard.document/3mgj4qfxnf32n"
+  cid: "bafyreiggae2nh2wdaziqww7lytu2a4urisqfstpfgbzigtzds3aztuyp7m"
+  rkey: "3mgj4qfxnf32n"
+  title: "A Review of \"The Signal and the Noise\""
+  published_at: "2024-05-21T00:00:00Z"
+  updated_at: "2026-06-13T14:49:07Z"

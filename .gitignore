@@ -8,3 +8,6 @@ site-*.tar
 /tmp/
 output/
 /result
+
+priv/dets/
+priv/standard_site_oauth/

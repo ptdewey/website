@@ -5,10 +5,17 @@ defmodule Site.AtProto do
   @collection "site.standard.document"
 
   def list_site_documents(opts) do
+    opts
+    |> Keyword.put(:collection, @collection)
+    |> list_records()
+  end
+
+  def list_records(opts) do
     did = Keyword.fetch!(opts, :did)
+    collection = Keyword.fetch!(opts, :collection)
     pds = Keyword.get(opts, :pds) || resolve_pds!(did)
 
-    list_records(pds, did, @collection)
+    list_records(pds, did, collection)
   end
 
   def resolve_pds!("did:plc:" <> _ = did) do

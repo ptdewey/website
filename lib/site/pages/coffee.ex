@@ -17,7 +17,7 @@ defmodule Site.Pages.Coffee do
       Brews I've logged on <a href="https://alpha.arabica.social">arabica.social</a>, a coffee journal on the AT Protocol.
     </p>
     <p>
-      The full journal, gear, and ratings are on <a href="https://alpha.arabica.social/profile/pdewey.com">@pdewey.com</a>.
+      The full journal, gear, and ratings are on <a href="https://alpha.arabica.social/profile/pdewey.com">alpha.arabica.social/profile/pdewey.com</a>.
     </p>
     <div id="brew-list" class="log-body">
       <p class="log-msg">Fetching brews…</p>

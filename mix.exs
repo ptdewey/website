@@ -25,7 +25,8 @@ defmodule Site.MixProject do
       {:phoenix_live_view, "~> 1.1"},
       {:mdex, "~> 0.11"},
       {:yaml_elixir, "~> 2.12"},
-      {:jason, "~> 1.4"}
+      {:jason, "~> 1.4"},
+      {:atex, git: "https://tangled.org/comet.sh/atex", branch: "main"}
     ]
   end
 end
