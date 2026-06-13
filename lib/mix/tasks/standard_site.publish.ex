@@ -15,7 +15,7 @@ defmodule Mix.Tasks.StandardSite.Publish do
   @shortdoc "Publish local blog posts as Standard.site document records"
 
   alias Site.StandardSite
-  alias Site.StandardSiteDocuments
+  alias Site.StandardSite.Documents
 
   @requirements ["app.start"]
 
@@ -55,21 +55,25 @@ defmodule Mix.Tasks.StandardSite.Publish do
     validate? = Map.get(opts, :validate, false)
 
     posts = posts(opts[:post])
-    local_documents = StandardSiteDocuments.all(output)
+    local_documents = Documents.all(output)
 
     remote_records =
       did
       |> Mix.Tasks.StandardSite.Sync.fetch_documents(publication, pds)
-      |> Mix.Tasks.StandardSite.Sync.localize_record_paths()
+
+    localized_remote_records = Mix.Tasks.StandardSite.Sync.localize_record_paths(remote_records)
 
     remote_documents =
-      remote_records
-      |> StandardSiteDocuments.merge_records(%{})
+      localized_remote_records
+      |> Documents.merge_records(%{})
 
     remote_records_by_path =
       remote_records
-      |> Enum.filter(fn %{"value" => value} -> is_binary(value["path"]) end)
-      |> Map.new(fn %{"value" => %{"path" => path} = value} -> {path, value} end)
+      |> Enum.map(fn %{"value" => value} ->
+        {Mix.Tasks.StandardSite.Sync.local_path_for_record_value(value), value}
+      end)
+      |> Enum.filter(fn {path, _value} -> is_binary(path) end)
+      |> Map.new()
 
     documents = Map.merge(local_documents, remote_documents)
 
@@ -105,7 +109,7 @@ defmodule Mix.Tasks.StandardSite.Publish do
           end
         end)
 
-      StandardSiteDocuments.write!(documents, output)
+      Documents.write!(documents, output)
       Mix.shell().info("Updated #{output}")
     end
   end
@@ -278,19 +282,19 @@ defmodule Mix.Tasks.StandardSite.Publish do
   defp default_auth(opts) do
     cond do
       opts[:oauth_session_key] || System.get_env("STANDARD_SITE_OAUTH_SESSION_KEY") -> "oauth"
-      match?({:ok, _}, Site.StandardSiteOAuth.session_key()) -> "oauth"
+      match?({:ok, _}, Site.StandardSite.OAuth.session_key()) -> "oauth"
       true -> "app-password"
     end
   end
 
   defp oauth_client!(did, opts) do
-    Site.StandardSiteOAuth.configure!(
-      port: opts[:oauth_port] || Site.StandardSiteOAuth.default_port()
+    Site.StandardSite.OAuth.configure!(
+      port: opts[:oauth_port] || Site.StandardSite.OAuth.default_port()
     )
 
     session_key =
       opts[:oauth_session_key] ||
-        case Site.StandardSiteOAuth.session_key() do
+        case Site.StandardSite.OAuth.session_key() do
           {:ok, session_key} ->
             session_key
 

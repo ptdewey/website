@@ -1,4 +1,4 @@
-defmodule Site.StandardSiteOAuth do
+defmodule Site.StandardSite.OAuth do
   @moduledoc false
 
   @dir "priv/standard_site_oauth"

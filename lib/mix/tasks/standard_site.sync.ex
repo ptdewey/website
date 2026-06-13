@@ -4,7 +4,8 @@ defmodule Mix.Tasks.StandardSite.Sync do
   @shortdoc "Fetch Standard.site document records into content/standard_site_documents.yml"
 
   alias Site.StandardSite
-  alias Site.StandardSiteDocuments
+  alias Site.StandardSite.Documents
+  alias Site.StandardSite.Records
 
   @requirements ["app.start"]
 
@@ -36,35 +37,38 @@ defmodule Mix.Tasks.StandardSite.Sync do
 
     documents =
       records
-      |> StandardSiteDocuments.merge_records(StandardSiteDocuments.all(output))
+      |> Documents.merge_records(Documents.all(output))
       |> keep_local_posts_only()
 
-    StandardSiteDocuments.write!(documents, output)
+    Documents.write!(documents, output)
 
     Mix.shell().info("Wrote #{map_size(documents)} Standard.site document mappings to #{output}")
   end
 
   def fetch_documents(did, publication, pds \\ nil) do
-    [did: did, pds: pds, collection: StandardSite.collection()]
-    |> Site.AtProto.list_records()
-    |> Enum.filter(fn %{"value" => value} ->
-      publication == nil or Site.StandardSite.publication_uri(value) == publication
-    end)
+    [did: did, pds: pds]
+    |> Records.list()
+    |> Records.filter_by_publication(publication)
   end
 
   def localize_record_paths(records) do
+    Enum.map(records, fn %{"value" => value} = record ->
+      put_in(record, ["value", "path"], local_path_for_record_value(value))
+    end)
+  end
+
+  def local_path_for_record_value(value) when is_map(value) do
     posts = Site.Blog.all_posts()
     by_path = Map.new(posts, fn post -> {post.path, post.path} end)
+
+    by_document_path =
+      Map.new(posts, fn post -> {Site.StandardSite.document_path(post), post.path} end)
+
     by_legacy_path = Map.new(posts, fn post -> {"/" <> post.id, post.path} end)
     by_title = Map.new(posts, fn post -> {post.title, post.path} end)
 
-    Enum.map(records, fn %{"value" => value} = record ->
-      local_path =
-        by_path[value["path"]] || by_legacy_path[value["path"]] || by_title[value["title"]] ||
-          value["path"]
-
-      put_in(record, ["value", "path"], local_path)
-    end)
+    by_path[value["path"]] || by_document_path[value["path"]] || by_legacy_path[value["path"]] ||
+      by_title[value["title"]] || value["path"]
   end
 
   defp keep_local_posts_only(documents) do

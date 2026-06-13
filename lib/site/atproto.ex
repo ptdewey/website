@@ -2,13 +2,6 @@ defmodule Site.AtProto do
   @moduledoc false
 
   @plc_directory "https://plc.directory"
-  @collection "site.standard.document"
-
-  def list_site_documents(opts) do
-    opts
-    |> Keyword.put(:collection, @collection)
-    |> list_records()
-  end
 
   def list_records(opts) do
     did = Keyword.fetch!(opts, :did)

@@ -7,7 +7,7 @@ defmodule Site.Pages.Post do
 
   def routes(%{posts: posts}) do
     Enum.map(posts, fn post ->
-      post = Site.StandardSiteDocuments.annotate_post(post)
+      post = Site.StandardSite.Documents.annotate_post(post)
 
       %Site.Route{
         path: post.path,

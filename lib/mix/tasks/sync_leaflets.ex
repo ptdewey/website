@@ -11,6 +11,8 @@ defmodule Mix.Tasks.SyncLeaflets do
 
   @requirements ["app.start"]
 
+  alias Site.StandardSite.Records
+
   @impl Mix.Task
   def run(args) do
     {opts, _args, _invalid} =
@@ -37,56 +39,21 @@ defmodule Mix.Tasks.SyncLeaflets do
 
     leaflets =
       [did: did, pds: pds]
-      |> Site.AtProto.list_site_documents()
-      |> maybe_filter_publication(publication)
-      |> Enum.map(&to_leaflet(&1, base_url))
+      |> Records.list()
+      |> Records.filter_by_publication(publication)
+      |> Enum.map(
+        &Records.to_listing_entry(&1,
+          base_url: base_url,
+          source: "leaflet",
+          default_title: "Untitled Leaflet"
+        )
+      )
       |> Enum.sort_by(& &1.date, {:desc, Date})
 
     File.mkdir_p!(Path.dirname(output))
     File.write!(output, to_yaml(leaflets))
 
     Mix.shell().info("Wrote #{length(leaflets)} leaflets to #{output}")
-  end
-
-  defp maybe_filter_publication(records, nil), do: records
-
-  defp maybe_filter_publication(records, publication) do
-    Enum.filter(records, fn %{"value" => value} -> publication_uri(value) == publication end)
-  end
-
-  defp publication_uri(%{"site" => site}) when is_binary(site), do: site
-
-  defp publication_uri(%{"publication" => publication}) when is_binary(publication),
-    do: publication
-
-  defp publication_uri(%{"publication" => %{"uri" => publication}}), do: publication
-  defp publication_uri(_value), do: nil
-
-  defp to_leaflet(%{"uri" => uri, "value" => value}, base_url) do
-    rkey = uri |> String.split("/") |> List.last()
-    created_at = value["createdAt"] || value["publishedAt"] || value["updatedAt"]
-
-    %{
-      title: value["title"] || value["name"] || "Untitled Leaflet",
-      path:
-        value["url"] || value["canonicalUrl"] || document_url(base_url, value["path"] || rkey),
-      date: date!(created_at),
-      source: "leaflet",
-      at_uri: uri
-    }
-  end
-
-  defp document_url(base_url, path) do
-    String.trim_trailing(base_url, "/") <> "/" <> String.trim_leading(path, "/")
-  end
-
-  defp date!(nil), do: raise("leaflet record did not include createdAt/publishedAt/updatedAt")
-
-  defp date!(datetime) do
-    case DateTime.from_iso8601(datetime) do
-      {:ok, datetime, _offset} -> DateTime.to_date(datetime)
-      {:error, _reason} -> Date.from_iso8601!(datetime)
-    end
   end
 
   defp to_yaml([]), do: "[]\n"

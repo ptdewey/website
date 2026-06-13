@@ -7,7 +7,7 @@ defmodule Site.Pages.Blog do
   def route(%{posts: posts}) do
     posts =
       posts
-      |> Kernel.++(Site.Leaflets.all())
+      |> Kernel.++(Site.StandardSite.Leaflets.all())
       |> Enum.sort_by(& &1.date, {:desc, Date})
 
     %Site.Route{

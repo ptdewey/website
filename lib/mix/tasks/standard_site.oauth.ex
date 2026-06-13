@@ -30,10 +30,10 @@ defmodule Mix.Tasks.StandardSite.Oauth do
       )
 
     handle = opts[:handle] || System.get_env("ATPROTO_IDENTIFIER") || "pdewey.com"
-    port = opts[:port] || Site.StandardSiteOAuth.default_port()
+    port = opts[:port] || Site.StandardSite.OAuth.default_port()
     scopes = Keyword.get_values(opts, :scope)
 
-    Site.StandardSiteOAuth.configure!(port: port, scopes: scopes)
+    Site.StandardSite.OAuth.configure!(port: port, scopes: scopes)
     Mix.shell().info("Requesting OAuth scopes: #{Atex.Config.OAuth.scopes()}")
 
     {:ok, listener} = listen(port)
@@ -167,10 +167,10 @@ defmodule Mix.Tasks.StandardSite.Oauth do
       session_key = Atex.OAuth.SessionStore.session_key(session)
       :ok = Atex.OAuth.SessionStore.insert(session)
       :dets.sync(:atex_oauth_sessions)
-      Site.StandardSiteOAuth.write_session_key!(session_key)
+      Site.StandardSite.OAuth.write_session_key!(session_key)
 
       Mix.shell().info("OAuth session stored for #{tokens.did}")
-      Mix.shell().info("Session key written to #{Site.StandardSiteOAuth.session_key_path()}")
+      Mix.shell().info("Session key written to #{Site.StandardSite.OAuth.session_key_path()}")
     else
       error -> Mix.raise("Failed to exchange OAuth callback: #{inspect(error)}")
     end

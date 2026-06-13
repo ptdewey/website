@@ -21,6 +21,8 @@ defmodule Site.StandardSite do
     if valid_rkey?(id), do: id, else: Atex.TID.now() |> to_string()
   end
 
+  def document_path(%{id: id}) when is_binary(id), do: "/" <> id
+
   def valid_rkey?(rkey) when is_binary(rkey) do
     byte_size(rkey) <= 512 and Regex.match?(~r/^[A-Za-z0-9._:~-]+$/, rkey) and
       rkey not in [".", ".."]
@@ -34,7 +36,7 @@ defmodule Site.StandardSite do
     %{
       "$type" => @collection,
       "site" => publication,
-      "path" => post.path,
+      "path" => document_path(post),
       "title" => post.title,
       "publishedAt" => published_at,
       "content" => markdown_content(post),

@@ -1,4 +1,4 @@
-defmodule Site.StandardSiteDocuments do
+defmodule Site.StandardSite.Documents do
   @moduledoc false
 
   alias Site.StandardSite

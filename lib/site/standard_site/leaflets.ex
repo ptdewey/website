@@ -1,4 +1,4 @@
-defmodule Site.Leaflets do
+defmodule Site.StandardSite.Leaflets do
   @moduledoc false
 
   @path "content/leaflets.yml"
