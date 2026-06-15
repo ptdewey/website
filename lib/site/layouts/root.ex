@@ -37,7 +37,8 @@ defmodule Site.Layouts.Root do
       </head>
       <body style="background: #f0ebe1; color: #252f1e;">
         <.header />
-        <main>{@content}</main>
+        <main id="page">{@content}</main>
+        <script type="module" src="/assets/js/spa-nav.js"></script>
       </body>
     </html>
     """

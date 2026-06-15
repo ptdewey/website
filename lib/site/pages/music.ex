@@ -17,18 +17,6 @@ defmodule Site.Pages.Music do
       Plays scrobbled by <a href="https://github.com/teal-fm/piper">piper</a> and written to my PDS for <a href="https://teal.fm">teal.fm</a>.
     </p>
 
-    <div id="now-playing" class="now-playing hidden" aria-live="polite" aria-atomic="false">
-      <span class="np-label">now playing</span>
-      <div class="log-value">
-        <div>
-          <span id="np-artist" class="np-artist"></span>
-          <span class="np-sep" aria-hidden="true">-</span>
-          <span id="np-track" class="np-track"></span>
-        </div>
-        <div id="np-release" class="np-release"></div>
-      </div>
-    </div>
-
     <div id="play-list" class="log-body">
       <p class="log-msg">Fetching plays…</p>
     </div>

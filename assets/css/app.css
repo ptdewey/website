@@ -212,8 +212,7 @@ bsky-conversation {
   margin-top: 1.5rem;
 }
 
-.log-entry,
-.now-playing {
+.log-entry {
   display: grid;
   grid-template-columns: 12ch 1fr;
   gap: 1rem;
@@ -221,8 +220,7 @@ bsky-conversation {
 }
 
 .log-date,
-.log-rkey,
-.np-label {
+.log-rkey {
   color: var(--yellow);
   font-size: 0.9rem;
 }
@@ -248,8 +246,7 @@ bsky-conversation {
 .brew-meta,
 .brew-equipment,
 .play-artist,
-.play-release,
-.np-release {
+.play-release {
   margin-top: 0.15rem;
 }
 
@@ -462,8 +459,7 @@ bsky-conversation {
 }
 
 @media (max-width: 480px) {
-  .log-entry,
-  .now-playing {
+  .log-entry {
     grid-template-columns: 1fr;
     gap: 0;
   }

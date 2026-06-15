@@ -1,5 +1,5 @@
-import { xrpc, listRecords, DID } from "./atproto.js";
-import { fadeIn, fadeInStagger } from "./anim.js";
+import { listRecords, DID } from "./atproto.js";
+import { fadeInStagger } from "./anim.js";
 
 const NS = "fm.teal.alpha";
 const PDSLS = "https://pdsls.dev/at/";
@@ -56,78 +56,6 @@ function renderPlay(tmpl, uri, play) {
   return el;
 }
 
-let npTimer = null;
-
-function hasNowPlaying(status) {
-  const item = status?.item;
-  if (!item) return false;
-  return Boolean(
-    item.trackName ||
-    item.releaseName ||
-    item.artists?.some((artist) => artist.artistName),
-  );
-}
-
-function hideNowPlaying() {
-  document.getElementById("now-playing")?.classList.add("hidden");
-}
-
-async function loadStatus() {
-  if (npTimer) {
-    clearTimeout(npTimer);
-    npTimer = null;
-  }
-
-  try {
-    const rec = await xrpc("com.atproto.repo.getRecord", {
-      repo: DID,
-      collection: `${NS}.actor.status`,
-      rkey: "self",
-    }).catch(() => null);
-    const status =
-      rec && typeof rec === "object" && "value" in rec ? rec.value : rec;
-    const container = document.getElementById("now-playing");
-    if (!hasNowPlaying(status)) {
-      hideNowPlaying();
-      return;
-    }
-
-    const expiryTime = Number(status.expiry);
-    const now = Math.floor(Date.now() / 1000);
-    if (expiryTime && expiryTime < now) {
-      hideNowPlaying();
-      return;
-    }
-
-    document.getElementById("np-track").textContent = status.item.trackName;
-    document.getElementById("np-artist").textContent =
-      status.item.artists?.map((a) => a.artistName).join(", ") ?? "";
-    const releaseEl = document.getElementById("np-release");
-    if (status.item.releaseName) {
-      releaseEl.textContent = status.item.releaseName;
-      releaseEl.classList.remove("hidden");
-    } else {
-      releaseEl.textContent = "";
-    }
-
-    if (expiryTime) {
-      const refreshInMs = Math.max(1000, (expiryTime - now + 1) * 1000);
-      npTimer = setTimeout(() => {
-        npTimer = null;
-        loadStatus();
-        loadPlays();
-      }, refreshInMs);
-    }
-
-    const wasHidden = container.classList.contains("hidden");
-    container.classList.remove("hidden");
-    if (wasHidden) fadeIn(container);
-  } catch (e) {
-    hideNowPlaying();
-    console.error("Failed to load status:", e);
-  }
-}
-
 async function loadPlays() {
   const container = document.getElementById("play-list");
   const tmpl = document.getElementById("play-tmpl");
@@ -162,5 +90,4 @@ async function loadPlays() {
   }
 }
 
-loadStatus();
 loadPlays();
