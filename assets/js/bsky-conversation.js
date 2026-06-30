@@ -124,8 +124,10 @@ function renderAuthor(author) {
   return `
     <a class="author" href="${escapeHtml(profileUrl(author.did))}" target="_blank" rel="noopener noreferrer">
       ${avatar}
-      <strong class="displayname">${escapeHtml(name)}</strong>
-      <span class="handle">@${escapeHtml(author.handle)}</span>
+      <span class="author-meta">
+        <strong class="displayname">${escapeHtml(name)}</strong>
+        <span class="handle">@${escapeHtml(author.handle)}</span>
+      </span>
     </a>`
 }
 
@@ -601,6 +603,13 @@ export class BskyConversation extends HTMLElement {
           text-decoration: underline;
         }
 
+        .bsky-conversation .author-meta {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 0.5em;
+          min-width: 0;
+        }
+
         .bsky-conversation .avatar {
           width: 1.5em;
           height: 1.5em;
@@ -651,6 +660,49 @@ export class BskyConversation extends HTMLElement {
           text-align: center;
           padding: 1em 0 0.5em;
           font-size: smaller;
+        }
+
+        /* Prevent long URLs/handles/words from forcing horizontal scroll.
+           Allow text to break anywhere, and let flex/grid children shrink. */
+        .bsky-conversation {
+          min-width: 0;
+          max-width: 100%;
+        }
+        .bsky-conversation .timeline,
+        .bsky-conversation .thread,
+        .bsky-conversation .reply,
+        .bsky-conversation .quote,
+        .bsky-conversation .original {
+          min-width: 0;
+        }
+        .bsky-conversation .reply > p,
+        .bsky-conversation .quote > p,
+        .bsky-conversation .original > p,
+        .bsky-conversation .depth-cutoff,
+        .bsky-conversation .continue,
+        .bsky-conversation .displayname,
+        .bsky-conversation .handle {
+          overflow-wrap: anywhere;
+          word-break: break-word;
+        }
+        .bsky-conversation .author {
+          max-width: 100%;
+          min-width: 0;
+        }
+
+        /* Tighten nested-thread indent on narrow screens so deep replies
+           still have room to wrap instead of overflowing. */
+        @media (max-width: 480px) {
+          .bsky-conversation .thread {
+            padding-left: 1em;
+          }
+          /* Stack handle beneath the display name instead of wrapping it
+             mid-token, which kept long handles from forcing horizontal scroll. */
+          .bsky-conversation .author-meta {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+          }
         }
       `
       document.head.appendChild(style)
