@@ -109,6 +109,15 @@ img {
   height: auto;
 }
 
+/* Footnotes / references section: hard-wrap long URLs and any long tokens so
+   they never force horizontal scroll, even when wider than the viewport.
+   MDEx renders these as <section class="footnotes"> with raw URLs as link
+   text, which browsers won't break by default. */
+section.footnotes {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .posts-list {
   padding: 0;
   list-style: none;
